@@ -3,10 +3,11 @@ import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import type { BotReply } from '../../../../packages/shared/src/blocks.ts';
 import { formatSegmentHeader } from '../../../../packages/shared/src/guide.ts';
+import { ticketLabel } from '../../../../packages/shared/src/api.ts';
 import type { Deps } from '../app.ts';
 import { answerQuestion, replyToText } from '../lib/answer.ts';
 import { requireAgent } from '../lib/auth.ts';
-import { computeStats } from '../lib/stats.ts';
+import { computeStats, filterSessions, OUTCOMES, PAGES } from '../lib/stats.ts';
 import { syncSession } from '../lib/sync.ts';
 
 const BATCH_SYNC_LIMIT = 25;
@@ -30,7 +31,12 @@ const SettingsBody = z.object({
   evidenceThreshold: z.number().min(0).max(1),
   supportHours: z.string().trim().max(120),
 });
-const StatsQuery = z.object({ from: z.string().datetime().optional(), to: z.string().datetime().optional() });
+const StatsQuery = z.object({
+  from: z.string().datetime().optional(),
+  to: z.string().datetime().optional(),
+  outcome: z.enum(OUTCOMES).optional(),
+  page: z.enum(PAGES).optional(),
+});
 
 const faqSegment = (id: string, question: string, answer: string) =>
   `${formatSegmentHeader(`faq-${id.slice(0, 8)}`, 'faq-admin', [])}\n### Team answers › ${question}\n\n${answer}`;
@@ -139,13 +145,47 @@ export function registerAdminRoutes(app: FastifyInstance, deps: Deps) {
     return { ok: true };
   });
 
-  app.get('/admin/stats', agent, async (req, reply) => {
-    const query = StatsQuery.safeParse(req.query);
-    if (!query.success) return reply.code(400).send({ error: 'from and to must be ISO dates' });
+  // Shared by the dashboard and its CSV export: date range, outcome and starting page.
+  const filtered = async (raw: unknown) => {
+    const query = StatsQuery.safeParse(raw);
+    if (!query.success) return null;
     const to = query.data.to ?? new Date().toISOString();
     const from = query.data.from ?? new Date(new Date(to).getTime() - 30 * DAY_MS).toISOString();
     const { sessions, messages } = await deps.store.statsData(from, to);
-    return { from, to, ...computeStats(sessions, messages) };
+    const kept = filterSessions(sessions, query.data);
+    const ids = new Set(kept.map((s) => s.id));
+    return { from, to, sessions: kept, messages: messages.filter((m) => ids.has(m.session_id)) };
+  };
+
+  app.get('/admin/stats', agent, async (req, reply) => {
+    const data = await filtered(req.query);
+    if (!data) return reply.code(400).send({ error: 'Invalid filters' });
+    return { from: data.from, to: data.to, ...computeStats(data.sessions, data.messages) };
+  });
+
+  // One row per message in the filtered chats, for the dashboard's "Export conversations (CSV)".
+  app.get('/admin/export/conversations', agent, async (req, reply) => {
+    const data = await filtered(req.query);
+    if (!data) return reply.code(400).send({ error: 'Invalid filters' });
+    const messages = await deps.store.messagesForSessions(data.sessions.map((s) => s.id));
+    const byId = new Map(data.sessions.map((s) => [s.id, s]));
+    const rows = messages.map((m) => {
+      const s = byId.get(m.session_id)!;
+      return {
+        chat_started: s.created_at,
+        ticket: s.chatwoot_display_id ? ticketLabel(s.chatwoot_display_id) : '',
+        roblox_username: s.roblox_username ?? '',
+        email: s.email ?? '',
+        chat_status: s.status,
+        asked_from: s.page_url ?? '',
+        time: m.created_at,
+        role: m.role,
+        author: m.role === 'agent' ? (m.agent_name ?? 'Team') : m.role === 'bot' ? 'Pip' : m.role === 'user' ? 'Player' : 'Note',
+        message: m.content,
+        feedback: m.feedback ?? '',
+      };
+    });
+    return { rows };
   });
 
   app.get('/admin/team', agent, async () => ({ team: await deps.store.listAgents() }));

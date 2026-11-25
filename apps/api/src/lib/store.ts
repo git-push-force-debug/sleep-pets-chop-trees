@@ -89,6 +89,8 @@ export interface Store {
   // Admin
   listSessions(statuses: SessionStatus[], limit: number): Promise<SessionRow[]>;
   statsData(fromIso: string, toIso: string): Promise<{ sessions: SessionRow[]; messages: MessageRow[] }>;
+  /** Every message (all roles) of these chats, oldest first — for CSV export. */
+  messagesForSessions(sessionIds: string[]): Promise<MessageRow[]>;
   listFaq(): Promise<FaqRow[]>;
   createFaq(row: Pick<FaqRow, 'question' | 'answer' | 'created_by'>): Promise<FaqRow>;
   updateFaq(id: string, patch: Partial<Pick<FaqRow, 'question' | 'answer' | 'dify_segment_id'>>): Promise<FaqRow | null>;
@@ -171,6 +173,8 @@ export function createSupabaseStore(db: SupabaseClient): Store {
         : [];
       return { sessions: sessions as SessionRow[], messages: messages as MessageRow[] };
     },
+    messagesForSessions: async (ids) =>
+      ids.length ? ((await one(db.from('messages').select('*').in('session_id', ids).order('created_at').limit(20000))) ?? []) as MessageRow[] : [],
     listFaq: async () => (await one(db.from('faq_entries').select('*').order('created_at', { ascending: false }))) ?? [],
     createFaq: async (row) => (await one(db.from('faq_entries').insert(row).select('*').single()))!,
     updateFaq: (id, patch) => one(db.from('faq_entries').update(patch).eq('id', id).select('*').maybeSingle()),

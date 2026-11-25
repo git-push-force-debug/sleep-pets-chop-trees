@@ -78,6 +78,7 @@ export function createFakeStore() {
     saveChatwootContact: async (userId, token) => void contacts.set(userId, token),
     listSessions: async (statuses, limit) => sessions.filter((s) => statuses.includes(s.status)).slice(0, limit),
     statsData: async () => ({ sessions, messages }),
+    messagesForSessions: async (ids) => messages.filter((m) => ids.includes(m.session_id)),
     listFaq: async () => faq,
     createFaq: async (row) => {
       const created: FaqRow = { id: id(), dify_segment_id: null, created_at: now(), updated_at: now(), ...row };

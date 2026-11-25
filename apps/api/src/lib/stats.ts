@@ -10,9 +10,32 @@ function median(values: number[]): number | null {
   return Math.round(value * 10) / 10;
 }
 
+export const OUTCOMES = ['bot', 'handed', 'resolved'] as const;
+export const PAGES = ['home', 'guide', 'support'] as const;
+export interface StatsFilter { outcome?: (typeof OUTCOMES)[number]; page?: (typeof PAGES)[number] }
+
+/** The dashboard's shared filters: outcome (Pip only / handed to a person / resolved) and the page the chat started on. */
+export function filterSessions(sessions: SessionRow[], { outcome, page }: StatsFilter): SessionRow[] {
+  return sessions.filter((s) => {
+    if (outcome === 'bot' && s.handoff_at) return false;
+    if (outcome === 'handed' && !s.handoff_at) return false;
+    if (outcome === 'resolved' && s.status !== 'resolved') return false;
+    const path = s.page_url ?? '/';
+    if (page === 'home' && path !== '/') return false;
+    if (page === 'guide' && !path.startsWith('/guide')) return false;
+    if (page === 'support' && !path.startsWith('/support')) return false;
+    return true;
+  });
+}
+
 export function computeStats(sessions: SessionRow[], messages: MessageRow[]) {
-  const perDay = new Map<string, number>();
-  for (const s of sessions) perDay.set(s.created_at.slice(0, 10), (perDay.get(s.created_at.slice(0, 10)) ?? 0) + 1);
+  const perDay = new Map<string, { count: number; handed: number }>();
+  for (const s of sessions) {
+    const day = perDay.get(s.created_at.slice(0, 10)) ?? { count: 0, handed: 0 };
+    day.count += 1;
+    if (s.handoff_at) day.handed += 1;
+    perDay.set(s.created_at.slice(0, 10), day);
+  }
 
   const handed = sessions.filter((s) => s.handoff_at);
   const firstReplies = handed.flatMap((s) => {
@@ -35,12 +58,18 @@ export function computeStats(sessions: SessionRow[], messages: MessageRow[]) {
   }
 
   return {
-    chatsPerDay: [...perDay].sort(([a], [b]) => a.localeCompare(b)).map(([date, count]) => ({ date, count })),
+    chatsPerDay: [...perDay].sort(([a], [b]) => a.localeCompare(b)).map(([date, d]) => ({ date, ...d })),
+    outcomes: {
+      bot: sessions.filter((s) => !s.handoff_at).length,
+      waiting: sessions.filter((s) => s.status === 'waiting_human').length,
+      team: sessions.filter((s) => s.handoff_at && s.status === 'human').length,
+      resolved: sessions.filter((s) => s.status === 'resolved').length,
+    },
     botOnly: sessions.length - handed.length,
     handedOff: handed.length,
     medianFirstReplyMinutes: median(firstReplies),
     medianResolutionMinutes: median(resolutions),
     feedback: { up: bot.filter((m) => m.feedback === 1).length, down: bot.filter((m) => m.feedback === -1).length },
-    topSections: [...sections.values()].sort((a, b) => b.count - a.count).slice(0, 5),
+    topSections: [...sections.values()].sort((a, b) => b.count - a.count).slice(0, 6),
   };
 }

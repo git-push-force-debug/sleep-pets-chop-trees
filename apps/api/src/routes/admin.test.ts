@@ -32,6 +32,7 @@ const ROUTES: [string, string][] = [
   ['GET', '/admin/gaps'],
   ['POST', '/admin/gaps/g1/resolve'],
   ['GET', '/admin/stats'],
+  ['GET', '/admin/export/conversations'],
   ['GET', '/admin/team'],
   ['POST', '/admin/team'],
   ['PATCH', '/admin/team/u9'],
@@ -135,7 +136,8 @@ describe('computeStats', () => {
       msg('d', 'agent', '2026-11-25T13:06:00Z'),
     ];
     expect(computeStats(sessions, messages)).toEqual({
-      chatsPerDay: [{ date: '2026-11-24', count: 1 }, { date: '2026-11-25', count: 3 }],
+      chatsPerDay: [{ date: '2026-11-24', count: 1, handed: 0 }, { date: '2026-11-25', count: 3, handed: 3 }],
+      outcomes: { bot: 1, waiting: 0, team: 1, resolved: 2 },
       botOnly: 1,
       handedOff: 3,
       medianFirstReplyMinutes: 6,
@@ -143,5 +145,36 @@ describe('computeStats', () => {
       feedback: { up: 1, down: 1 },
       topSections: [{ title: 'Unlock the six ranch tiers', url: 'https://s/guide/player-guide#rebirth', count: 2 }],
     });
+  });
+});
+
+describe('dashboard filters and export', () => {
+  it('filters stats by outcome and starting page, and rejects unknown filters', async () => {
+    const { app, store } = setup();
+    const a = await store.createSession('p1', { page_url: '/' });
+    const b = await store.createSession('p2', { page_url: '/guide/biomes' });
+    Object.assign(b, { status: 'resolved', handoff_at: b.created_at, resolved_at: b.created_at });
+    const get = async (q: string) => (await app.inject({ url: `/admin/stats?${q}`, headers: as('agent1') })).json();
+    expect((await get('outcome=resolved')).outcomes).toMatchObject({ bot: 0, resolved: 1 });
+    expect((await get('page=home')).outcomes).toMatchObject({ bot: 1, resolved: 0 });
+    expect((await get('page=guide&outcome=bot')).botOnly).toBe(0);
+    expect((await app.inject({ url: '/admin/stats?outcome=nope', headers: as('agent1') })).statusCode).toBe(400);
+    expect(a.id).toBeTruthy();
+  });
+
+  it('exports one row per message of the filtered chats', async () => {
+    const { app, store } = setup();
+    const s = await store.createSession('p1', { page_url: '/support' });
+    Object.assign(s, { status: 'human', handoff_at: s.created_at, chatwoot_display_id: 4, roblox_username: 'sleepy', email: 'a@example.com' });
+    await store.insertMessages([
+      { session_id: s.id, role: 'user', content: 'help' },
+      { session_id: s.id, role: 'agent', content: 'on it', agent_name: 'Maya' },
+    ]);
+    const res = await app.inject({ url: '/admin/export/conversations?outcome=handed', headers: as('agent1') });
+    expect(res.json().rows).toEqual([
+      expect.objectContaining({ ticket: '#10004', roblox_username: 'sleepy', email: 'a@example.com', author: 'Player', message: 'help' }),
+      expect.objectContaining({ author: 'Maya', message: 'on it' }),
+    ]);
+    expect((await app.inject({ url: '/admin/export/conversations?outcome=bot', headers: as('agent1') })).json().rows).toEqual([]);
   });
 });

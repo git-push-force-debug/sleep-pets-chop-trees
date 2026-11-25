@@ -10,6 +10,14 @@ import { AppRoutes } from '../App.tsx';
 beforeEach(() => {
   window.matchMedia = vi.fn(() => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() })) as unknown as typeof window.matchMedia;
   window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
+  // jsdom has no IntersectionObserver (used by scroll reveals): report everything as visible.
+  globalThis.IntersectionObserver = class {
+    constructor(private cb: IntersectionObserverCallback) {}
+    observe(el: Element) { this.cb([{ isIntersecting: true, target: el } as IntersectionObserverEntry], this as unknown as IntersectionObserver); }
+    unobserve() {}
+    disconnect() {}
+    takeRecords() { return []; }
+  } as unknown as typeof IntersectionObserver;
 });
 afterEach(cleanup);
 
@@ -57,6 +65,15 @@ describe('navigation', () => {
     const labels = [...nav.querySelectorAll('.nav-links a')].map((a) => a.textContent);
     expect(labels).toEqual(['Home', 'Guide', 'Wildlife', 'Gear', 'Rewards', 'FAQ', 'Support']);
     expect(screen.getByRole('heading', { name: 'Page not found' })).toBeTruthy();
+  });
+});
+
+describe('support page', () => {
+  it('offers three ways to get help and does not load a chat on the page', async () => {
+    await at('/support');
+    expect(screen.getByRole('heading', { level: 1, name: 'How can we help?' })).toBeTruthy();
+    for (const name of ['Ask Pip', 'Talk to a person', 'Common questions']) expect(screen.getByRole('heading', { level: 2, name })).toBeTruthy();
+    expect(screen.queryByLabelText('Message Pip')).toBeNull();
   });
 });
 

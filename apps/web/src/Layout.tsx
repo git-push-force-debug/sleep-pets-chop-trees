@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
 import { PlayIcon } from '../../../packages/shared/src/ui/icons.tsx';
 import { RaisedPillLink } from '../../../packages/shared/src/ui/RaisedPill.tsx';
@@ -12,10 +12,26 @@ export function Layout() {
     else window.scrollTo(0, 0);
   }, [pathname, hash]);
 
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <ChatProvider>
       <a className="skip-link" href="#main">Skip to content</a>
-      <header className={`site-header ${pathname === '/' ? 'over-hero' : ''}`}>
+      {pathname !== '/' && (
+        <div className="page-banner" aria-hidden="true">
+          {[[1, 14, 0], [2, 34, -30], [3, 8, -60], [1, 26, -90]].map(([n, top, delay], i) => (
+            <img key={i} className="sprite cloud" src={`/art/v3/cloud-${n}.webp`} alt="" style={{ top: `${top}%`, width: 'clamp(110px, 14vw, 240px)', animationDuration: '110s', animationDelay: `${delay}s` }} />
+          ))}
+          <img className="banner-hills" src="/art/v3/meadow.webp" alt="" />
+        </div>
+      )}
+      <header className={`site-header over-hero ${scrolled ? 'scrolled' : ''} ${pathname === '/' && !scrolled ? 'hide-play' : ''}`}>
         <div className="wrap header-row">
           <Link to="/" className="brand" aria-label="Sleep Pets & Chop Trees — home">
             <img src="/art/logo.png" alt="Sleep Pets & Chop Trees" width="720" height="315" />

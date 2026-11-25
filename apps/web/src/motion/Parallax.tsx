@@ -7,42 +7,45 @@ import {
   useTransform,
   type MotionValue,
 } from 'motion/react';
-import { useRef, type CSSProperties, type PointerEvent, type ReactNode } from 'react';
+import { useRef, type PointerEvent, type ReactNode } from 'react';
 
 /**
- * Layered parallax (Firewatch-style): each layer gets a depth from 0 (far) to 1 (near).
- * Scrolling moves far layers more slowly than near ones; the pointer nudges near layers more.
- * Transform-only, and a static stack under reduced motion (same final layout).
+ * One seamless scene from stacked layers, each with a depth from 0 (far) to 1 (near).
+ * On scroll the far layers drift at about half page speed and the nearest ones overtake the page,
+ * so the foreground rises over the content. The pointer nudges near layers more.
+ * Children sit inside the stack (between layers) at `contentAt`. Transform-only; static under reduced motion.
  */
 export interface Layer {
-  src: string;
+  src?: string;
+  /** Sprites or anything else that should move at this depth (they keep their own CSS loops). */
+  node?: ReactNode;
   depth: number;
   className?: string;
-  style?: CSSProperties;
 }
 
-function LayerImg({ layer, progress, px, py }: { layer: Layer; progress: MotionValue<number>; px: MotionValue<number>; py: MotionValue<number> }) {
-  const scrollY = useTransform(progress, [0, 1], [0, 320 * (1 - layer.depth)]);
-  const pointerX = useTransform(px, (v) => v * -36 * layer.depth);
-  const pointerY = useTransform(py, (v) => v * -18 * layer.depth);
+// px a layer is pushed back down over the scene's scroll: + slower than the page, − faster.
+const lag = (depth: number) => 360 * (1 - depth) - 160 * depth;
+
+function DepthLayer({ depth, progress, px, py, reduced, className, z, children }: {
+  depth: number; progress: MotionValue<number>; px: MotionValue<number>; py: MotionValue<number>;
+  reduced: boolean; className: string; z: number; children: ReactNode;
+}) {
+  const scrollY = useTransform(progress, [0, 1], [0, reduced ? 0 : lag(depth)], { clamp: false });
+  const pointerX = useTransform(px, (v) => v * -36 * depth);
+  const pointerY = useTransform(py, (v) => v * -18 * depth);
   const y = useTransform([scrollY, pointerY], ([a, b]) => (a as number) + (b as number));
-  return (
-    <motion.img
-      src={layer.src}
-      alt=""
-      aria-hidden="true"
-      draggable={false}
-      className={`plx-layer ${layer.className ?? ''}`}
-      style={{ ...layer.style, x: pointerX, y, willChange: 'transform' }}
-      onError={(e) => ((e.target as HTMLImageElement).style.display = 'none')}
-    />
-  );
+  return <motion.div className={className} style={{ x: pointerX, y, zIndex: z }}>{children}</motion.div>;
 }
 
-export function ParallaxScene({ layers, className = '', children, overlay }: { layers: Layer[]; className?: string; children?: ReactNode; overlay?: ReactNode }) {
+export function ParallaxScene({ layers, contentAt, contentDepth, band = false, className = '', children }: {
+  layers: Layer[]; contentAt: number; contentDepth: number; className?: string; children: ReactNode;
+  /** Mid-page scene: layers travel while it crosses the viewport, centred when it is in the middle. */
+  band?: boolean;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const reduced = !!useReducedMotion();
+  const { scrollYProgress: raw } = useScroll({ target: ref, offset: band ? ['start end', 'end start'] : ['start start', 'end start'] });
+  const scrollYProgress = useTransform(raw, (v) => (band ? v - 0.5 : v));
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
   const px = useSpring(rawX, { stiffness: 60, damping: 18, mass: 0.6 });
@@ -54,18 +57,31 @@ export function ParallaxScene({ layers, className = '', children, overlay }: { l
     rawX.set((e.clientX - r.left) / r.width - 0.5);
     rawY.set((e.clientY - r.top) / r.height - 0.5);
   };
+  const shared = { progress: scrollYProgress, px, py, reduced };
 
   return (
     <div ref={ref} className={`plx ${className}`} onPointerMove={onMove} onPointerLeave={() => (rawX.set(0), rawY.set(0))}>
-      <div className="plx-stage" aria-hidden="true">
-        {reduced
-          ? layers.map((l) => <img key={l.src} src={l.src} alt="" className={`plx-layer ${l.className ?? ''}`} style={l.style} />)
-          : layers.map((l) => <LayerImg key={l.src} layer={l} progress={scrollYProgress} px={px} py={py} />)}
-        {overlay}
-      </div>
-      {children}
+      {layers.map((l, i) => (
+        <DepthLayer key={i} {...shared} depth={l.depth} z={i * 2} className={`plx-layer ${l.className ?? ''}`}>
+          <div aria-hidden="true" className="plx-fill">
+            {l.src ? <img src={l.src} alt="" draggable={false} className="plx-img" /> : l.node}
+          </div>
+        </DepthLayer>
+      ))}
+      <DepthLayer {...shared} depth={contentDepth} z={contentAt * 2 - 1} className="plx-content">
+        {children}
+      </DepthLayer>
     </div>
   );
+}
+
+/** Scroll-linked drift for things below the hero: travels `range`→`-range` px while it crosses the viewport. */
+export function Drift({ range, className, children }: { range: number; className?: string; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [range, -range]);
+  return <motion.div ref={ref} className={className} style={{ y }}>{children}</motion.div>;
 }
 
 /** Rise-in as a section scrolls into view (once). */

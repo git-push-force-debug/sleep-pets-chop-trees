@@ -2,8 +2,25 @@
   "name": "sleep-pets-chop-trees",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=20.6" },
+  "engines": {
+    "node": ">=20.6"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
+    "test": "vitest run",
+    "build": "npm run build --workspaces --if-present",
+    "ingest": "tsx scripts/ingest-guide.ts",
+    "dify:sync": "tsx --env-file=.env.local scripts/dify-sync.ts",
     "check:connections": "node --env-file=.env.local scripts/check-connections.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.7",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.12",
+    "zod": "^4.6.7"
   }
 }

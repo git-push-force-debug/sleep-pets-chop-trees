@@ -7,3 +7,4 @@ dist/
 .admin-credentials
 .DS_Store
 coverage/
+.superpowers/

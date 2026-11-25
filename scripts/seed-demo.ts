@@ -79,7 +79,8 @@ export function buildDemo(userId: string) {
     const daysAgo = status === 'waiting_human' ? rand() * 0.5 : rand() * 29.5;
     const start = Date.now() - daysAgo * 86_400_000;
     let t = 0;
-    const msg = (role: string, content: string, extra: Row = {}) => messages.push({ session_id: id, role, content, created_at: at(start, (t += 1 + rand() * 2)), ...extra });
+    const msg = (role: string, content: string, extra: Row = {}) =>
+      messages.push({ session_id: id, role, content, reply: null, feedback: null, agent_name: null, created_at: at(start, (t += 1 + rand() * 2)), ...extra });
 
     // 1–3 guide questions answered by Pip, with sources and some thumbs.
     for (let q = 0, n = 1 + Math.floor(rand() * 3); q < n; q++) {
@@ -96,7 +97,11 @@ export function buildDemo(userId: string) {
       gaps.push({ session_id: id, question, top_score: Math.round(rand() * 25) / 100, created_at: at(start, t) });
     }
 
-    const row: Row = { id, user_id: userId, status, page_url: pick(PAGES), user_agent: 'seed-demo', created_at: at(start, 0) };
+    // Every row lists every column: a bulk insert fills missing keys with NULL, not the column default.
+    const row: Row = {
+      id, user_id: userId, status, page_url: pick(PAGES), user_agent: 'seed-demo', created_at: at(start, 0),
+      bot_paused: false, handoff_at: null, chatwoot_display_id: null, roblox_username: null, email: null, resolved_at: null,
+    };
     if (status !== 'bot') {
       const ticket = 900 + i;
       const problem = pick(NEEDS_PERSON);

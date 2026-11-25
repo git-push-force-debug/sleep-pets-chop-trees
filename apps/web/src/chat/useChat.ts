@@ -4,7 +4,9 @@ import type { BotReply } from '../../../../packages/shared/src/blocks.ts';
 import { api, ApiError, supabase } from './api.ts';
 import { chatReducer, initialChat, type ChatState } from './chatReducer.ts';
 
-const POLL_MS = 5000; // free Chatwoot plan: no webhooks, so agent replies are polled while a person handles the chat
+// Free Chatwoot plan: no webhooks, so agent replies are polled — faster while waiting for the first reply.
+const POLL_WAITING_MS = 3000;
+const POLL_HUMAN_MS = 5000;
 
 export interface HandoffForm {
   robloxUsername: string;
@@ -19,6 +21,8 @@ export interface Chat {
   handoff(form: HandoffForm): Promise<boolean>;
   startNew(): Promise<void>;
   feedback(messageId: string, value: 1 | -1): Promise<void>;
+  /** A reply finished its entrance animation; never replay it (e.g. when the panel reopens). */
+  markPlayed(messageId: string): void;
 }
 
 type MessageRow = { id: string; session_id: string; role: ChatMessage['role']; content: string; reply: BotReply | null; agent_name: string | null; created_at: string; feedback: 1 | -1 | null };
@@ -90,7 +94,7 @@ export function useChat(enabled: boolean): Chat {
         // transient: the next tick retries
       }
     };
-    const timer = setInterval(tick, POLL_MS);
+    const timer = setInterval(tick, status === 'waiting_human' ? POLL_WAITING_MS : POLL_HUMAN_MS);
     return () => clearInterval(timer);
   }, [sessionId, status]);
 
@@ -134,5 +138,7 @@ export function useChat(enabled: boolean): Chat {
     }
   }, []);
 
-  return { state, settings, send, handoff, startNew, feedback };
+  const markPlayed = useCallback((id: string) => dispatch({ type: 'played', id }), []);
+
+  return { state, settings, send, handoff, startNew, feedback, markPlayed };
 }

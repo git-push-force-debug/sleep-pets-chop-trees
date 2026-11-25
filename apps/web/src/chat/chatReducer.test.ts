@@ -41,3 +41,14 @@ describe('errorMessage', () => {
     expect(errorMessage(500, { error: 'db exploded' })).toBe('Something went wrong. Please try again.');
   });
 });
+
+describe('animate once', () => {
+  it('stops animating a reply once it has played', () => {
+    let s = chatReducer(initialChat, { type: 'loaded', session, messages: [] });
+    s = chatReducer(s, { type: 'sent', messages: [msg('b', 'bot', '2026-11-25T10:02:00Z')] });
+    expect(s.fresh).toEqual(['b']);
+    s = chatReducer(s, { type: 'played', id: 'b' });
+    expect(s.fresh).toEqual([]);
+  });
+});
+

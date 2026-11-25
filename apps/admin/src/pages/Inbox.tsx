@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { BotReply as Reply } from '../../../../packages/shared/src/blocks.ts';
 import { BotReply } from '../../../../packages/shared/src/ui/BotReply.tsx';
+import { ticketLabel } from '../../../../packages/shared/src/api.ts';
 import { chatwootUrl } from '../links.ts';
 import { supabase, type Agent } from '../auth.ts';
 import { adminApi, useSessions, type SessionRow } from '../data.ts';
@@ -59,7 +60,7 @@ function Conversation({ session, agent }: { session: SessionRow; agent: Agent })
     <section className="conversation" aria-label="Conversation">
       <header className="conv-head">
         <div>
-          <h2>{session.chatwoot_display_id ? `Ticket #${session.chatwoot_display_id}` : 'Bot chat'} · {session.roblox_username ?? 'Player'}</h2>
+          <h2>{session.chatwoot_display_id ? `Ticket ${ticketLabel(session.chatwoot_display_id)} (Chatwoot #${session.chatwoot_display_id})` : 'Bot chat'} · {session.roblox_username ?? 'Player'}</h2>
           <p className={`status-line s-${session.status}`}>{session.status.replace('_', ' ')}{session.handoff_at && session.status === 'waiting_human' ? ` · waiting ${waited(session.handoff_at)}` : ''}</p>
         </div>
         <div className="conv-actions">
@@ -150,7 +151,7 @@ export function Inbox({ agent }: { agent: Agent }) {
                   <b>{s.roblox_username ?? 'Player'}</b>
                   {s.status === 'waiting_human' && <span className="wait">⏱ {waited(s.handoff_at)}</span>}
                 </span>
-                <span className="row-sub">{s.chatwoot_display_id ? `Ticket #${s.chatwoot_display_id}` : 'Bot only'} · {new Date(s.updated_at).toLocaleString()}</span>
+                <span className="row-sub">{s.chatwoot_display_id ? `Ticket ${ticketLabel(s.chatwoot_display_id)}` : 'Bot only'} · {new Date(s.updated_at).toLocaleString()}</span>
               </button>
             </li>
           ))}

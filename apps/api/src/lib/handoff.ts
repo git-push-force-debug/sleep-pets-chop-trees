@@ -1,3 +1,4 @@
+import { ticketLabel } from '../../../../packages/shared/src/api.ts';
 import type { Deps } from '../app.ts';
 import type { MessageRow, SessionRow } from './store.ts';
 
@@ -65,7 +66,7 @@ export async function startHandoff(
     });
     const updated = await deps.store.updateSession(sessionId, { chatwoot_display_id: conversation.displayId });
     await deps.store.insertMessages([
-      { session_id: sessionId, role: 'system', content: `Handed to a person · Ticket #${conversation.displayId}` },
+      { session_id: sessionId, role: 'system', content: `Connected to the team · Ticket ${ticketLabel(conversation.displayId)}` },
     ]);
     return updated!;
   } catch (error) {

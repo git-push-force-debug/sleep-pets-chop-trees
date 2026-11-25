@@ -16,6 +16,7 @@ export type ChatAction =
   | { type: 'sent'; messages: ChatMessage[] }
   | { type: 'received'; message: ChatMessage }
   | { type: 'status'; session: ChatSession }
+  | { type: 'played'; id: string }
   | { type: 'failed'; error: string }
   | { type: 'clearError' };
 
@@ -42,6 +43,8 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
       return { ...state, messages: merge(state.messages, [action.message]) };
     case 'status':
       return { ...state, session: action.session };
+    case 'played':
+      return { ...state, fresh: state.fresh.filter((id) => id !== action.id) };
     case 'failed':
       return { ...state, sending: false, error: action.error };
     case 'clearError':

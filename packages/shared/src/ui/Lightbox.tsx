@@ -17,9 +17,6 @@ export function Lightbox({ image, onClose }: { image: GuideImage | null; onClose
       {image && (
         <figure>
           <img src={image.url} alt={image.alt} width={image.width} height={image.height} />
-          <figcaption>
-            {image.label && <strong>{image.label}</strong>} {image.caption}
-          </figcaption>
           <button type="button" className="spct-icon-btn spct-lightbox-close" aria-label="Close picture" onClick={onClose}>
             <CloseIcon />
           </button>

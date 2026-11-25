@@ -55,6 +55,15 @@ describe('BotReply', () => {
     expect(screen.getByRole('button', { name: 'What pet do I need?' })).toBeTruthy();
   });
 
+  it('shows pictures without caption text and sources as one small link line', () => {
+    const { container } = render(<BotReply reply={reply} onSuggestion={() => {}} onHandoff={() => {}} />);
+    expect(container.querySelector('.spct-images figcaption')).toBeNull();
+    expect(screen.queryByText(/The hub at night/)).toBeNull();
+    const line = container.querySelector('.spct-sources')!;
+    expect(line.textContent).toMatch(/^Source: Unlock the six ranch tiers/);
+    expect(screen.getByText('7')).toBeTruthy(); // stats show their final value
+  });
+
   it('never renders raw HTML or javascript: links from markdown', () => {
     const { container } = render(
       <BotReply

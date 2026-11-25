@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ChatMessage, ChatSession } from '../../../../packages/shared/src/api.ts';
 import { initialChat } from './chatReducer.ts';
@@ -23,6 +23,7 @@ function fakeChat(over: Partial<Chat['state']> = {}, settings: Chat['settings'] 
     handoff: vi.fn(async () => true),
     startNew: vi.fn(async () => {}),
     feedback: vi.fn(async () => {}),
+    markPlayed: vi.fn(),
   };
 }
 
@@ -43,10 +44,26 @@ describe('ChatPanel', () => {
     expect(chat.send).toHaveBeenCalledWith('how do I chop trees?');
   });
 
-  it('shows the ticket while waiting for a person', () => {
-    render(<ChatPanel chat={fakeChat({ session: session({ status: 'waiting_human', ticket: 128, botPaused: true }) })} />);
-    expect(screen.getByText('Waiting for a person · Ticket #128')).toBeTruthy();
+  it('shows just "Pip" in the header', () => {
+    render(<ChatPanel chat={fakeChat()} />);
+    expect(screen.getByRole('heading', { name: 'Pip' })).toBeTruthy();
+    expect(screen.queryByText(/answers from the game guide/)).toBeNull();
+  });
+
+  it('shows an in-chat ticket card while a person joins, with no offline box', () => {
+    const settings = { greeting: 'Hi', starterQuestions: [], offlineMessage: 'usually within a day', botEnabled: true };
+    render(<ChatPanel chat={fakeChat({ session: session({ status: 'waiting_human', ticket: 128, botPaused: true }) }, settings)} />);
+    expect(screen.getByText('Ticket #10128')).toBeTruthy();
+    expect(screen.getByText('A person is joining…')).toBeTruthy();
+    expect(screen.queryByText('usually within a day')).toBeNull();
     expect(screen.queryByRole('button', { name: 'Talk to a person' })).toBeNull();
+  });
+
+  it('marks a new reply as played once it has finished animating', async () => {
+    const reply = { blocks: [{ type: 'text' as const, markdown: 'Hi' }], suggestions: [], sources: [], images: [] };
+    const chat = fakeChat({ messages: [msg({ id: 'b1', role: 'bot', content: 'Hi', reply })], fresh: ['b1'] });
+    render(<ChatPanel chat={chat} />);
+    await waitFor(() => expect(chat.markPlayed).toHaveBeenCalledWith('b1'));
   });
 
   it('shows a returning player the agent reply and a closed chat', () => {

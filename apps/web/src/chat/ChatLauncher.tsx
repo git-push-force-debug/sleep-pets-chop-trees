@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
-import { useLocation } from 'react-router';
 import { usePrefersReducedMotion } from '../../../../packages/shared/src/ui/motion.ts';
 import { ChatPanel } from './ChatPanel.tsx';
 import { useChat, type Chat } from './useChat.ts';
@@ -13,10 +12,10 @@ const SPRING = { type: 'spring', stiffness: 380, damping: 36 } as const;
 
 /** One chat for the whole site: the floating launcher and the Support page share it. */
 export function ChatProvider({ children }: { children: ReactNode }) {
-  const onSupport = useLocation().pathname === '/support';
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState<string | null>(null);
-  const chat = useChat(open || onSupport || pending !== null);
+  const [handoffSignal, setHandoffSignal] = useState(0);
+  const chat = useChat(open || pending !== null || handoffSignal > 0);
   const launcher = useRef<HTMLButtonElement>(null);
   const reduced = usePrefersReducedMotion();
   const [desktop, setDesktop] = useState(() => window.matchMedia?.(DESKTOP).matches ?? true);
@@ -30,13 +29,14 @@ export function ChatProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const onOpen = (e: Event) => {
-      const question = (e as CustomEvent<{ question?: string }>).detail?.question;
-      if (!onSupport) setOpen(true);
-      if (question) setPending(question);
+      const detail = (e as CustomEvent<{ question?: string; handoff?: boolean }>).detail ?? {};
+      setOpen(true);
+      if (detail.question) setPending(detail.question);
+      if (detail.handoff) setHandoffSignal((n) => n + 1);
     };
     window.addEventListener('spct:open-chat', onOpen);
     return () => window.removeEventListener('spct:open-chat', onOpen);
-  }, [onSupport]);
+  }, []);
 
   // Send a question chosen elsewhere on the site once the chat is ready.
   useEffect(() => {
@@ -72,7 +72,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   return (
     <ChatContext.Provider value={chat}>
       {children}
-      {!onSupport && (
+      {(
         <>
           <AnimatePresence>
             {open && !desktop && (
@@ -81,7 +81,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
             {open && (
               <motion.div key="panel" className={`chat-dock ${desktop ? 'side' : 'sheet'}`} role="dialog" aria-modal={!desktop} aria-label="Chat with Pip" {...motionProps}>
                 {!desktop && <span className="sheet-handle" aria-hidden="true" />}
-                <ChatPanel chat={chat} onClose={close} />
+                <ChatPanel chat={chat} onClose={close} handoffSignal={handoffSignal} />
               </motion.div>
             )}
           </AnimatePresence>

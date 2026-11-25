@@ -2,5 +2,13 @@
   "name": "@spct/shared",
   "private": true,
   "type": "module",
-  "exports": { "./*": "./src/*" }
+  "exports": {
+    "./*": "./src/*"
+  },
+  "dependencies": {
+    "motion": "^14.14.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-markdown": "^10.1.0"
+  }
 }

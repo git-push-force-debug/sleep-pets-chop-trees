@@ -7,6 +7,17 @@ Source material: `~/Documents/Codex/2026-11-25/look-at-hte/outputs/sleep-pets-an
 
 **Decisions Lance made:** site, logo and repo use the name "Sleep Pets & Chop Trees". Chapter 07 (Creator reference) is **admin-only**. A Chatwoot conversation opens **at hand-off**, with the bot transcript copied in, and keeps that ID afterwards. Use the signed-in Vercel account (`localtradingscom-6532`) and a **new $0 Supabase project** in the `travyai.com@gmail.com` org.
 
+**Update 2026-11-25 — Chatwoot free plan:** Chatwoot Cloud's free (Hacker) plan has **no API access token**, and Lance chose to stay on it. So the server talks to a **Website inbox through Chatwoot's widget API**, the same endpoints Chatwoot's own chat bubble uses. These were verified in `chatwoot/chatwoot` source:
+- `POST /api/v1/widget/config` → contact `auth_token`
+- `POST /api/v1/widget/conversations` → `{id: display_id, status}`
+- `POST|GET /api/v1/widget/messages` → private notes are filtered out
+- `GET /api/v1/widget/conversations` → status
+- `GET /api/v1/widget/inbox_members` → token check
+
+Auth is the `X-Auth-Token` header. Throttles are about 30 conversations and 60 messages per minute per IP and token.
+
+**Agents reply, assign, label and resolve inside Chatwoot's dashboard or mobile app.** Our admin panel covers everything else and links to each Chatwoot conversation.
+
 **My calls** (Lance can override):
 - Dify is **retrieval only** (Knowledge API). Our Fastify server calls Gemini directly with structured JSON output, then validates it and adds sources and images. This matches Lance's flow and gives full control of the generative UI. A Dify chat app would hide that control.
 - The admin panel is a **separate Vite app and a separate Vercel project**, so no admin code ships to players.
@@ -33,9 +44,19 @@ Stack: React + Vite + TypeScript, Tailwind v4 with CSS-variable tokens, `motion`
    - sends the evidence and recent turns to Gemini with a `responseSchema`. Gemini returns `{answer_found, intent, blocks[], suggestions[], used_section_ids[]}`;
    - the server validates with zod. It drops image IDs and section IDs that didn't come from the retrieved sections, and adds `sources` (`/guide/<chapter>#<section>`) plus image URLs.
 3. **Offer a person** when: `!answer_found`, the top score is below the threshold, the intent is `wants_human`, or the intent is `account_or_purchase` / `bug_report` (Robux, refunds, bans, lost pets). The bot shows a hand-off card. A "Talk to a person" button is always in the chat header.
-4. **Hand-off** (idempotent): an optional form collects Roblox username and email, with a summary the bot pre-fills. The server creates the Chatwoot contact and conversation on the API inbox, replays the transcript in order (player = incoming, bot = outgoing, labelled "Bot"), and adds a private note with the summary and page URL. It then sets `bot_paused=true, status=waiting_human` and shows **Ticket #<display_id>**.
-5. While a person is handling the chat, player messages go to Chatwoot and are stored in Supabase. Agent replies arrive from our admin panel or the Chatwoot dashboard through the webhook. The server checks the secret path token, **re-fetches the message from the Chatwoot API** and ignores private notes. It de-duplicates by `chatwoot_message_id`, inserts the row, and Realtime pushes it to the player.
-6. **Resolved:** a `conversation_status_changed` webhook marks the session resolved and the player sees a "Resolved" banner and a "Start new chat" button. The server returns 409 for any post to a resolved session, so Chatwoot never silently reopens it. If an agent reopens the ticket, the chat reopens. "Hand back to bot" sets `bot_paused=false` and the Chatwoot status to `pending`.
+4. **Hand-off** (idempotent, one conversation per chat session):
+   - An optional form collects Roblox username and email, with a summary the bot pre-fills.
+   - The server gets a widget contact token (`POST widget/config`, one per player). The token is stored in the server-only table `chatwoot_contacts`, never in a table the player can read.
+   - It calls `POST widget/conversations` with contact `{name: roblox username, email}` and `custom_attributes {session_id, page_url}`. The first message is the formatted bot transcript plus the summary (agents read the earlier chat there, and the admin panel shows it rich).
+   - It sets `bot_paused=true, status=waiting_human` and shows **Ticket #<display_id>**.
+5. While a person is handling the chat:
+   - Player messages go out through `POST widget/messages` and are stored in Supabase.
+   - **Agent replies** arrive through `syncSession()`, which runs `GET widget/messages?after=<last id>` with that session's token and keeps outgoing, non-private messages. It de-duplicates by `chatwoot_message_id`, inserts rows, and Realtime pushes them to the player and the admin panel.
+   - `syncSession()` is triggered by the Chatwoot webhook, if the free plan allows webhooks: the URL is checked against its secret path, and the data is **re-fetched through the widget API**, never trusted from the payload. As a fallback, the player's open chat polls `POST /chat/sessions/:id/sync` every ~5 s while waiting for a person, and the admin panel syncs whenever a conversation is opened.
+6. **Resolved:**
+   - `syncSession()` reads the status (`GET widget/conversations`). When it's `resolved`, the session is marked resolved and the player sees a "Resolved" banner and a "Start new chat" button.
+   - The inbox setting "Allow messages after conversation resolved" is **off**, so Chatwoot itself refuses replies (403). Our server also returns 409.
+   - A new chat after resolution makes a new conversation for the same contact. If an agent reopens the ticket, the chat reopens. "Hand back to bot" (admin panel) sets `bot_paused=false`.
 
 ## Generative UI (shared renderer, used in web and admin)
 Block types: `text` (markdown), `steps`, `table`, `stats`, `images` (gallery, lightbox), `callout` (tip/warning/info), `card` (animal, weapon or tier facts with an optional image), `suggestions` (reply chips), `handoff`. The server appends `sources` as link chips.
@@ -57,7 +78,7 @@ Under OS reduced motion everything appears instantly with the same information. 
 | Supabase | toggle **Allow anonymous sign-ins**, paste the **secret key** into `.env.local` | create the project (MCP, $0 confirmed), migrations, URL and publishable key |
 | Gemini | create a key at aistudio.google.com → `.env.local` | list models, pick the newest Flash model → `GEMINI_MODEL` |
 | Dify Cloud | sign up. Model Providers → Gemini (paste key) → set Gemini as the default embedding model. Create a **Knowledge API key** → `.env.local` | create the public and internal datasets, upload content |
-| Chatwoot Cloud | sign up (Hacker plan). Profile → **Access token** + account ID → `.env.local` | create the API inbox, webhook, labels and canned replies through the API |
+| Chatwoot Cloud | sign up (free Hacker plan). Create a **Website inbox** and add yourself as an agent. Turn off "Allow messages after conversation resolved". Copy the **websiteToken** → `.env.local`. Add the webhook from `CHATWOOT_WEBHOOK_URL`, if the plan shows Integrations → Webhooks | check the token and agent with `check:connections`. Fall back to polling if there's no webhook |
 | Codex | nothing | confirm image generation works |
 | Admins | admin email(s) → `ADMIN_EMAILS` in `.env.local` | create accounts. A random password goes to a gitignored local file, never into chat |
 
@@ -73,13 +94,14 @@ I create a `.env.local` template with only these blanks. Then `npm run check:con
 - Chapter 07 goes to the **internal** dataset, used only by the admin "Suggest reply" feature.
 
 ## Phase 3 — API (`apps/api`, Fastify)
-Routes: `POST /chat/sessions`, `GET /chat/sessions/:id`, `POST /chat/sessions/:id/messages`, `POST /chat/sessions/:id/handoff`, `POST /chat/messages/:id/feedback`, `POST /webhooks/chatwoot/:secret`, plus agent-only `/admin/*`: reply, note, assign, labels, canned, resolve, reopen, hand-back, suggest, FAQ CRUD and re-sync, gaps, stats, team, settings.
-Modules: `lib/dify.ts`, `lib/gemini.ts`, `lib/chatwoot.ts`, `lib/answer.ts` (the pipeline + hand-off decision), `lib/auth.ts` (JWT → player or agent).
+Routes: `POST /chat/sessions`, `GET /chat/sessions/:id`, `POST /chat/sessions/:id/messages`, `POST /chat/sessions/:id/handoff`, `POST /chat/sessions/:id/sync`, `POST /chat/messages/:id/feedback`, `POST /webhooks/chatwoot/:secret`. Agent-only `/admin/*` routes: sync, hand-back, suggest, FAQ CRUD and re-sync, gaps, stats, team, settings.
+Modules: `lib/dify.ts`, `lib/gemini.ts` (primary `gemini-3.5-flash-lite`, fallback `gemini-3.5-flash` on 503 or invalid output, thinking minimal), `lib/chatwoot.ts` (widget API), `lib/answer.ts` (the pipeline + hand-off decision), `lib/auth.ts` (JWT → player or agent).
 
 **Supabase tables:**
 - `chat_sessions` (user_id, status `bot|waiting_human|human|resolved`, bot_paused, chatwoot_contact_id / source_id / conversation_id / display_id, roblox_username, email, page_url)
 - `messages` (session_id, role `user|bot|agent|system`, content, blocks jsonb, sources jsonb, chatwoot_message_id unique, agent_name, feedback)
 - `agents` (user_id, role `admin|agent`, display_name)
+- `chatwoot_contacts` (user_id, auth_token, source_id). RLS is on with **no** policies, so only the server can read it.
 - `faq_entries`, `bot_gaps`, `retrieval_cache`, `settings`, `rate_limits`
 
 RLS: a player can read only rows where `user_id = auth.uid()`. Agents can read all. All writes go through the server's secret key. Realtime is on for `chat_sessions` and `messages`.
@@ -96,11 +118,10 @@ A floating chat launcher appears on every page.
 ## Phase 5 — Admin panel (`apps/admin`)
 - Sign in with email and password. Only listed agents get in. Roles: admin and agent.
 - **Inbox** updates live, with sound and browser notifications on hand-off. Tabs: Needs a person, Mine, Open, Bot chats, Resolved. Search by ticket, username or text, with a wait timer on each chat.
-- **Conversation:** the rich transcript and the player panel (username, email, page, device). Actions:
-  - take over or assign;
-  - reply, private note, canned replies, labels;
-  - **Suggest reply** (AI, includes chapter 07);
-  - hand back to bot, resolve and reopen.
+- **Conversation:** the rich transcript (bot and agent messages, synced live) and the player panel (username, email, page, device, ticket number). Actions:
+  - **Open in Chatwoot**, a deep link to `app.chatwoot.com/app/accounts/<id>/conversations/<display_id>`, where agents reply, assign, label and resolve;
+  - **Suggest reply** (AI, includes chapter 07), with a copy button;
+  - hand back to bot, and sync now.
 - **Knowledge:**
   - section sync status and a re-sync button;
   - FAQ entries, which are pushed to Dify;
@@ -127,24 +148,27 @@ After approval:
   - ingest finds 56 sections, keeps chapter 07 out of the public set, and every image ref resolves;
   - the pipeline strips unknown images and sources, and a low score or a matching intent produces a hand-off card;
   - double-clicking hand-off creates one conversation, and the transcript stays in order;
-  - the webhook rejects a bad secret, skips private and incoming messages, and de-duplicates;
+  - the webhook rejects a bad secret; `syncSession` keeps only outgoing, non-private agent messages, de-duplicates, and marks the session resolved when Chatwoot says so;
+  - a `chatwoot_contacts` token is never readable with a player's token;
   - a post to a resolved session returns 409;
   - a player's token can't read another session, and an anonymous user can't call `/admin`.
 - **End-to-end in the built-in browser, on phone and desktop sizes:**
   1. Ask "how do I rebirth?" → a table block appears with the tier data, an image and a source link to the Guide.
   2. Ask something outside the guide → a hand-off card appears.
   3. Hand off → the chat shows up live in the admin panel and in Chatwoot.
-  4. Reply from the admin panel, and from the Chatwoot dashboard → both appear in the player's chat.
+  4. Reply from the Chatwoot dashboard → it appears in the player's chat and in the admin panel transcript.
   5. Resolve → the player sees the chat closed, it stays closed after a reload, and it can't be posted to.
   6. Reduced-motion run: all information and controls are still present.
   7. `check:connections` shows all ✓.
 
 ## Known limits / risks
 - **Dify Sandbox:** 10 knowledge requests per minute, which means about 10 bot answers per minute across the whole site. Mitigation: a retrieval cache and a friendly "busy, or talk to a person" reply on 429. Dify Professional ($59/mo) raises it to 100 per minute.
-- **Chatwoot Hacker plan:** 2 agents, about 500 conversations per month, 30-day history. Whether it includes the API inbox is **unverified**. If it doesn't, I stop and ask: the 15-day trial or Startups at $19 per agent.
+- **Chatwoot Hacker plan:** 2 agents, about 500 conversations per month, 30-day history, no API token.
+  - The widget API isn't officially documented, so a Chatwoot change could break it. All calls live in `lib/chatwoot.ts`, so a fix happens in one place.
+  - If webhooks aren't on the free plan, agent replies show up through ~5 s polling while the player's chat is open. Replies sent while the player is away appear when they come back.
+  - Upgrading later means switching `lib/chatwoot.ts` to the Account API (token) and moving reply, assign and resolve into our admin panel.
 - Gemini's free tier has strict rate limits and may use data for training. Turn on billing before launch.
 - Vercel Hobby is for non-commercial use only. If the site counts as commercial, it needs Pro.
-- Shortcut: all agent replies go through one Chatwoot token. Our database records which agent sent each one. Upgrade to per-agent tokens if the team grows.
 - A player's chat history is tied to their browser. The ticket number still lets an agent find the chat.
 
 **Not in v1:** email notifications to players, typing indicators, CAPTCHA, a custom domain, multiple languages, streaming replies.

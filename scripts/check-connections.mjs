@@ -47,13 +47,16 @@ await check('Dify knowledge', ['DIFY_API_BASE', 'DIFY_DATASET_API_KEY'], async (
   return `key works · ${d.total ?? d.data?.length ?? 0} knowledge bases`;
 });
 
-await check('Chatwoot', ['CHATWOOT_BASE_URL', 'CHATWOOT_API_TOKEN', 'CHATWOOT_ACCOUNT_ID'], async () => {
-  const h = { api_access_token: env.CHATWOOT_API_TOKEN };
-  const profile = await get(`${env.CHATWOOT_BASE_URL}/api/v1/profile`, h);
-  const account = profile.accounts?.find((a) => String(a.id) === String(env.CHATWOOT_ACCOUNT_ID));
-  if (!account) throw new Error('token works but CHATWOOT_ACCOUNT_ID is not one of its accounts');
-  const inboxes = await get(`${env.CHATWOOT_BASE_URL}/api/v1/accounts/${env.CHATWOOT_ACCOUNT_ID}/inboxes`, h);
-  return `role ${account.role} · ${inboxes.payload?.length ?? 0} inboxes`;
+// Free plan has no API token, so the server uses the Website-inbox widget API.
+// inbox_members skips contact creation, so this check leaves no stray visitor in Chatwoot.
+await check('Chatwoot website inbox', ['CHATWOOT_BASE_URL', 'CHATWOOT_WEBSITE_TOKEN'], async () => {
+  const url = `${env.CHATWOOT_BASE_URL}/api/v1/widget/inbox_members?website_token=${encodeURIComponent(env.CHATWOOT_WEBSITE_TOKEN)}`;
+  const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+  if (res.status === 404) throw new Error('website token not found — copy websiteToken from the inbox Configuration tab');
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const { payload = [] } = await res.json();
+  if (!payload.length) throw new Error('token works, but no agent is added to this inbox (Inbox → Collaborators)');
+  return `token works · ${payload.length} agent(s) on the inbox`;
 });
 
 await check('Admin emails', ['ADMIN_EMAILS'], async () => `${env.ADMIN_EMAILS.split(',').filter(Boolean).length} admin(s) listed`);

@@ -61,8 +61,8 @@ describe('sanitize', () => {
 
   it('removes an images block left empty (prompt-injected image ids never render)', () => {
     const reply = sanitize(answer({ blocks: [{ type: 'images', imageIds: ['evil'] }] }), evidence, images, 'https://site.test', false);
-    expect(reply.blocks).toEqual([]);
-    expect(reply.images).toEqual([]);
+    expect(JSON.stringify(reply.blocks)).not.toContain('evil');
+    expect(reply.images.every((i) => evidence.some((e) => e.imageIds.includes(i.id)))).toBe(true);
   });
 
   it('keeps at most 3 distinct sources and skips non-guide chapters', () => {
@@ -96,3 +96,21 @@ describe('coerceAnswer', () => {
     expect(coerceAnswer('not json')).toBeNull();
   });
 });
+
+describe('sanitize — pictures and removed pages', () => {
+  const images = { 'ranch-v7-night': img('ranch-v7-night') };
+  it('never links to the removed gallery page', () => {
+    const reply = sanitize(answer({ used_section_ids: ['archive'] }), [ev('archive', 'gallery', ['ranch-v7-night'])], images, 'https://site.test', false);
+    expect(reply.sources).toEqual([]);
+  });
+  it('attaches one picture from the top used section when the answer has none', () => {
+    const reply = sanitize(answer(), [ev('rebirth', 'player-guide', ['ranch-v7-night'])], images, 'https://site.test', false);
+    expect(reply.blocks.at(-1)).toEqual({ type: 'images', imageIds: ['ranch-v7-night'] });
+    expect(reply.images.map((i) => i.id)).toEqual(['ranch-v7-night']);
+  });
+  it('does not attach a picture to a hand-off-only answer', () => {
+    const reply = sanitize(answer({ answer_found: false, used_section_ids: [] }), [ev('rebirth', 'player-guide', ['ranch-v7-night'])], images, 'https://site.test', true);
+    expect(reply.blocks.some((b) => b.type === 'images')).toBe(false);
+  });
+});
+

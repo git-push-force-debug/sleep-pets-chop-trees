@@ -50,6 +50,16 @@ describe('guide chapter page', () => {
   });
 });
 
+describe('navigation', () => {
+  it('has Home first and no Gallery, and the gallery page is gone', async () => {
+    await at('/guide/gallery');
+    const nav = screen.getAllByRole('navigation', { name: 'Main' })[0]!;
+    const labels = [...nav.querySelectorAll('.nav-links a')].map((a) => a.textContent);
+    expect(labels).toEqual(['Home', 'Guide', 'Wildlife', 'Gear', 'Rewards', 'FAQ', 'Support']);
+    expect(screen.getByRole('heading', { name: 'Page not found' })).toBeTruthy();
+  });
+});
+
 describe('built bundle', () => {
   const dist = join(__dirname, '../../dist');
   it.skipIf(!existsSync(dist))('contains no creator-chapter text', () => {

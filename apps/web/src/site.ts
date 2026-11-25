@@ -1,15 +1,15 @@
-import type { ChapterSlug } from '../../../packages/shared/src/guide.ts';
-
-export const NAV: { slug: ChapterSlug; label: string }[] = [
-  { slug: 'player-guide', label: 'Guide' },
-  { slug: 'biomes', label: 'Wildlife' },
-  { slug: 'economy', label: 'Gear' },
-  { slug: 'rewards', label: 'Rewards' },
-  { slug: 'faq', label: 'FAQ' },
-  { slug: 'gallery', label: 'Gallery' },
+export const NAV: { to: string; label: string }[] = [
+  { to: '/', label: 'Home' },
+  { to: '/guide/player-guide', label: 'Guide' },
+  { to: '/guide/biomes', label: 'Wildlife' },
+  { to: '/guide/economy', label: 'Gear' },
+  { to: '/guide/rewards', label: 'Rewards' },
+  { to: '/guide/faq', label: 'FAQ' },
+  { to: '/support', label: 'Support' },
 ];
 
 export const ROBLOX_URL = 'https://www.roblox.com/games/109510233820622';
 
-/** Opens Pip's chat from anywhere (the launcher listens), optionally asking a question. */
-export const openChat = (question?: string) => window.dispatchEvent(new CustomEvent('spct:open-chat', { detail: { question } }));
+/** Opens Pip's chat from anywhere (the launcher listens): optionally asks a question, or opens the hand-off form. */
+export const openChat = (detail: { question?: string; handoff?: boolean } = {}) =>
+  window.dispatchEvent(new CustomEvent('spct:open-chat', { detail }));

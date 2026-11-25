@@ -26,3 +26,6 @@ export interface PublicSettings {
   offlineMessage: string;
   botEnabled: boolean;
 }
+
+/** Players see full-looking ticket numbers: Chatwoot #3 → #10003. */
+export const ticketLabel = (chatwootId: number | null | undefined) => (chatwootId == null ? '' : `#${10000 + chatwootId}`);

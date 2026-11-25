@@ -4,7 +4,8 @@ import type { Guide, GuideImage } from '../../../packages/shared/src/guide.ts';
 // Only the public guide (chapters 01–06) is ever imported by the website bundle, and only by guide pages.
 export const guide = guideJson as Guide;
 
-export const chapterBySlug = (slug: string | undefined) => guide.chapters.find((c) => c.slug === slug);
+// The gallery chapter stays in Pip's knowledge but has no page of its own.
+export const chapterBySlug = (slug: string | undefined) => (slug === 'gallery' ? undefined : guide.chapters.find((c) => c.slug === slug));
 
 export type Piece = { kind: 'md'; text: string } | { kind: 'img'; image: GuideImage };
 

@@ -23,13 +23,10 @@ export function Layout() {
           <nav aria-label="Main" className="main-nav">
             <ul className="nav-links">
               {NAV.map((n) => (
-                <li key={n.slug}>
-                  <NavLink to={`/guide/${n.slug}`}>{n.label}</NavLink>
+                <li key={n.to}>
+                  <NavLink to={n.to} end={n.to === '/'}>{n.label}</NavLink>
                 </li>
               ))}
-              <li>
-                <NavLink to="/support">Support</NavLink>
-              </li>
             </ul>
             <details className="nav-menu">
               <summary aria-label="Menu">
@@ -37,13 +34,10 @@ export function Layout() {
               </summary>
               <ul>
                 {NAV.map((n) => (
-                  <li key={n.slug}>
-                    <NavLink to={`/guide/${n.slug}`}>{n.label}</NavLink>
+                  <li key={n.to}>
+                    <NavLink to={n.to} end={n.to === '/'}>{n.label}</NavLink>
                   </li>
                 ))}
-                <li>
-                  <NavLink to="/support">Support</NavLink>
-                </li>
               </ul>
             </details>
           </nav>

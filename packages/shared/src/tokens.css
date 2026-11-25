@@ -1,4 +1,4 @@
-/* Design tokens — Sleep Pets & Chop Trees. Source: design/canvas (Claude Design). */
+/* Design tokens — Sleep Pets & Chop Trees. One light, cartoon palette everywhere (no dark theme, by request). */
 :root {
   --ink: #2a1e14;
   --ink-soft: #5c4a3a;
@@ -48,24 +48,9 @@
   --t-label: 650 13px/1.3 var(--font);
   --t-caption: 500 12px/1.4 var(--font);
 
+  --sky-top: #8fd3f7;
+  --sky-bottom: #fff3da;
+  --grass: #5cb85c;
+  --grass-deep: #2e7d3a;
   color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --ink: #fff3e2;
-    --ink-soft: #d8c9ae;
-    --paper: #1d1610;
-    --paper-deep: #2a2018;
-    --panel: #2f251c;
-    --line: #4a3a2c;
-    --meadow-tint: #1d3a22;
-    --sky: #7cb8ef;
-    --sky-deep: #a9d1f7;
-    --sky-tint: #1b2c3d;
-    --warn-bg: #3d3014;
-    --warn-ink: #ffe3a1;
-    --danger-tint: #3d1d17;
-    color-scheme: dark;
-  }
 }

@@ -95,7 +95,7 @@ export function Home() {
               </p>
               <div className="chip-row">
                 {STARTERS.map((q) => (
-                  <button key={q} type="button" className="spct-chip" onClick={() => openChat(q)}>
+                  <button key={q} type="button" className="spct-chip" onClick={() => openChat({ question: q })}>
                     {q}
                   </button>
                 ))}

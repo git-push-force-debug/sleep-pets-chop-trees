@@ -7,7 +7,8 @@ import type { Evidence } from './dify.ts';
 import { buildContents, SYSTEM_PROMPT } from './prompt.ts';
 
 const HUMAN_INTENTS = new Set(['wants_human', 'account_or_purchase', 'bug_report']);
-const GUIDE_CHAPTERS = new Set<string>(CHAPTER_SLUGS.filter((c) => c !== 'creator'));
+// Chapters with a public page; creator is admin-only and the gallery page was removed (its pictures are still used).
+const GUIDE_CHAPTERS = new Set<string>(CHAPTER_SLUGS.filter((c) => c !== 'creator' && c !== 'gallery'));
 const MAX_SOURCES = 3;
 const TOP_K = 8; // 5 missed table-only answers (e.g. darts per animal live in the biome roster)
 
@@ -82,6 +83,15 @@ export function sanitize(
       } else blocks.push(rest);
     } else if (block.type !== 'handoff') {
       blocks.push(block);
+    }
+  }
+  // Pictures make answers friendlier: borrow one from the first used section that has one.
+  if (a.answer_found && usedImages.size === 0) {
+    const used = new Set(a.used_section_ids);
+    const picture = evidence.filter((e) => used.has(e.sectionId)).flatMap((e) => e.imageIds).find((id) => allowedImages.has(id));
+    if (picture) {
+      usedImages.add(picture);
+      blocks.push({ type: 'images', imageIds: [picture] });
     }
   }
   if (offerHuman) blocks.push({ type: 'handoff', reason: handoffReason(a) });

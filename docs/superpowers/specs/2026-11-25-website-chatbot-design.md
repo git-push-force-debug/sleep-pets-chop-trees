@@ -31,7 +31,7 @@ Player browser (apps/web) ──HTTPS+JWT──► Fastify API (apps/api, Vercel
    │                                           │  ├─ Gemini API          (write JSON UI blocks)
 Supabase (Postgres, Auth, Realtime) ◄──────────┤  └─ Chatwoot Cloud API  (hand-off, replies, status)
    ▲                                           ▲
-Agent browser (apps/admin) ──HTTPS+JWT─────────┘◄── Chatwoot webhook (message_created, status_changed)
+Agent browser (apps/admin) ──HTTPS+JWT─────────┘   (no webhooks on free plan: server polls the widget API)
 ```
 Repo `git-push-force-debug/sleep-pets-chop-trees` (public). npm workspaces:
 `apps/web`, `apps/admin`, `apps/api`, `packages/shared` (zod block schemas, block renderer, tokens), `content/` (generated guide JSON + images), `scripts/`, `supabase/migrations/`, `docs/superpowers/specs|plans/`.
@@ -52,7 +52,10 @@ Stack: React + Vite + TypeScript, Tailwind v4 with CSS-variable tokens, `motion`
 5. While a person is handling the chat:
    - Player messages go out through `POST widget/messages` and are stored in Supabase.
    - **Agent replies** arrive through `syncSession()`, which runs `GET widget/messages?after=<last id>` with that session's token and keeps outgoing, non-private messages. It de-duplicates by `chatwoot_message_id`, inserts rows, and Realtime pushes them to the player and the admin panel.
-   - `syncSession()` is triggered by the Chatwoot webhook, if the free plan allows webhooks: the URL is checked against its secret path, and the data is **re-fetched through the widget API**, never trusted from the payload. As a fallback, the player's open chat polls `POST /chat/sessions/:id/sync` every ~5 s while waiting for a person, and the admin panel syncs whenever a conversation is opened.
+   - Webhooks are a paid Chatwoot feature (confirmed by Lance), so `syncSession()` runs on **polling only**:
+     - the player's open chat calls `POST /chat/sessions/:id/sync` every ~5 s while a person is handling it;
+     - the open admin panel calls `POST /admin/sync` every ~20 s, which syncs every `waiting_human`/`human` session in one batch;
+     - opening a conversation in the admin panel syncs it at once.
 6. **Resolved:**
    - `syncSession()` reads the status (`GET widget/conversations`). When it's `resolved`, the session is marked resolved and the player sees a "Resolved" banner and a "Start new chat" button.
    - The inbox setting "Allow messages after conversation resolved" is **off**, so Chatwoot itself refuses replies (403). Our server also returns 409.
@@ -78,7 +81,7 @@ Under OS reduced motion everything appears instantly with the same information. 
 | Supabase | toggle **Allow anonymous sign-ins**, paste the **secret key** into `.env.local` | create the project (MCP, $0 confirmed), migrations, URL and publishable key |
 | Gemini | create a key at aistudio.google.com → `.env.local` | list models, pick the newest Flash model → `GEMINI_MODEL` |
 | Dify Cloud | sign up. Model Providers → Gemini (paste key) → set Gemini as the default embedding model. Create a **Knowledge API key** → `.env.local` | create the public and internal datasets, upload content |
-| Chatwoot Cloud | sign up (free Hacker plan). Create a **Website inbox** and add yourself as an agent. Turn off "Allow messages after conversation resolved". Copy the **websiteToken** → `.env.local`. Add the webhook from `CHATWOOT_WEBHOOK_URL`, if the plan shows Integrations → Webhooks | check the token and agent with `check:connections`. Fall back to polling if there's no webhook |
+| Chatwoot Cloud | sign up (free Hacker plan). Create a **Website inbox** and add yourself as an agent. Turn off "Allow messages after conversation resolved". Copy the **websiteToken** → `.env.local`. Webhooks are paid, so skip them | check the token and agent with `check:connections` |
 | Codex | nothing | confirm image generation works |
 | Admins | admin email(s) → `ADMIN_EMAILS` in `.env.local` | create accounts. A random password goes to a gitignored local file, never into chat |
 
@@ -94,7 +97,7 @@ I create a `.env.local` template with only these blanks. Then `npm run check:con
 - Chapter 07 goes to the **internal** dataset, used only by the admin "Suggest reply" feature.
 
 ## Phase 3 — API (`apps/api`, Fastify)
-Routes: `POST /chat/sessions`, `GET /chat/sessions/:id`, `POST /chat/sessions/:id/messages`, `POST /chat/sessions/:id/handoff`, `POST /chat/sessions/:id/sync`, `POST /chat/messages/:id/feedback`, `POST /webhooks/chatwoot/:secret`. Agent-only `/admin/*` routes: sync, hand-back, suggest, FAQ CRUD and re-sync, gaps, stats, team, settings.
+Routes: `POST /chat/sessions`, `GET /chat/sessions/:id`, `POST /chat/sessions/:id/messages`, `POST /chat/sessions/:id/handoff`, `POST /chat/sessions/:id/sync`, `POST /chat/messages/:id/feedback`. Agent-only `/admin/*` routes: sync, hand-back, suggest, FAQ CRUD and re-sync, gaps, stats, team, settings.
 Modules: `lib/dify.ts`, `lib/gemini.ts` (primary `gemini-3.5-flash-lite`, fallback `gemini-3.5-flash` on 503 or invalid output, thinking minimal), `lib/chatwoot.ts` (widget API), `lib/answer.ts` (the pipeline + hand-off decision), `lib/auth.ts` (JWT → player or agent).
 
 **Supabase tables:**
@@ -135,7 +138,7 @@ A floating chat launcher appears on every page.
 - **Team** (admin only): add, remove and change agent roles. **Settings:** bot on/off, greeting, starter questions, offline message, evidence threshold, support hours.
 
 ## Phase 6 — Deploy & wire
-Deploy the 3 Vercel projects (web, admin, api). CORS allows only the web and admin origins. Register the Chatwoot webhook with the API URL and its secret path. Create the admin accounts. Then run the end-to-end check below on the live URLs.
+Deploy the 3 Vercel projects (web, admin, api). CORS allows only the web and admin origins. Create the admin accounts. Then run the end-to-end check below on the live URLs.
 
 ## Workflow (superpowers)
 After approval:
@@ -148,7 +151,7 @@ After approval:
   - ingest finds 56 sections, keeps chapter 07 out of the public set, and every image ref resolves;
   - the pipeline strips unknown images and sources, and a low score or a matching intent produces a hand-off card;
   - double-clicking hand-off creates one conversation, and the transcript stays in order;
-  - the webhook rejects a bad secret; `syncSession` keeps only outgoing, non-private agent messages, de-duplicates, and marks the session resolved when Chatwoot says so;
+  - `syncSession` keeps only outgoing, non-private agent messages, de-duplicates, and marks the session resolved when Chatwoot says so;
   - a `chatwoot_contacts` token is never readable with a player's token;
   - a post to a resolved session returns 409;
   - a player's token can't read another session, and an anonymous user can't call `/admin`.
@@ -165,7 +168,7 @@ After approval:
 - **Dify Sandbox:** 10 knowledge requests per minute, which means about 10 bot answers per minute across the whole site. Mitigation: a retrieval cache and a friendly "busy, or talk to a person" reply on 429. Dify Professional ($59/mo) raises it to 100 per minute.
 - **Chatwoot Hacker plan:** 2 agents, about 500 conversations per month, 30-day history, no API token.
   - The widget API isn't officially documented, so a Chatwoot change could break it. All calls live in `lib/chatwoot.ts`, so a fix happens in one place.
-  - If webhooks aren't on the free plan, agent replies show up through ~5 s polling while the player's chat is open. Replies sent while the player is away appear when they come back.
+  - There are no webhooks on the free plan, so agent replies arrive by polling: about 5 s while the player's chat is open, about 20 s while the admin panel is open. Replies sent while the player is away appear when they come back.
   - Upgrading later means switching `lib/chatwoot.ts` to the Account API (token) and moving reply, assign and resolve into our admin panel.
 - Gemini's free tier has strict rate limits and may use data for training. Turn on billing before launch.
 - Vercel Hobby is for non-commercial use only. If the site counts as commercial, it needs Pro.

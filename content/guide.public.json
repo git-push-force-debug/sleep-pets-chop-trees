@@ -1,0 +1,1680 @@
+{
+  "chapters": [
+    {
+      "slug": "player-guide",
+      "number": "01",
+      "title": "Player guide",
+      "summary": "Your first session, controls, captures, ranch work and rebirths.",
+      "internal": false,
+      "sections": [
+        {
+          "id": "start",
+          "title": "Start here",
+          "markdown": "Sleep Pets & Chop Trees is a ranch and collection game. Put wild animals to sleep with dart guns, carry them across the brick edge into the hub, and settle them in your enclosure. Placed pets earn Cash on their own. Cut trees with melee tools for Wood, then use both currencies and the required pet to rebirth and open more of the map.\n\n> **Your first session.** Claim both welcome gifts in Rewards. Buy the Dart Pistol for **$5,000** and, when the tutorial sends you back, the Baseball Bat for **20 Wood**. Make your first catch in the Grassland close to the brick path. Keep the first pets in your pen to earn while you explore.\n\n| What you want to do | Where to go |\n| --- | --- |\n| Catch your first pet | [The tutorial](#tutorial) and [capture walkthrough](#capture) |\n| Buy or equip a weapon | **Weapon Store** at the hub. **Upgrade** has per-weapon upgrades. |\n| Find a pet you own | **Ranch** for placed pets, **Bag** for stored items, **Upgrade → Animals** for all owned pets. |\n| Make more Cash | Fill the pen, place your best earners, claim [Rewards](#rewards), and [rebirth](#rebirth). |\n| Make more Wood | Equip a melee tool and [chop trees](#chop), including golden trees. |\n| Find an animal or compare pets | [Biome atlas](#world) and [species tables](#grassland). |\n| Find a quick answer | [Player FAQ](#faq) and [troubleshooting](#troubleshooting). |\n\n[image:ranch-v7-overview]\n\n**Build used for this guide.** The open Studio place reported version **260**, place **109510233820622**, universe **10774990312**. The loading screen says **Wild Ranch Simulator**. This guide uses the experience name **Sleep Pets & Chop Trees** from Studio. Screens marked _Archived play_ or _Archived Studio view_ are genuine local project images from earlier builds. Use this guide's tables and instructions for version 260.",
+          "imageIds": [
+            "ranch-v7-overview"
+          ]
+        },
+        {
+          "id": "tutorial",
+          "title": "First ranch, step by step",
+          "markdown": "The tutorial uses white arrows on the ground, a pointing finger on menus, and a guide dialog. Close a menu with its red **X** if the guide tells you to switch. Follow its prompts in order on your first visit.\n\n| Step | What to do |\n| --- | --- |\n| 1\\. Claim your welcome gifts | Press **Next** on the greeting. Open **Rewards → Missions**. Press **Claim** for **$10,000**, then press the separate **Claim** for **100 Wood**. |\n| 2\\. Buy the Dart Pistol | Follow the arrows to the **Weapon Store**. Press **E**, use the gamepad prompt, or tap. Open **Guns** and buy the **Dart Pistol** for **$5,000**. |\n| 3\\. Go to the Grassland | Cross the end of the brick apron. The Grassland starts immediately beyond it. |\n| 4\\. Take out the gun | Press **2** or tap the gun slot. The crosshair appears. |\n| 5\\. Put an animal to sleep | Aim the crosshair at a nearby Common pet and shoot until its sleep progress reaches 100%. A normal-sized Deer, Fox, or Boar needs three clean Dart Pistol hits at base power. |\n| 6\\. Pick it up | Approach the sleeping pet and press **E** or tap **Pick Up**. |\n| 7\\. Bring it home | Head straight back across the brick edge, then walk into **your own** fenced enclosure. Wait for the capture notification. |\n| 8\\. Improve the gun | Open **Upgrade → Guns → Dart Pistol** and buy **+1 Sleep DMG**. The first point costs **$540**. |\n| 9\\. Buy the bat | Return to the **Weapon Store → Melee** and buy the **Baseball Bat** for **20 Wood**. |\n| 10\\. Chop a Grassland tree | Press **1** or tap the melee slot. Face a trunk outside the hub and swing until the tree falls. |\n| 11\\. Buy food | Go back to **Food Market**. Open its prompt, select **Cabbage**, then use the green **$1,000** price button. |\n| 12\\. Feed your pet | Open **Upgrade → Animals → your animal → Feed** and give it one serving. |\n| 13\\. Buy a pet stat | Return to the animal card and use **+1** on a stat. Finishing the first run pays a one-time **$1,000** tutorial reward. |\n\n**Skip and replay.** Skipping delivers any eligible welcome gifts and puts missing starter equipment in inventory. The completion bonus comes from finishing the tutorial. To review the instructions, use **Settings → Replay** after the tutorial has ended. A replay begins at the weapon step and pays no extra tutorial rewards. First-time tutorial players get protection from direct wild attacks and have storm visuals suppressed. Nearby wild animals are slowed for the first-time tutorial.",
+          "imageIds": []
+        },
+        {
+          "id": "controls",
+          "title": "Controls and menus",
+          "markdown": "| Action | Keyboard and mouse | Touch | Controller binding found in code |\n| --- | --- | --- | --- |\n| Move and turn | WASD and the Roblox camera | Roblox stick and camera drag | Roblox movement and camera sticks |\n| Equip melee / gun | **1** / **2**, or click a slot | Tap either hotbar slot | **L1** toggles the dart gun. Use the visible slots for other equipment. |\n| Use other hotbar items | **3–7** or click a filled slot | Tap a slot. Follow the item's prompt. | Use the visible inventory controls where available. |\n| Bag | **B** or the bag icon by the hotbar | Bag icon | **Select** / **View** |\n| Shoot or swing | Left click. Hold to repeat while the tool is ready. | Tap the world with the tool equipped. | **R2** fires the gun. |\n| Scope and zoom | Hold right mouse. Scroll or use the zoom controls. | Tap **Scope**, then **\\+ / −**. Drag the view to aim. | Hold **L2** to scope. |\n| Reload | **R** or automatic reload when empty | Automatic reload when empty | **Y** |\n| Interact with shop / wild sleeper | **E** | Tap the proximity prompt | **X** |\n| Drop a carried wild pet | **G** or **Drop** | **Drop** | Use the on-screen action. |\n| Place a pet held from Bag | Click open ground inside your own fence | Tap open ground inside your fence | Use the visible ranch or inventory controls. |\n| Ride your placed pet | Its **E** prompt | Tap **Ride** on the pet | Use the game's proximity prompt. |\n| Ride a pet held in your hands | Click **Ride** | Tap **Ride** | Use the visible **Ride** button. |\n| Dismount as driver | Land, then click **Dismount** | Land, then tap **Dismount** | **B** after landing |\n| Feed a nearby pet | Hold food, then **F** or use Feed | Hold food, then tap animal or **Feed** | **Y** on the feed prompt |\n| Fly or climb | Hold **Space** on a flying-capable mount | **Fly**, then use Jump to climb | **L3** takes off |\n| Descend / land | Hold **Q** or left **Ctrl** to descend. Click **Land** for an automatic descent. | Hold the down arrow, or tap **Land**. | **R1** descends |\n| Mount attack animation | **R** with the dart gun away | No dedicated touch attack button identified | **Y** with the dart gun away |\n\nHold **Alt** or left **Ctrl** to free the mouse in gun mode. Use it to click the hotbar or a menu. While a text box has focus, number-key equipment switching waits. On desktop, **G** also attempts to place a Bag pet you hold if you are standing inside your plot on foot.\n\nThe left menu has **Rebirth, Upgrade, Index, Rewards, Shop** and **Invite**. **Auto Chop** appears above it with melee equipped. On the right, **Settings** changes presentation and **Ranch** opens enclosure management. Cash, Wood and earnings are on the HUD. The day/night clock and rotating rare-animal status share the bottom corner. Weather appears while a storm is active. Centered menus temporarily hide the hotbar and corner timers.\n\nController and touch entries above come from the current client bindings and prompts. Button names follow Xbox-style labels where the code specifies a key.",
+          "imageIds": []
+        },
+        {
+          "id": "capture",
+          "title": "Find, aim and put a pet to sleep",
+          "markdown": "1.  **Pick a target you can bring home.** Early on, work near the Grassland entrance. The biome badge tells you where you are. A target has to be in its home biome, and you need to be inside that same biome when you fire.\n2.  **Use an open line of sight.** Equip the dart gun and move the center crosshair onto the animal. The reticle and hit feedback help confirm aim. Terrain, rocks, tree trunks and buildings can stop the dart. The high boundary cliffs are also blocked for capture. Scoped view moves to eye height and hides your character and mount locally.\n3.  **Build up sleep progress.** Each hit adds that gun's Sleep DMG to your own progress on the target. Another player's hits build their own bar. The first player to reach 100% puts the pet to sleep. Melee flings a wild animal instead of adding sleep progress. A hit on a conscious animal often makes it flee or charge.\n4.  **Reload when needed.** Ammo is a magazine count. Reload a partial magazine with the reload input, or let an empty one reload automatically. The gun's tag or upgrade card shows magazine size, reload, rate, range and Sleep DMG. The current gun uses manual aim.\n\n**When a pet lies down, move in.** Wild sleep usually lasts **45 seconds**. The player who put it to sleep has the first **5 seconds** of pickup protection. After that, the first eligible player to pick it up takes it. The reach starts from a 14-stud setting and is adjusted for animal size and mounting. Fly close enough to get the prompt. A flying pet falls or glides toward the ground when sedated.\n\n**Animals react differently.** Timid and alert wildlife tend to run. Aggressive animals can retaliate after a hit. Aggressive Epic and higher animals can charge on approach. Mystic flyers can dive. At night, wildlife detection distance is 75% of its daytime distance. Ordinary player walking speed is 26 studs per second, so use a clear approach and consider a mount for longer chases.\n\n[image:r8-pose-aim]\n\n[image:new-animals-grassland]",
+          "imageIds": [
+            "r8-pose-aim",
+            "new-animals-grassland"
+          ]
+        },
+        {
+          "id": "carry",
+          "title": "Carry the catch home",
+          "markdown": "When you pick up a sleeping wild pet, it rides overhead and the **Bring it home** bar starts. The game gives the carried pet a travel timer based on your distance to your pen, the biome, its rarity and appearance, and how much it slows you down. A heavy roll relative to the pet’s species can slow you more. For the Grassland the allowance is tuned around walking. Later biomes use a pace based on a normal Rare mount from the previous biome.\n\n-   **Cross the brick edge first.** As soon as your delivery is safely across the Grassland-to-hub line, the carry clock stops. The **Safe! Put it in your enclosure** message tells you that you can finish the walk through the square.\n-   **Finish inside your fence.** Step into your own enclosure or use **Drop** over it to deliver. An open pen slot places the pet. If the pen is full, delivery stores it, and it can appear in a hotbar slot if there is room. If both are full, make a space before trying to finish.\n-   **Keep moving through the wild.** A rival can knock a carried pet out of your hands before you reach safety. A stolen drop has no pickup protection. A player who successfully delivers somebody else's knocked-loose pet can complete the steal mission. Pets in the ranch are protected from theft.\n-   **A manual drop starts a ground timer.** A pet you drop outside your pen lands on the ground and stays asleep for at least 15 seconds, or for the remaining carry time if that is longer. It can be picked up again. If it wakes, it runs toward its habitat. Flying drops use the ground below. Leaving the server with an unfinished carry loses it.\n\n**What changes at dusk?** Night helps recovery after delivery and makes wildlife slower to notice you. The carry timer counts down at the same speed day and night.\n\n| What you see | What to do |\n| --- | --- |\n| **Protected** | Wait for the short protection window to end if another player sedated it. |\n| **Get closer** | Close the gap to the pet or get near it on your mount. |\n| **Hurry! It's waking up!** | Head straight for the brick edge. The red bar indicates the final quarter. |\n| **Safe!** | Walk into your enclosure and look for the capture notification. |\n| **Ranch and bag are full!** | Free a storage or pen slot. Keep track of any pet you are still carrying. |\n| **It woke up and ran away!** | A lost catch has to be sedated and picked up again. It bolts during its first few seconds. |",
+          "imageIds": []
+        },
+        {
+          "id": "ranch",
+          "title": "Run your ranch and train pets",
+          "markdown": "You get an enclosure when your profile loads. The place has six authored plots around the hub. A new ranch has **6 placed slots** and room for **60 stored animals** under normal capture and storage rules. Each rebirth adds one pen slot, up to **12**. Some reward and crate grants can land in storage beyond the normal capture cap.\n\n| Action | How it works |\n| --- | --- |\n| See your pen | Open **Ranch**. Its counter shows placed animals against capacity. |\n| Inspect a pet | Open its card from **Upgrade → Animals**, the Ranch list or the Bag. Check its rarity, traits, recovery, earnings, size, weight, age, XP and upgrades. |\n| Place a stored pet | Use **Place** on its card where offered, or hold it and click/tap an open spot inside your fence. |\n| Move a placed pet | Use the placement action from its ranch card. Pick a floor spot with room inside your own fence. |\n| Store a pet | Use the pet card's **Unequip** action to return a placed pet to Bag. |\n| Fill with top earners | **Place Best** sorts pets by base income and fills the enclosure. The currently ridden pet is left alone. |\n| Feed | Use **Feed** on the pet card, or hold food and approach or tap the pet. A feeding adds the food's XP. |\n| Improve a stat | On the pet card, spend Cash with **+1** or **MAX** where shown. **MAX** stops at the cap or when Cash runs out. |\n| Decorate | Open **Ranch → Decorate**. Buy props with Wood and choose one of the six fixed spots. An owned prop can be reused or removed. |\n| Sell | Visit **Sell Stand**. Select individual pets or a batch, review the value, and confirm. The sale is permanent. |\n\n**Recovery.** A newly captured pet arrives recovering. It earns half its awake rate while placed and cannot be ridden until awake. Recovery work spans **2 minutes** for a Grassland Common to **90 minutes** for an Enchanted Mystic at daytime base speed. Night runs remaining recovery at **10×** and the permanent recovery perk adds **4×**, for **40×** together. The displayed remaining time changes when the rate changes. A reward or crate pet is granted ready to use. **Wake Now** is a paid shortcut for an owned pet still recovering.\n\n**Training.** Food gives XP. XP opens room for separately purchased Cash stat upgrades. At level 1 you can already buy three points per stat. Each level adds room for three more, subject to each stat's cap. Read [Pet levels and earnings](#pet-math) for the rarity ceilings and exact stat effects.\n\n[image:r8-feed-prompt]\n\n[image:gate3-play-client]",
+          "imageIds": [
+            "r8-feed-prompt",
+            "gate3-play-client"
+          ]
+        },
+        {
+          "id": "riding",
+          "title": "Ride, fly and take a passenger",
+          "markdown": "**Ride an awake pet you own.** Walk up to it in the ranch and use **Ride**, or hold it from Bag and click or tap the **Ride** button. Mounting a placed pet moves it out of its earning slot and into the stored/riding state. When you dismount it comes back to your hands. Place it in the enclosure again to resume passive income from that pet.\n\n**On the ground.** Move with the normal controls. Tap Jump for a hop. Ground speed depends on biome, rarity, appearance, mutation, size, weight and Speed upgrades. Jump upgrades affect the jump. Dismount on the ground with the visible button, or the controller **B** binding. **E** is the ranch pet prompt for getting on.\n\n**In the air.** Griffin, Sand Dragon, Dragon and Violet Wyvern can fly. Hold Jump for roughly half a second to take off, or use the **Fly** button on touch. Keep Jump held to climb, hold **Q** or the descent control to go down, or select **Land**. The flight ceiling is about **250 studs of world height**. Biome gates and world edges still apply. You can aim and fire a dart gun in flight when the normal capture checks pass. Land before a driver dismounts. If the animal you are riding covers the crosshair in unscoped gun mode, it fades locally. Scoping can hide the mount and rider on your screen.\n\n**Ride along.** Approach another player's grounded mount and use its **Ride along** prompt. It has one passenger seat behind the driver. You need free hands for a carried catch and the seat must be free. The driver steers. A passenger can leave with the passenger action or Jump even during flight and is placed down toward the ground. A hit on a mount can move both riders. A carried pet and a flying mount need extra space near the ground, gates and trees.\n\n**Mount action.** **R** or **Y** with the gun away plays the mount's attack animation. The riding path triggers an animation. Wild charge knockback and equipped melee strikes have their own combat rules.\n\n[image:r8-ride-pose]\n\n[image:r8-fly-above-dismount]",
+          "imageIds": [
+            "r8-ride-pose",
+            "r8-fly-above-dismount"
+          ]
+        },
+        {
+          "id": "chop",
+          "title": "Chop trees and handle knockback",
+          "markdown": "Equip the **Baseball Bat** or another melee weapon. Walk up to a trunk, face it and click or tap to swing. Watch the chips and progress. When it falls, Wood is credited to your wallet and the trunks fly toward your HUD. The starter bat has 1 base Tree DMG, a 0.5-second swing and one-tree cleave. A reference Grassland tree needs six ordinary starter hits. Critical hits and tree size change that count.\n\n| Logging rule | Current build |\n| --- | --- |\n| Auto Chop | Equip melee and click the **Auto Chop** icon over Rebirth and Upgrade. The green arrow means on. It swings at the weapon's pace when a tree is in reach in front of you. It does not walk you to the next tree. |\n| Golden tree | 3% roll on setup and regrowth. Look for the golden sparkle. It pays 5× the tree's usual Wood before your modifiers. |\n| Critical hit | 15% chance per tree hit. A critical hit does 2× tree damage. |\n| Regrowth / healing | A fallen tree regrows after about 7 seconds. Unfinished chop damage heals after 20 seconds unattended. A regrowing trunk can remain walk-through until the space clears. |\n| Shared tree | Players who dealt damage share its Wood by contribution, with a minimum one Wood for eligible contributors. |\n| Later weapons | More Tree DMG and more cleave at higher tiers. The first three tools have blade hits only. Starting at Cenarius, a growing crescent can reach trees and other valid targets. |\n| Wood boosters | Earn upgrades, rebirths and the 2× Wood perk stack on tree payout. Fractional bonus Wood is rounded by chance across hits. |\n\n**Player versus player.** Outside the ranch safe area, a melee blow can fling and briefly ragdoll a player or mount. It does not take health as conventional weapon damage. Ragdoll duration is roughly **1.6–3 seconds**. After a player's hit ends, there is a **3-second** guard against the next player hit. Body weight affects knockback. If you're delivering a catch, the fastest protection is to cross back into the ranch square. Swinging and tree chopping still work in the safe area.\n\n**Spend Wood on purpose.** Wood buys melee weapons, their four stat tracks, decorations and the Wood part of rebirth. The Shop also sells Wood packs. A larger or later-biome tree takes more work and grants more Wood, so match your tool to the habitat. [Compare the full melee catalog](#melee).",
+          "imageIds": []
+        },
+        {
+          "id": "rebirth",
+          "title": "Unlock the six ranch tiers",
+          "markdown": "Open **Rebirth** to see the exact species your profile needs. It is one Common, Uncommon or Rare from the biome you are finishing. A pet in the Bag also counts. The requirement is saved for that stage. Keep the pet until you rebirth. The progress bar uses the lower of your Cash and Wood progress, and the ready badge also checks the animal.\n\n| Stage | Cash needed | Wood | Pet from | Enclosure | Opens | Slots | Cash / Wood |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| 1   | $280,000 | 250 | Grassland | Meadow | Savanna | 7   | ×2 / ×1.5 |\n| 2   | $4,000,000 | 800 | Savanna | Safari | Snowland | 8   | ×4 / ×2.25 |\n| 3   | $20,000,000 | 5,000 | Snowland | Glacier | Desert | 9   | ×8 / ×3.375 |\n| 4   | $80,000,000 | 20,000 | Desert | Oasis | Prehistoric | 10  | ×16 / ×5.0625 |\n| 5   | $800,000,000 | 100,000 | Prehistoric | Jurassic | Enchanted Grove | 11  | ×32 / ×7.5938 |\n| 6   | $16,000,000,000 | 500,000 | Enchanted Grove | Crystal | Final tier | 12  | ×64 / ×11.3906 |\n\nA currency rebirth resets your Cash balance to **0**, deducts the listed Wood and keeps your pets, tools, upgrades, Index and other inventory. The required animal also stays in your collection. A **199 Robux** skip can advance one stage and keeps your balances and collection. Each stage adds a pen slot and a new enclosure style. Each doubles passive Cash and multiplies tree Wood by **1.5×** relative to the previous stage.\n\n### A practical progression route\n\n1.  Fill the initial six slots with catches near the Grassland entrance. Claim the daily calendar and any ready missions or Index rewards.\n2.  Keep your required species, buy the melee tool you need for reliable logging and get at least one pet recovered for riding. Spend on upgrades before a currency rebirth if the upgrade fits your next habitat and you already have enough to meet the rebirth threshold afterward.\n3.  Enter the newly opened biome. Replace weak earners gradually and keep a fast mount available for the return trip. Check **Rebirth** as soon as you open the next stage so you know which species to keep.\n4.  At stage six the **Crystal** enclosure, 12 slots and full multipliers are the final goals. Enchanted Grove itself opens one rebirth earlier.",
+          "imageIds": []
+        }
+      ]
+    },
+    {
+      "slug": "biomes",
+      "number": "02",
+      "title": "Biomes and wildlife",
+      "summary": "World map, timers, traits and all 72 species.",
+      "internal": false,
+      "sections": [
+        {
+          "id": "world",
+          "title": "Read the map",
+          "markdown": "The world runs in one direction from the Ranch Hub through six habitats. The brick apron is the hub's edge. Follow the landscape through the next gate to advance. If a gate tells you to rebirth, use the [Rebirth panel](#rebirth) and check the required animal, Cash and Wood. Walking, riding and flight all obey the unlocks.\n\n| Region | Opens | X reference | Weather | Landmark cue |\n| --- | --- | --- | --- | --- |\n| [Grassland](#grassland) | Start | 556–2,200 | Thunderstorm | Meadows and soil banks |\n| [Savanna](#savanna) | Rebirth 1 | 2,200–3,800 | Lightning Storm | Golden grass and rock arches |\n| [Snowland](#snowland) | Rebirth 2 | 3,800–5,400 | Blizzard | Snow shelves and pines |\n| [Desert](#desert) | Rebirth 3 | 5,400–7,000 | Sandstorm | Sandstone mesas and cacti |\n| [Prehistoric](#prehistoric) | Rebirth 4 | 7,000–8,600 | Ancient Storm | Ferns and dinosaur country |\n| [Enchanted Grove](#enchanted) | Rebirth 5 | 8,600–10,200 | Magic Storm | Mushrooms and crystals |\n\nThe X values above are the server's configured biome checkpoints in studs. Grassland starts at the paved line, **X = 556**. The spacing formula for later gates uses **600 + 1,600 × (biome number − 1)**. Enchanted Grove is the last named region. The broad world boundary extends past its reference interval in places. The side mountains and world bounds constrain travel. Walkable slope is capped at **50°**, and riders ease to a stop near the edge.\n\n### What is in the Ranch Hub?\n\n-   **Weapon Store** sells dart guns and melee tools on separate tabs. The six premium weapon displays around the plaza correspond to the last three guns and last three melee tools.\n-   **Food Market** sells pet XP food. **Gear Shop** sells Radars. **Sell Stand** buys animals. Follow the station prompt at the counter.\n-   **Top Ranchers** shows ten positions per column for lifetime Cash, lifetime Wood and played time. These are separate from the Cash and Wood balances you can spend.\n-   **Feedback** lets you send a short filtered note to the owner. Draft text survives closing the panel during play. The server expects 4–400 bytes of text and at most one accepted note per minute. The hub has a fountain, shopkeepers, lanterns and six surrounding plots.\n-   Old archive pictures show named Mystic displays and prices. Use the current crate catalog for Mystic purchases. The hub's current weapon displays are managed separately.\n\n[image:hosted-world-edit-capture]\n\n[image:hosted-snowland-edit-capture]",
+          "imageIds": [
+            "hosted-world-edit-capture",
+            "hosted-snowland-edit-capture"
+          ]
+        },
+        {
+          "id": "wildlife",
+          "title": "Spawns, rarity and appearance",
+          "markdown": "Each biome has **12 species** in the same layout of **3 Common, 2 Uncommon, 2 Rare, 2 Epic, 2 Legendary, 1 Mystic**. The ordinary target is **60 wildlife per biome**. A normal refill gives each eligible species its rarity weight. A second selection favors species with fewer examples currently alive in that biome. Epic fills have a cap of **3 per biome**. An unseen portion of the population rotates roughly every 20 seconds, with a larger turnover around dawn and dusk.\n\n| Rarity | Ordinary refill weight per eligible species | How it occurs in the wild | Nominal lifetime |\n| --- | ---: | --- | --- |\n| Common | 30  | Normal refill | No fixed expiry, can rotate |\n| Uncommon | 12  | Normal refill | No fixed expiry, can rotate |\n| Rare | 5   | Normal refill | 20 minutes |\n| Epic | 1.8 | Normal refill under the Epic cap | 15 minutes |\n| Legendary | 0   | Scheduled every 3 server hours plus party specials | 60 minutes, with an extension when attended |\n| Mystic | 0   | Scheduled every 6 server hours on a +30-minute offset, one active scheduled Mystic max | 60 minutes, with an extension when attended |\n\nThe standard Legendary schedule starts at server age **3:00**. The standard Mystic schedule first comes due at **6:30**, then **12:30**, and so on. The clock belongs to that server. A joining player does not reset it. The standard rolls choose a biome at spawn time and regular notices do not tell players the biome. The HUD rotates the countdowns with **roaming now!** while a rarity is active. After the nominal hour, a Legendary or Mystic stays while a player is within roughly **200 studs** or it has been hit in the last **60 seconds**. A due spawn can miss if it fails to find valid ground. Rewards and crates use their own loot tables.\n\n### Appearance, mutations and individual size\n\n| Trait | Roll | Income | Base speed | Sleep HP |\n| --- | --- | --- | --- | --- |\n| Normal | 96.05% | ×1  | +0% | ×1  |\n| Gold | 3%  | ×3  | +5% | ×1.5 |\n| Diamond | 0.8% | ×8  | +10% | ×2.2 |\n| Rainbow | 0.15% | ×25 | +15% | ×3.5 |\n| Volted | 12% per eligible storm check | ×2  | +5% | ×1.3 |\n\n**Normal** has no extra multiplier and accounts for **96.05%** of ordinary appearance rolls. Gold, Diamond and Rainbow are alternative appearances. Volted is a separate storm mutation and can stack with an appearance. The speed bonuses from appearance and mutation are added together before the body and speed formulas. Cash and Sleep HP multipliers stack by multiplication. A rare **2%** size roll gives a Huge body of **1.35–1.50×**. Other size rolls are clustered near 1.0× and clamped to **0.75–1.35×**. Individual wild weight also rolls around **0.90–1.10×**. A large or variant catch can need noticeably more darts than its roster baseline.",
+          "imageIds": []
+        },
+        {
+          "id": "weather",
+          "title": "Day, night, storms and parties",
+          "markdown": "The game clock starts with the server. Check the day or night counter when planning a catch or waiting for recovery.\n\n-   A full day/night cycle runs **10 minutes** per animal year. Day lasts 7 minutes and night lasts 3. Night shrinks wildlife detection to 75% and speeds ranch recovery to 10×.\n-   At most one biome has an active storm. The first storm starts after roughly 4–9 minutes. Later gaps are 8–18 minutes and storms last 3–5 minutes. The weather tile names the active habitat.\n-   **Volted** has a 12% chance on an eligible new wild spawn in a storm, with additional 12% checks about once per minute on existing eligible awake wildlife. Already-mutated animals keep their mutation. Recovery and carry times are separate mechanics.\n-   An owner-started **Admin Abuse Party** is announced in that server. Its active modifiers are **2× ranch Cash**, a **50% higher population target** and extra Legendary chances. Its first extra spawn is due shortly after the party starts and then about every 15 minutes. The generic event list in the reviewed world module is empty.\n\n**Recovery example.** Two minutes of remaining recovery work takes about 12 seconds in a stable night window. With the permanent recovery perk it takes about 3 seconds. A switch back to day rescales the remaining time. Hunts still use the separate carry clock.\n\n[image:ranch-v7-tutorial-day]\n\n[image:ranch-v7-night]",
+          "imageIds": [
+            "ranch-v7-tutorial-day",
+            "ranch-v7-night"
+          ]
+        },
+        {
+          "id": "grassland",
+          "title": "Grassland",
+          "markdown": "**Open to everyone.** Meadows, broadleaf trees and grass-topped rock or soil terraces lead out from the hub. Start close to the brick edge. Use ordinary deer, foxes and boars to learn the shortest return route. The rare mounts Bison and Moose are a good step up for your first long trips. Griffin is a flying Mystic.\n\n[image:overhaul-overview]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Deer | Common | Timid | 60  | 26  | 3   | $6  | $600 | 2m  | 54.8 |\n| Fox | Common | Timid | 7   | 26  | 3   | $6  | $600 | 2m  | 54.8 |\n| Boar | Common | Alert | 90  | 26  | 3   | $6  | $600 | 2m  | 54.8 |\n| Addax | Uncommon | Timid | 100 | 42  | 5   | $10.5 | $1,050 | 3m 19s | 58.1 |\n| Horse | Uncommon | Timid | 450 | 42  | 5   | $10.5 | $1,050 | 3m 19s | 58.1 |\n| Bison | Rare | Alert | 800 | 66  | 7   | $18.38 | $1,837 | 5m 31s | 61.6 |\n| Moose | Rare | Alert | 550 | 66  | 7   | $18.38 | $1,837 | 5m 31s | 61.6 |\n| Bear | Epic | Aggressive | 300 | 102 | 11  | $32.16 | $3,215 | 9m 10s | 65.3 |\n| Tiger | Epic | Aggressive | 220 | 102 | 11  | $32.16 | $3,215 | 9m 10s | 65.3 |\n| Unicorn | Legendary | Alert | 500 | 162 | 17  | $95.3 | $9,529 | 15m 14s | 130.7 |\n| Kirin | Legendary | Aggressive | 520 | 162 | 17  | $95.3 | $9,529 | 15m 14s | 130.7 |\n| Griffin Fly | Mystic | Aggressive | 700 | 255 | 26  | $166.77 | $16,677 | 25m 18s | 137.3 |\n\nDart Pistol is the biome’s entry benchmark at 10 Sleep DMG. Hits use that base gun. Recovery is daytime base work. Cash/s is awake placed income before additional boosts. Sale assumes a 1.0 weight roll. Ride is nominal ground speed in studs/s before upgrades or perks.\n\n[See all 12 original model pictures](#rig-grassland).",
+          "imageIds": [
+            "overhaul-overview"
+          ]
+        },
+        {
+          "id": "savanna",
+          "title": "Savanna",
+          "markdown": "**Opens at Rebirth 1.** Gold grass, flat-canopy trees, terracotta ledges and rock arches make it easy to recognize. Cheetah and Giraffe are its two Rare entries. Cerberus is a ground Mystic. Reference trees are tougher than the Grassland's, so bring a tool with more Tree DMG.\n\n[image:p2-savanna-play-client]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Zebra | Common | Timid | 350 | 44.2 | 3   | $15 | $1,500 | 2m 35s | 95.4 |\n| Ostrich | Common | Timid | 120 | 44.2 | 3   | $15 | $1,500 | 2m 35s | 95.4 |\n| Hedgehog | Common | Alert | 15  | 44.2 | 3   | $15 | $1,500 | 2m 35s | 95.4 |\n| Hyena | Uncommon | Alert | 60  | 71.4 | 5   | $26.25 | $2,625 | 4m 17s | 101 |\n| Wildebeest | Uncommon | Timid | 250 | 71.4 | 5   | $26.25 | $2,625 | 4m 17s | 101 |\n| Cheetah | Rare | Timid | 55  | 112.2 | 7   | $45.94 | $4,593 | 7m 7s | 106.7 |\n| Giraffe | Rare | Alert | 1,000 | 112.2 | 7   | $45.94 | $4,593 | 7m 7s | 106.7 |\n| Hippopotamus | Epic | Aggressive | 2,200 | 173.4 | 11  | $80.39 | $8,039 | 11m 49s | 112.6 |\n| Crocodile | Epic | Aggressive | 500 | 173.4 | 11  | $80.39 | $8,039 | 11m 49s | 112.6 |\n| Lion | Legendary | Aggressive | 190 | 275.4 | 17  | $214.42 | $21,442 | 19m 38s | 135.1 |\n| Elephant | Legendary | Aggressive | 5,500 | 275.4 | 17  | $214.42 | $21,442 | 19m 38s | 135.1 |\n| Cerberus | Mystic | Aggressive | 900 | 433.5 | 26  | $375.24 | $37,524 | 32m 37s | 141.7 |\n\nBrush Revolver is the biome’s entry benchmark at 17 Sleep DMG. Hits use that base gun. Recovery is daytime base work. Cash/s is awake placed income before additional boosts. Sale assumes a 1.0 weight roll. Ride is nominal ground speed in studs/s before upgrades or perks.\n\n[See all 12 original model pictures](#rig-savanna).",
+          "imageIds": [
+            "p2-savanna-play-client"
+          ]
+        },
+        {
+          "id": "snowland",
+          "title": "Snowland",
+          "markdown": "**Opens at Rebirth 2.** Look for snow-capped rock, icy terraces and conifers. The roster has small Common animals, two aggressive Epics and two very different Legendary bodies, Woolly Mammoth and Ice Tortoise. Yeti is the ground Mystic.\n\n[image:p2-snowland-play-client]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Red Panda | Common | Timid | 8   | 72.8 | 3   | $37.5 | $3,750 | 3m 19s | 102.8 |\n| Snow Monkey | Common | Timid | 12  | 72.8 | 3   | $37.5 | $3,750 | 3m 19s | 102.8 |\n| Mountain Goat | Common | Alert | 100 | 72.8 | 3   | $37.5 | $3,750 | 3m 19s | 102.8 |\n| Arctic Wolf | Uncommon | Aggressive | 50  | 117.6 | 5   | $65.62 | $6,562 | 5m 31s | 108.5 |\n| Yak | Uncommon | Alert | 550 | 117.6 | 5   | $65.62 | $6,562 | 5m 31s | 108.5 |\n| Wolverine | Rare | Aggressive | 20  | 184.8 | 7   | $114.84 | $11,484 | 9m 10s | 114.5 |\n| Snow Leopard | Rare | Alert | 55  | 184.8 | 7   | $114.84 | $11,484 | 9m 10s | 114.5 |\n| Polar Bear | Epic | Aggressive | 450 | 285.6 | 11  | $200.98 | $20,097 | 15m 14s | 120.6 |\n| Woolly Rhino | Epic | Aggressive | 2,500 | 285.6 | 11  | $200.98 | $20,097 | 15m 14s | 120.6 |\n| Woolly Mammoth | Legendary | Aggressive | 6,000 | 453.6 | 17  | $482.45 | $48,245 | 25m 18s | 139.6 |\n| Ice Tortoise | Legendary | Alert | 900 | 453.6 | 17  | $482.45 | $48,245 | 25m 18s | 139.6 |\n| Yeti | Mystic | Aggressive | 400 | 714 | 26  | $844.29 | $84,429 | 42m 2s | 146.3 |\n\nPrairie Carbine is the biome’s entry benchmark at 28 Sleep DMG. Hits use that base gun. Recovery is daytime base work. Cash/s is awake placed income before additional boosts. Sale assumes a 1.0 weight roll. Ride is nominal ground speed in studs/s before upgrades or perks.\n\n[See all 12 original model pictures](#rig-snowland).",
+          "imageIds": [
+            "p2-snowland-play-client"
+          ]
+        },
+        {
+          "id": "desert",
+          "title": "Desert",
+          "markdown": "**Opens at Rebirth 3.** Sand, layered mesas, spires, cactus and dead trees distinguish this habitat. Desert cactus and dead trees in the logging system count as chop targets. Ammit and Chimera are Legendary. Sand Dragon is its flying Mystic.\n\n[image:p2-desert-play-client]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Mouse | Common | Timid | 3   | 122.2 | 3   | $93.75 | $9,375 | 4m 17s | 110.4 |\n| Rabbit | Common | Timid | 4   | 122.2 | 3   | $93.75 | $9,375 | 4m 17s | 110.4 |\n| Fennec Fox | Common | Timid | 2   | 122.2 | 3   | $93.75 | $9,375 | 4m 17s | 110.4 |\n| Sand Cat | Uncommon | Alert | 3   | 197.4 | 5   | $164.06 | $16,406 | 7m 7s | 116.4 |\n| Tarantula | Uncommon | Alert | 1   | 197.4 | 5   | $164.06 | $16,406 | 7m 7s | 116.4 |\n| Caracal | Rare | Alert | 18  | 310.2 | 7   | $287.11 | $28,710 | 11m 49s | 122.6 |\n| Bighorn Ram | Rare | Alert | 130 | 310.2 | 7   | $287.11 | $28,710 | 11m 49s | 122.6 |\n| Camel | Epic | Alert | 600 | 479.4 | 11  | $502.44 | $50,244 | 19m 38s | 128.9 |\n| Kangaroo | Epic | Alert | 85  | 479.4 | 11  | $502.44 | $50,244 | 19m 38s | 128.9 |\n| Ammit | Legendary | Aggressive | 700 | 761.4 | 17  | $1,085.52 | $108,552 | 32m 37s | 144.1 |\n| Chimera | Legendary | Aggressive | 800 | 761.4 | 17  | $1,085.52 | $108,552 | 32m 37s | 144.1 |\n| Sand Dragon Fly | Mystic | Aggressive | 3,000 | 1,198.5 | 26  | $1,899.66 | $189,966 | 54m 11s | 150.9 |\n\nSavanna Marksman is the biome’s entry benchmark at 47 Sleep DMG. Hits use that base gun. Recovery is daytime base work. Cash/s is awake placed income before additional boosts. Sale assumes a 1.0 weight roll. Ride is nominal ground speed in studs/s before upgrades or perks.\n\n[See all 12 original model pictures](#rig-desert).",
+          "imageIds": [
+            "p2-desert-play-client"
+          ]
+        },
+        {
+          "id": "prehistoric",
+          "title": "Prehistoric",
+          "markdown": "**Opens at Rebirth 4.** Ferns, broad rock shelves and tall vegetation surround the dinosaur roster. Even Common and Uncommon species can be very heavy. Keep the weight-based carry slowdown in mind. Spinosaurus and Tyrannosaurus Rex are Legendary. Dragon is the flying Mystic.\n\n[image:p2-prehistoric-play-client]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Velociraptor | Common | Alert | 15  | 202.8 | 3   | $234.38 | $23,437 | 5m 31s | 118.4 |\n| Pachycephalosaurus | Common | Alert | 450 | 202.8 | 3   | $234.38 | $23,437 | 5m 31s | 118.4 |\n| Iguanodon | Common | Timid | 3,000 | 202.8 | 3   | $234.38 | $23,437 | 5m 31s | 118.4 |\n| Parasaurolophus | Uncommon | Timid | 2,500 | 327.6 | 5   | $410.16 | $41,015 | 9m 10s | 124.6 |\n| Stegosaurus | Uncommon | Alert | 5,000 | 327.6 | 5   | $410.16 | $41,015 | 9m 10s | 124.6 |\n| Ankylosaurus | Rare | Alert | 6,000 | 514.8 | 7   | $717.77 | $71,777 | 15m 14s | 131 |\n| Triceratops | Rare | Aggressive | 9,000 | 514.8 | 7   | $717.77 | $71,777 | 15m 14s | 131 |\n| Therizinosaurus | Epic | Aggressive | 5,000 | 795.6 | 11  | $1,256.1 | $125,610 | 25m 18s | 137.6 |\n| Brachiosaurus | Epic | Alert | 40,000 | 795.6 | 11  | $1,256.1 | $125,610 | 25m 18s | 137.6 |\n| Spinosaurus | Legendary | Aggressive | 7,000 | 1,263.6 | 17  | $2,442.42 | $244,242 | 42m 2s | 148.7 |\n| Tyrannosaurus Rex | Legendary | Aggressive | 8,000 | 1,263.6 | 17  | $2,442.42 | $244,242 | 42m 2s | 148.7 |\n| Dragon Fly | Mystic | Aggressive | 4,000 | 1,989 | 26  | $4,274.24 | $427,424 | 1h 9m 50s | 155.6 |\n\nGlacier Sniper is the biome’s entry benchmark at 78 Sleep DMG. Hits use that base gun. Recovery is daytime base work. Cash/s is awake placed income before additional boosts. Sale assumes a 1.0 weight roll. Ride is nominal ground speed in studs/s before upgrades or perks.\n\n[See all 12 original model pictures](#rig-prehistoric).",
+          "imageIds": [
+            "p2-prehistoric-play-client"
+          ]
+        },
+        {
+          "id": "enchanted",
+          "title": "Enchanted Grove",
+          "markdown": "**Opens at Rebirth 5.** Purple and blue vegetation, mushrooms and crystals distinguish the final habitat. Violet Wyvern is the flying Mystic. The names in this chapter use the current displayed names. Some project files and older screenshots refer to earlier internal model names.\n\n[image:p2-enchanted-play-client]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Glimmer Deer | Common | Timid | 200 | 340.6 | 3   | $585.94 | $58,593 | 7m 7s | 126.7 |\n| Duskwolf | Common | Alert | 60  | 340.6 | 3   | $585.94 | $58,593 | 7m 7s | 126.7 |\n| Spinecat | Common | Alert | 120 | 340.6 | 3   | $585.94 | $58,593 | 7m 7s | 126.7 |\n| Mossback | Uncommon | Timid | 800 | 550.2 | 5   | $1,025.39 | $102,539 | 11m 49s | 133.1 |\n| Tuskhorn | Uncommon | Alert | 1,500 | 550.2 | 5   | $1,025.39 | $102,539 | 11m 49s | 133.1 |\n| Glowmane | Rare | Timid | 700 | 864.6 | 7   | $1,794.43 | $179,443 | 19m 38s | 139.7 |\n| Featherscale | Rare | Alert | 600 | 864.6 | 7   | $1,794.43 | $179,443 | 19m 38s | 139.7 |\n| Thunder Bison | Epic | Alert | 2,000 | 1,336.2 | 11  | $3,140.26 | $314,025 | 32m 37s | 146.4 |\n| Hammerhorn | Epic | Aggressive | 3,000 | 1,336.2 | 11  | $3,140.26 | $314,025 | 32m 37s | 146.4 |\n| Shadowfang | Legendary | Aggressive | 900 | 2,122.2 | 17  | $5,495.45 | $549,545 | 54m 11s | 153.3 |\n| Astraeus | Legendary | Alert | 600 | 2,122.2 | 17  | $5,495.45 | $549,545 | 54m 11s | 153.3 |\n| Violet Wyvern Fly | Mystic | Aggressive | 1,200 | 3,340.5 | 26  | $9,617.04 | $961,704 | 1h 30m | 160.3 |\n\nFossil Hunter is the biome’s entry benchmark at 131 Sleep DMG. Hits use that base gun. Recovery is daytime base work. Cash/s is awake placed income before additional boosts. Sale assumes a 1.0 weight roll. Ride is nominal ground speed in studs/s before upgrades or perks.\n\n[See all 12 original model pictures](#rig-enchanted).",
+          "imageIds": [
+            "p2-enchanted-play-client"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "economy",
+      "number": "03",
+      "title": "Economy and equipment",
+      "summary": "Pet training, complete tool and supply catalogs, and décor.",
+      "internal": false,
+      "sections": [
+        {
+          "id": "pet-math",
+          "title": "Pet levels, weight and earnings",
+          "markdown": "A pet card shows several traits. **Rarity** sets its baseline and level ceiling, **appearance** is Normal/Gold/Diamond/Rainbow, and **Volted** can appear beside any appearance. Pets also have individual size and weight, age, feeding XP and paid stat points. The atlas lists standard size-1, weight-roll-1 specimens with zero age, XP and upgrades.\n\n| Rarity | Max level | Total XP | XP per level | Speed cap | Size cap | Jump / Earn cap |\n| --- | --- | --- | --- | --- | --- | --- |\n| Common | 10  | 4,500 | 500 | 30  | 30  | 30  |\n| Uncommon | 20  | 9,500 | 500 | 60  | 60  | 60  |\n| Rare | 40  | 20,000 | 512.82 | 60  | 100 | 120 |\n| Epic | 60  | 40,000 | 677.97 | 60  | 100 | 180 |\n| Legendary | 80  | 70,000 | 886.08 | 60  | 100 | 240 |\n| Mystic | 100 | 100,000 | 1,010.1 | 60  | 100 | 300 |\n\n| Purchased stat | Per point | Limits and use |\n| --- | --- | --- |\n| Speed | +0.5% to the speed multiplier | Up to 60 points, subject to level. A full Common can buy 30 points. Very high final speeds taper toward the 300 stud/s cap. |\n| Jump | +0.1% to mount JumpPower | Base JumpPower 85. Level cap applies. |\n| Size | +1 percentage point of growth | Up to 100 points. Visual growth adds size in five 10% steps, capped at 1.5× the species scale in the shared growth formula. |\n| Earn | +0.3% to the base income multiplier | Level cap applies. Earn and Speed are the most expensive tracks for a given pet. |\n\nXP needed per level is the rarity's total XP divided by **max level − 1**. Cash points cost more as you add points to a track. For the next point the code starts from the greater of 100 Cash or 25.5 seconds of that pet's base income, then applies track price weight, prior points and the habitat price scale. Track weights are Speed 5, Jump 1, Size 2 and Earn 5. The shop rounds the result. Food and upgrades have independent jobs.\n\n**Age and size.** Placed and ridden pets age during active play. Placed pets also age offline. Every 600 seconds of age shows as one animal year, up to 2,000. Natural growth updates in 10-year steps. Growth combines age, the Size track and any legacy growth already recorded in the save. Effective weight scales with the cube of size. Higher relative weight can help an owned mount’s speed. A heavier-than-normal sleeping catch can slow the person carrying it.\n\n**Passive Cash.** An awake placed pet earns its base rate × 1.2 balance boost × rebirth multiplier × (1 + Friend Boost) × permanent multipliers, including the Index boost. An active party can double total ranch payout. A recovering placed pet earns half. A stored pet and a pet you are riding earn no passive Cash from that slot. On a fresh profile, a just-awake size-1 Grassland Common with no other boosts illustrates the baseline at **$6/s**. Catching it also builds Index completion, so your actual HUD may be slightly higher.\n\n**Selling.** A standard size-1, weight-roll-1 Grassland Common has a **$600** sale baseline. The price follows the species income ladder, 120 seconds of baseline, individual capture size, initial weight roll and appearance/mutation income factors. Age, upgrades, personal wealth, rebirth, friend and perk multipliers do not raise it. A Rare-or-higher pet, a pet with special looks or mutation, or an individual priced at $100,000 or more asks for confirmation.",
+          "imageIds": []
+        },
+        {
+          "id": "guns",
+          "title": "All 15 dart guns",
+          "markdown": "Use the **Guns** tab in the Weapon Store to buy or equip. The starting hotbar uses slot **2** for the selected gun. Each pair in the first twelve tiers is a useful benchmark for a biome, from Grassland to Enchanted Grove. You can buy a tier you can afford. The biome gates themselves check rebirth, independent of the gun in your hands.\n\n| Tier | Weapon | Cash | Robux | Sleep DMG | Ammo | Reload sec | Sec/shot | Range | Cap/track |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1   | Dart Pistol | $5,000 | —   | 10  | 4   | 2.4 | 0.55 | 360 | 5   |\n| 2   | Ranger Pistol | $10,000 | —   | 13  | 7   | 2.1 | 0.45 | 385 | 8   |\n| 3   | Brush Revolver | $50,000 | —   | 17  | 9   | 1.95 | 0.42 | 412 | 10  |\n| 4   | Tracker Carbine | $200,000 | —   | 22  | 11  | 1.8 | 0.38 | 442 | 12  |\n| 5   | Prairie Carbine | $800,000 | —   | 28  | 13  | 1.65 | 0.35 | 472 | 14  |\n| 6   | Safari Rifle | $2,000,000 | —   | 36  | 15  | 1.5 | 0.32 | 502 | 16  |\n| 7   | Savanna Marksman | $8,000,000 | —   | 47  | 18  | 1.35 | 0.3 | 536 | 18  |\n| 8   | Storm Repeater | $20,000,000 | —   | 60  | 20  | 1.2 | 0.27 | 571 | 20  |\n| 9   | Glacier Sniper | $60,000,000 | —   | 78  | 22  | 1.1 | 0.25 | 606 | 22  |\n| 10  | Dune Longshot | $150,000,000 | —   | 101 | 24  | 1   | 0.24 | 642 | 24  |\n| 11  | Fossil Hunter | $500,000,000 | —   | 131 | 26  | 0.95 | 0.23 | 678 | 26  |\n| 12  | Celestial Launcher | $2,000,000,000 | —   | 170 | 28  | 0.9 | 0.22 | 714 | 28  |\n| 13  | Golden Sovereign | $500,000,000,000 | 149 | 207 | 32  | 0.8 | 0.2 | 751 | 32  |\n| 14  | Crystal Warden | $1,000,000,000,000 | 299 | 224 | 35  | 0.7 | 0.18 | 790 | 36  |\n| 15  | Starfall Mythic | $10,000,000,000,000 | 499 | 242 | 40  | 0.6 | 0.15 | 833 | 40  |\n\nRange is in studs. Stats are for a new weapon with no upgrades. “Cap/track” is the level cap on each of its four tracks.\n\n**Next.** See [gun upgrades and max stats](#gun-upgrades) before buying points.",
+          "imageIds": []
+        },
+        {
+          "id": "gun-upgrades",
+          "title": "Gun upgrades and max stats",
+          "markdown": "In **Upgrade → Guns**, each owned weapon has four independent Cash tracks. **Sleep DMG** gains up to 70% of the gap to the next gun's base power. **Ammo** adds one shot per point. **Reload** closes up to 80% of the reload gap. **Scope** closes up to 86% of the range gap. The rate shown as seconds per shot stays fixed on each gun. The strongest gun uses an internal ceiling for those comparisons. Zoom starts at 1.0×, remembers the last setting, and max zoom scales from 1.5× for the base Dart Pistol to approximately 6× at the top end.\n\n| Gun | First point | Last point | Single track total | Max Sleep DMG | Max Ammo | Min Reload | Max Range |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Dart Pistol | $540 | $3,000 | $7,390 | 12.102 | 9   | 2.16 | 381.5 |\n| Ranger Pistol | $920 | $6,000 | $18,890 | 15.801 | 15  | 1.98 | 408.22 |\n| Brush Revolver | $3,000 | $21,000 | $98,000 | 20.5 | 19  | 1.83 | 437.8 |\n| Tracker Carbine | $13,000 | $77,000 | $440,000 | 26.199 | 23  | 1.68 | 467.8 |\n| Prairie Carbine | $48,000 | $290,000 | $1,918,000 | 33.602 | 27  | 1.53 | 497.8 |\n| Safari Rifle | $180,000 | $1,000,000 | $8,090,000 | 43.699 | 31  | 1.38 | 531.24 |\n| Savanna Marksman | $670,000 | $4,000,000 | $22,590,000 | 56.102 | 36  | 1.23 | 566.1 |\n| Storm Repeater | $940,000 | $15,000,000 | $112,790,000 | 72.602 | 40  | 1.12 | 601.1 |\n| Glacier Sniper | $9,000,000 | $56,000,000 | $583,000,000 | 94.102 | 44  | 1.02 | 636.96 |\n| Dune Longshot | $35,000,000 | $210,000,000 | $2,369,000,000 | 122 | 48  | 0.96 | 672.96 |\n| Fossil Hunter | $130,000,000 | $790,000,000 | $9,620,000,000 | 158.301 | 52  | 0.91 | 708.96 |\n| Celestial Launcher | $490,000,000 | $3,000,000,000 | $26,490,000,000 | 195.898 | 56  | 0.82 | 745.82 |\n| Golden Sovereign | $610,000,000 | $4,000,000,000 | $33,650,000,000 | 218.898 | 64  | 0.72 | 784.54 |\n| Crystal Warden | $690,000,000 | $5,000,000,000 | $41,040,000,000 | 236.602 | 71  | 0.62 | 826.98 |\n| Starfall Mythic | $660,000,000 | $6,000,000,000 | $49,050,000,000 | 253.199 | 80  | 0.552 | 888.9 |\n\nPrices above show the first and last point of **one track**, plus the cost to take a single track all the way from 0. The [full per-level price index](#price-index) shows every step. The old global dart-strength track has been retired.\n\n[image:r8-pose-aim]\n\n[image:r8-pose-reload]",
+          "imageIds": [
+            "r8-pose-aim",
+            "r8-pose-reload"
+          ]
+        },
+        {
+          "id": "melee",
+          "title": "All 13 melee tools",
+          "markdown": "Buy with **Wood** at **Weapon Store → Melee**, or use the Robux option on the last three tiers if available. The current selection is slot **1**. **Tree DMG** is logging work per normal hit. **Knock** is nominal launch strength before the target's body modifier. **Cleave** is the maximum number of trees hit per swing. **Reach** is the base blade figure. **Range** is the base sweep figure.\n\n| Tier | Tool | Wood | Robux | Tree DMG | Knock | Reach | Range | Swing s | Cleave |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1   | Baseball Bat | 20  | —   | 1   | 47  | 7   | 7   | 0.5 | 1   |\n| 2   | Hunters Axe | 50  | —   | 1.5 | 57  | 7.5 | 7.5 | 0.55 | 1   |\n| 3   | Bonecrusher | 150 | —   | 2.8 | 70  | 7.5 | 7.5 | 0.62 | 1   |\n| 4   | Cenarius | 500 | —   | 4.4 | 83  | 8   | 8   | 0.55 | 1   |\n| 5   | Excalibur | 1,000 | —   | 7.2 | 97  | 9   | 12  | 0.5 | 2   |\n| 6   | Bloodfang | 5,000 | —   | 8.2 | 110 | 9   | 13  | 0.42 | 2   |\n| 7   | Dragons Fang | 10,000 | —   | 13  | 123 | 8.5 | 14  | 0.4 | 2   |\n| 8   | Titan | 50,000 | —   | 29  | 143 | 9.5 | 18  | 0.78 | 3   |\n| 9   | Celestial Halberd | 100,000 | —   | 44  | 157 | 11  | 21  | 0.62 | 3   |\n| 10  | Reaper | 1,000,000 | —   | 126 | 170 | 11.5 | 24  | 0.66 | 4   |\n| 11  | Red Crimson | 20,000,000 | 149 | 180 | 180 | 12  | 28  | 0.72 | 6   |\n| 12  | Glacier Crusher | 150,000,000 | 299 | 315 | 190 | 13  | 32  | 0.66 | 8   |\n| 13  | Eclipse | 500,000,000 | 499 | 630 | 200 | 15  | 36  | 0.6 | 10  |\n\nReach and range are in studs. Mounted strikes can reach farther from the mount’s body. Only tools with a slash wave use the extra sweep distance.\n\n**Next.** Compare [melee upgrades and max stats](#melee-upgrades).",
+          "imageIds": []
+        },
+        {
+          "id": "melee-upgrades",
+          "title": "Melee upgrades and max stats",
+          "markdown": "Every melee tool has independent **Tree DMG, Knock, Radius** and **Earn** tracks with up to **30 points each**. A point takes the track's coefficient times the weapon's grade. Radius affects blade reach and the sweep. Earn affects the Wood credited after a tree falls. Chop speed and cleave make a good logging tool even when you use it mostly in the hub. At the Eclipse's maximum Knock track, the base launch stat reaches **300** before target modifiers.\n\n| Tool | Logging home | First Wood | Last Wood | One track total | Max Tree DMG | Max Knock | Max Range | Max Earn |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Baseball Bat | Grassland | 6   | 83  | 898 | 1.6 | 51.27 | 7.93 | ×1.6 |\n| Hunters Axe | Grassland | 8   | 110 | 1,217 | 2.62 | 63.48 | 8.75 | ×1.75 |\n| Bonecrusher | Savanna | 18  | 250 | 2,712 | 5.32 | 79.55 | 9   | ×1.9 |\n| Cenarius | Savanna | 31  | 430 | 4,607 | 9.02 | 96.2 | 9.87 | ×2.05 |\n| Excalibur | Snowland | 160 | 2,000 | 23,760 | 15.84 | 114.64 | 15.2 | ×2.2 |\n| Bloodfang | Snowland | 230 | 3,000 | 34,940 | 19.27 | 132.5 | 16.9 | ×2.35 |\n| Dragons Fang | Desert | 530 | 7,000 | 79,970 | 32.5 | 150.95 | 18.67 | ×2.5 |\n| Titan | Desert | 820 | 11,000 | 123,700 | 79.02 | 180.38 | 24.9 | ×2.725 |\n| Celestial Halberd | Prehistoric | 2,000 | 33,000 | 351,000 | 129.8 | 203.39 | 30.1 | ×2.95 |\n| Reaper | Enchanted Grove | 12,000 | 170,000 | 1,854,000 | 409.5 | 227.95 | 36  | ×3.25 |\n| Red Crimson | Enchanted Grove | 21,000 | 300,000 | 3,205,000 | 639 | 249.55 | 43.87 | ×3.55 |\n| Glacier Crusher | Enchanted Grove | 62,000 | 860,000 | 9,303,000 | 1,212.75 | 272.05 | 52.27 | ×3.85 |\n| Eclipse | Enchanted Grove | 170,000 | 2,000,000 | 25,250,000 | 2,709 | 300 | 62.4 | ×4.3 |\n\n**Point effects.** Tree DMG and Earn add 5% of the tool’s grade per point to their respective multiplier. Knock adds grade ÷ 132 and Radius adds grade ÷ 90 per point. The grade runs from 0.40 for the bat to 2.20 for Eclipse. A level-30 Radius track on Eclipse takes its base 36-stud sweep to 62.4 studs.",
+          "imageIds": []
+        },
+        {
+          "id": "supplies",
+          "title": "Food Market and Gear Shop",
+          "markdown": "Open the stall's prompt in the square. Both markets take **Cash** for the normal purchase. A stock roll is made every **5 minutes** for the server, and each player has a separate allowance from that roll. Buying with Cash uses your own stock and wallet. The individual Robux item path can grant one item even when ordinary stock is used up. **Restock** at **19 Robux** resets your allowance for that shop to the current server stock. This can still leave a rare item at zero if the roll was zero.\n\n| Food | XP  | Cash | Robux | Stock per restock |\n| --- | --- | --- | --- | --- |\n| Cabbage | 100 | $1,000 | 5   | 10–25 |\n| Apple | 250 | $12,000 | 9   | 6–15 |\n| Carrot | 400 | $95,000 | 14  | 4–12 |\n| Melon | 650 | $150,000 | 19  | 3–9 |\n| Pineapple | 1,000 | $1,000,000 | 24  | 2–7 |\n| Shrimp | 1,600 | $2,000,000 | 29  | 2–6 |\n| Salmon | 2,400 | $13,000,000 | 39  | 2–5 |\n| Drumstick | 3,900 | $21,000,000 | 49  | 1–4 |\n| Ham | 6,000 | $150,000,000 | 64  | 1–3 |\n| Steak | 10,000 | $260,000,000 | 79  | 1–3 |\n\n| Radar | Cash | Robux | Stock | Search |\n| --- | --- | --- | --- | --- |\n| Common | $990 | 5   | 3–8 | Chosen biome |\n| Uncommon | $5,000 | 9   | 2–6 | Chosen biome |\n| Rare | $31,000 | 19  | 1–4 | Chosen biome |\n| Epic | $180,000 | 39  | 1–3 | Chosen biome |\n| Legendary | $2,000,000 | 79  | 0–2 | Chosen biome |\n| Mystic | $8,000,000 | 129 | 0–1 | All biomes |\n\n**Auto-Buy.** The shop's pass enables Auto-Buy toggles for all its items. A player without the pass can instead unlock one specific item for **10 Robux**. At a restock, items switched on consume your Cash up to the stock you can afford. Turn off the toggles when saving for a rebirth. Buying an unlock and paying for restocked items are separate charges in different currencies.",
+          "imageIds": []
+        },
+        {
+          "id": "radar",
+          "title": "Use a radar and manage Wood",
+          "markdown": "Hold a radar from Bag or the hotbar and click or tap the world. For Common through Legendary, choose a biome with that rarity currently available. A **Mystic Radar** searches across biomes. Follow the arrow and distance indicator toward the target. A radar gives you a location, while your character still needs the correct gate unlocked to travel there.\n\n-   Only one radar can run. Turn the current one off before selecting a different rarity.\n-   A scan starts with **5 minutes**. If you pick up the marked pet, its tracking clock pauses during the carry.\n-   The matching radar is spent when an eligible catch is delivered. If another player catches the target, the radar shuts off and stays in your inventory. A timeout with no delivery also keeps it.\n-   A target can disappear or move. If there's no eligible target, check the biome selection and the rare-animal status later. The hidden Unlimited Radar entry is a legacy perk.\n\n### Tree toughness and base yield\n\n| Biome | Reference tree HP | Base Wood | Suggested entry tool |\n| --- | --- | --- | --- |\n| Grassland | 6   | 2   | Baseball Bat |\n| Savanna | 16  | 5   | Bonecrusher |\n| Snowland | 40  | 12  | Excalibur |\n| Desert | 96  | 28  | Dragons Fang |\n| Prehistoric | 246 | 64  | Celestial Halberd |\n| Enchanted Grove | 630 | 150 | Reaper |\n\nA reference tree is 34 studs tall. The size factor is height ÷ 34, clamped to **0.6–2.0**, with HP and Wood rounded. Golden tree rewards and your chopping multipliers apply on top. Reward cards described in _trees' worth_ use the reference yield of your best owned melee tool's home biome. That is a separate reward calculation from swinging at a physical tree.",
+          "imageIds": []
+        },
+        {
+          "id": "decor",
+          "title": "Furnish your enclosure",
+          "markdown": "Open **Ranch → Decorate**, buy an item with **Wood** once and then choose one of the six fixed locations. The spots are front-left, front-right, left, right, back-left and back-right as seen from the gate. Props are available across enclosures. Enclosure style changes come from rebirth.\n\n| Decoration | Wood cost | Largest dimension |\n| --- | --- | --- |\n| Flower Bed | 64  | 30 studs |\n| Lantern Post | 140 | 34 studs |\n| Hay Cart | 300 | 34 studs |\n| Windmill | 600 | 48 studs |\n| Snowman | 1,000 | 36 studs |\n| Ice Lantern | 3,000 | 34 studs |\n| Potted Cactus | 5,000 | 32 studs |\n| Sandstone Statue | 10,000 | 34 studs |\n| Fossil Skeleton | 21,000 | 44 studs |\n| Stone Fountain | 42,000 | 38 studs |\n| Glow Mushroom | 91,000 | 57 studs |\n| Treehouse | 210,000 | 60 studs |\n\nThe models are scaled to the listed largest dimension when placed and face inward. Decoration is visual, while pet placement and earned Cash use the enclosure's own rules.\n\n[image:p2-enchanted-enc-play]",
+          "imageIds": [
+            "p2-enchanted-enc-play"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "rewards",
+      "number": "04",
+      "title": "Rewards and Shop",
+      "summary": "Calendar, missions, codes, presents and exact crate outcomes.",
+      "internal": false,
+      "sections": [
+        {
+          "id": "rewards",
+          "title": "Find the free rewards",
+          "markdown": "**Rewards** has **Missions, Daily** and **Codes**. Quests appear below the day's missions. The welcome gifts also appear above the missions for eligible players. The ready badge counts available daily, mission and quest claims. **Claim All** collects the currently eligible daily reward, missions and unlocked quest tiers in one action. Use the individual welcome Claim buttons when starting the tutorial.\n\n**Daily calendar.** One claim per UTC day. In Manila the reset is **8:00 a.m.** Missing a day leaves your calendar at the same slot. After day 30, it cycles back to day 1. Days 7 and 14 give a random Legendary. Days 21 and 30 give a random Mystic.\n\n**Cash reward rule.** A listed floor is the minimum. The server takes the larger of that amount or the eligible seconds of your full-rate placed ranch income. That reference rate includes ordinary profile bonuses, and does not apply the temporary party boost or the recovering discount. The Wood rewards listed in _trees_ use the best melee tool you own, as explained in [Manage Wood](#radar).\n\n| Day | Reward | Day | Reward |\n| --- | --- | --- | --- |\n| 1   | $500 min. or 1 min of income | **16** | 3 × Shrimp |\n| 2   | 10 × Cabbage | **17** | Wood worth 48 trees |\n| 3   | Wood worth 24 trees | **18** | 1 × Drumstick |\n| 4   | 5 × Apple | **19** | $80,000 min. or 8 min of income |\n| 5   | $5,000 min. or 3 min of income | **20** | 10 × Melon |\n| 6   | 3 × Melon | **21** | Random **Mystic** pet |\n| 7   | Random **Legendary** pet | **22** | $100,000 min. or 9 min of income |\n| 8   | $10,000 min. or 5 min of income | **23** | 5 × Shrimp |\n| 9   | 10 × Apple | **24** | Wood worth 60 trees |\n| 10  | Wood worth 36 trees | **25** | 2 × Drumstick |\n| 11  | 2 × Shrimp | **26** | $160,000 min. or 10 min of income |\n| 12  | $25,000 min. or 6 min of income | **27** | 1 × Steak |\n| 13  | 6 × Melon | **28** | $240,000 min. or 12 min of income |\n| 14  | Random **Legendary** pet | **29** | 3 × Drumstick |\n| 15  | $40,000 min. or 7 min of income | **30** | Random **Mystic** pet |",
+          "imageIds": []
+        },
+        {
+          "id": "missions",
+          "title": "Daily missions and long-term quests",
+          "markdown": "You get **three missions per UTC day** from this pool. The draw is saved for the day. Use **Go** to see a tip and claim completed cards before reset. The capture missions count successful deliveries. A dart mission counts accepted animal hits. The steal mission counts bringing home a catch that another player dropped after being hit.\n\n| Mission | Reward |\n| --- | --- |\n| Capture 5 animals | $2,000 min. or 3 min of income |\n| Capture 2 Uncommon or rarer | $3,000 min. or 210s of income |\n| Capture a Rare or rarer | $5,000 min. or 5 min of income |\n| Capture 2 animals at night | $3,000 min. or 210s of income |\n| Capture an animal during a storm | $4,000 min. or 4 min of income |\n| Capture 3 Savanna animals | $4,000 min. or 4 min of income |\n| Capture 2 Snowland animals | $5,000 min. or 5 min of income |\n| Hit animals with 30 darts | $2,000 min. or 150s of income |\n| Feed your animals 5 times | $2,000 min. or 150s of income |\n| Sell 3 animals | $3,000 min. or 3 min of income |\n| Ride for 3 minutes | $2,000 min. or 150s of income |\n| Use a radar | $2,000 min. or 150s of income |\n| Buy 5 food | $1,000 min. or 2 min of income |\n| Chop 10 trees | Wood worth 6 trees |\n| Chop 25 trees | Wood worth 14 trees |\n| Chop a Golden tree | Wood worth 10 trees |\n| Steal an animal from another player | Wood worth 12 trees |\n\n### Quests\n\nQuest progress persists across days. Each quest has three thresholds. Claim each tier in sequence. The species quest uses total unique species in the Index when its progress is updated.\n\n| Quest | Tier 1 | Tier 2 | Tier 3 |\n| --- | --- | --- | --- |\n| Capture animals | 50  | 150 | 400 |\n| Capture Legendary animals | 1   | 3   | 10  |\n| Capture Mystic animals | 1   | 2   | 5   |\n| Capture mutated animals | 5   | 20  | 50  |\n| Capture Gold, Diamond or Rainbow animals | 3   | 10  | 25  |\n| Capture animals at night | 20  | 60  | 150 |\n| Feed your animals times | 50  | 200 | 600 |\n| Sell animals | 25  | 100 | 300 |\n| Discover species | 12  | 36  | 72  |\n| Hit animals with darts | 500 | 2,000 | 6,000 |\n| Chop trees | 50  | 250 | 1,000 |\n\n| Tier | Cash | Food | Pet |\n| --- | --- | --- | --- |\n| 1   | $8,000 min. or 6 min of income | 3 × Melon | —   |\n| 2   | $25,000 min. or 12 min of income | 3 × Shrimp | —   |\n| 3   | $80,000 min. or 20 min of income | 2 × Drumstick | Epic |",
+          "imageIds": []
+        },
+        {
+          "id": "collection",
+          "title": "Index, invites and codes",
+          "markdown": "### Animal Index\n\nEncountered pets can be marked seen. Catch or receive a species to count it as owned in the collection record. The Index remembers discoveries after a sale. It shows Normal, Gold, Diamond and Rainbow. The Normal count advances with the first capture of that species in any appearance, while the color categories need their own recorded variant. Volted is tracked separately.\n\n| Index tab | Permanent Cash boost for each species recorded in that tab | At 72 entries |\n| --- | ---: | ---: |\n| Normal | +0.5% | +36% |\n| Gold | +1% | +72% |\n| Diamond | +2% | +144% |\n| Rainbow | +4% | +288% |\n\nThese contributions add to a theoretical maximum **+540%**, equivalent to **6.4×** before the other multipliers. The Index's dramatic “1 in N” labels are flavor text. The wild refill uses weights and schedules, and paid crates show their own exact odds. Every four unique species opens a Cash claim, up to **18 milestones**. [See all milestone floors](#index-reference).\n\n### Friends and invitations\n\nEvery verified Roblox friend currently in the same server adds **+25%** to passive Cash, counted up to ten friends. Their contribution ends when they leave. The six authored plots make the theoretical cap higher than the number of friends that can ordinarily share a six-player ranch server. Separately, a distinct friend whose Roblox join credits your invite advances the Invite boxes. The four claim thresholds are **1 → Epic, 2 → Epic, 3 → Legendary, 4 → Legendary**. Invite claims and Friend Boost are counted independently.\n\n### Redeem codes\n\nOpen **Rewards → Codes**, enter a code, and choose **Redeem**. Codes shown here were configured in the inspected build. The server accepts one redemption per player, ignores case and removes whitespace before lookup.\n\n| Code | Reward |\n| --- | --- |\n| `RANCHER` | 2 × Shrimp |\n| `SAFARI` | $25,000 min. or 5 min of income + 5 × Apple + 2 × Melon |\n| `TIMBER` | Wood worth 45 trees |\n| `WILDRANCH` | $10,000 min. or 2 min of income + Wood worth 15 trees + 20 × Cabbage |",
+          "imageIds": []
+        },
+        {
+          "id": "shop",
+          "title": "Shop and paid perks",
+          "markdown": "The in-game Shop offers paid crates, Cash and Wood packs, permanent perks, and premium weapons. These are the **configured Robux prices** in the reviewed place. Roblox pricing and product availability are checked before game prompts are enabled. No paid transaction was needed to compile this guide.\n\n| Offer | Robux | Grant |\n| --- | --- | --- |\n| Pouch of Cash | 49  | $10,000,000 |\n| Sack of Cash | 149 | $100,000,000 |\n| Chest of Cash | 299 | $1,000,000,000 |\n| Vault of Cash | 499 | $10,000,000,000 |\n| Bundle of Wood | 49  | 100,000 Wood |\n| Pile of Wood | 149 | 500,000 Wood |\n| Cart of Wood | 299 | 1,000,000 Wood |\n| Lumber Yard | 499 | 10,000,000 Wood |\n| 2x Wood | 149 | Every tree you chop gives double Wood, forever. Multiplies with your weapon's Earn upgrades. |\n| 2x Animal Income | 149 | Every animal in your ranch earns double, forever. Multiplies with every other bonus. |\n| 4x Recovery Speed | 149 | Captured animals recover and wake up 4x faster, forever. Stacks with the x10 night speed-up. |\n\n| Other purchase | Configured price | Effect |\n| --- | ---: | --- |\n| Rebirth Skip | 199 Robux | One available stage, keeping balances and pets. |\n| Offline Claim 2× | 49 Robux | Doubles the calculated offline claim. |\n| Wake Now | 25 Robux | Wake one owned recovering pet. |\n| Personal restock | 19 Robux | Refresh your stock allowance in Food Market or Gear Shop. |\n| Per-item Auto-Buy unlock | 10 Robux | Enables Auto-Buy for that specific market item. Restocks still spend Cash. |\n| Premium weapons | 149 / 299 / 499 Robux by tier | See the [guns](#guns) and [melee](#melee) tables for their alternate Cash or Wood routes. |",
+          "imageIds": []
+        },
+        {
+          "id": "gifts",
+          "title": "Gifts and game passes",
+          "markdown": "Choose an eligible Cash pack, Wood pack or permanent perk in **Send a Gift**. Select a player currently in the server or a verified Roblox friend. A friend in another server or offline can receive eligible queued gifts later, provided that service is available. The recipient gets the configured pack amount. Crates, passes and personal offline claims are excluded from gifting. If a one-time perk arrives after the recipient already owns it, the grant can convert to Cash. Duplicate premium weapon deliveries from the Roblox Store page also use a Cash fallback.\n\n**Gift check before you pay.** Check the recipient and the item in the gift picker. The server rejects self-gifts, hidden offers and already-owned one-time perks when recipient data is available. Delivery to someone outside the current server depends on friendship and the gift queue being reachable.\n\n### Configured game passes\n\nThe game still checks ownership of these passes. The inspected in-game Shop does not render a dedicated passes or legacy bundle section. This is the configuration reference for owned passes and platform-side listings.\n\n| Pass | Robux | Ownership effect |\n| --- | --- | --- |\n| VIP Rancher | 199 | Golden VIP nametag, VIP chat tag and a golden ranch sign. |\n| Golden Dart Gun | 149 | Gold skin + sparkle dart trail on every tranquilizer gun. |\n| Rainbow Ride Trail | 99  | Rainbow trail behind any animal you ride. |\n| Food Auto-Buy | 149 | Every restock, the Food Market buys the food you switched on with your Cash. |\n| Gear Auto-Buy | 149 | Every restock, the Gear Shop buys the radars you switched on with your Cash. |",
+          "imageIds": []
+        },
+        {
+          "id": "crates",
+          "title": "Every crate and exact odds",
+          "markdown": "Open **Shop** and choose the crate. Buy **1, 3 or 10 rolls** where the offer is available. Each roll grants one pet, with the probabilities below. The Wild Crate mixes the habitats. Each regional crate takes all six listed outcomes from that biome. The ordinary Mystic chance is **1% per roll**. On the **100th roll since the last Mystic for the same crate**, the roll is guaranteed to be that crate's Mystic. Any Mystic from that crate resets that crate's counter. The tracker is saved across sessions and packs.\n\n| Crate | 50% | 21% | 21% | 3.5% | 3.5% | 1%  | R$ 1 / 3 / 10 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Wild Crate | Bison | Crocodile | Polar Bear | Chimera | Tyrannosaurus Rex | Violet Wyvern | 49 / 139 / 449 |\n| Grassland Crate | Moose | Bear | Tiger | Kirin | Unicorn | Griffin | 25 / 69 / 199 |\n| Savanna Crate | Giraffe | Crocodile | Hippopotamus | Elephant | Lion | Cerberus | 29 / 79 / 249 |\n| Snowland Crate | Snow Leopard | Polar Bear | Woolly Rhino | Ice Tortoise | Woolly Mammoth | Yeti | 35 / 99 / 299 |\n| Desert Crate | Caracal | Camel | Kangaroo | Ammit | Chimera | Sand Dragon | 39 / 109 / 349 |\n| Prehistoric Crate | Triceratops | Brachiosaurus | Therizinosaurus | Spinosaurus | Tyrannosaurus Rex | Dragon | 45 / 129 / 399 |\n| Enchanted Crate | Glowmane | Hammerhorn | Thunder Bison | Astraeus | Shadowfang | Violet Wyvern | 49 / 149 / 499 |\n\nOne outcome per roll. Pity can replace the ordinary roll with the Mystic in the 1% column. Prices above are in Robux.\n\n**Delivery.** Crate pets are granted in their normal appearance with the built-in size roll. They go into a free pen slot or storage, and are ready to use without recovery. Paid random items are unavailable if the per-player policy check disallows them or cannot confirm eligibility. The pity counter applies only to that crate. A wild Legendary or Mystic spawn follows its own schedule.\n\n### Offline earnings\n\nWhen you return after at least 30 seconds away with placed animals, the game calculates the absence using up to **24 hours** at **50%** of the eligible ranch rate. The calculation ages those placed pets, uses their fully recovered payout rate and the profile's normal permanent multipliers, and omits Friend Boost. Only positive earnings create a claim. In **Welcome back!**, choose **Claim 1×** for free or the paid **Claim 2×**. The paid double path waits for the Roblox receipt. Keep earners placed before you leave.",
+          "imageIds": []
+        }
+      ]
+    },
+    {
+      "slug": "faq",
+      "number": "05",
+      "title": "Frequently asked questions",
+      "summary": "Answers for capture problems, slow progress, shopping and more.",
+      "internal": false,
+      "sections": [
+        {
+          "id": "faq",
+          "title": "Getting started and capture FAQ",
+          "markdown": "### Where do I get my starter money?\n\nOpen **Rewards → Missions** and claim both welcome cards. The gifts are $10,000 and 100 Wood. The Dart Pistol costs $5,000 and the Baseball Bat costs 20 Wood during the guided route. Skipping supplies the eligible welcome gifts and missing starter tools.\n\n### What do I do first after the tutorial?\n\nFill your pen with pets you can bring back reliably. Claim available free rewards, check which pet Rebirth needs, and build up a Wood reserve with a starter melee tool.\n\n### Why are my darts missing?\n\nKeep the animal in the crosshair, close the gap if it is out of range, and move clear of rocks, tree trunks and terrain. You and the target must be in the target's home biome. Lower ground can also help if the cliff-guard message appears.\n\n### Is there an Auto Aim button?\n\nThe current HUD removed Auto Aim and its T shortcut. Aim through the center crosshair and scope manually.\n\n### How do I make the gun stronger?\n\nOpen **Upgrade → Guns**, choose a gun you own, and buy its Sleep DMG points. Upgrades belong to that gun. Buy Ammo, Reload or Scope when those are the limits you keep running into.\n\n### Why does my gun put one Fox to sleep faster than another?\n\nThe atlas shows a size-1 Normal baseline. A bigger body, special appearance or a Volted mutation can increase Sleep HP. Upgrades on the gun change how much each landed hit contributes.\n\n### Why can't I pick up a sleeping animal?\n\nGet closer and wait for the pickup prompt. Another player's claim starts with a five-second window. An animal can wake, be picked up by someone else, or be out of reach from where you stand.\n\n### Can I pick up from a mount?\n\nYes, if you are close enough for the pickup prompt. The mounting case uses the mount's size to adjust the reach, and the normal capture checks still apply.\n\n### Where does the carry timer stop?\n\nAt the paved hub boundary. Walk further into your own enclosure to finish claiming the pet. Watch for the **Safe!** and then the capture notifications.\n\n### Can I drop it to help a friend?\n\nDropping a wild sleeper puts it on a pickup timer. Claim protection and ownership rules still apply. A knocked-loose carry has no normal protection. The game has no regular direct pet-trading menu in the reviewed player flow.\n\n### Can someone steal a pet from my pen?\n\nThe theft mechanic concerns a sleeping wild catch being carried in the wild. An already-owned enclosure pet is protected.\n\n### What if I leave while holding a catch?\n\nAn undelivered wild pet is lost when you leave. Carry it into the enclosure before quitting if you want to keep it.\n\n### Why is my pet doing nothing in the Bag?\n\nStored pets are safe inventory. Earnings require a placed pet. **Ranch → Place Best** can bring your best earners into the pen.",
+          "imageIds": []
+        },
+        {
+          "id": "faq-ranch",
+          "title": "Ranch, riding and logging FAQ",
+          "markdown": "### Why is a new pet earning half?\n\nIt is recovering from the wild capture. Keep it placed and let it wake. Night speeds recovery, and the permanent perk stacks with night.\n\n### Can feeding wake a pet?\n\nFood adds XP. The recovery timer, night bonus, recovery perk and Wake Now use a separate system.\n\n### Can a Common pet keep leveling forever?\n\nCommon pets top out at level 10 and 4,500 XP. Mystic pets top out at level 100 and 100,000 XP. See all six ceilings in [Pet levels](#pet-math).\n\n### Why can I see an upgrade but can't buy it?\n\nCheck the wallet, level and track cap. Animal and gun tracks use Cash. Melee tracks use Wood. Feeding increases pet XP and opens additional room for stat points.\n\n### Where did my pet go after riding?\n\nIt becomes a held animal when you dismount. Click or tap inside your own enclosure to place it, or use its card where the place action is shown.\n\n### Can every pet fly?\n\nFour can fly in this roster. They are Griffin, Sand Dragon, Dragon and Violet Wyvern. The other two Mystics, Cerberus and Yeti, stay on the ground.\n\n### Why can't I dismount right now?\n\nThe driver needs to be grounded. Descend or use **Land**, then select **Dismount**. A passenger can leave using their passenger action or Jump.\n\n### Why does my mount turn transparent when I aim?\n\nThe current HUD automatically fades a mount if its body blocks your crosshair in gun mode. Other players still see the mount. Scoping can hide the rider and mount on your own screen.\n\n### Can two people ride one pet?\n\nYes. One drives and one uses **Ride along**. Board while the mount is grounded and the rear seat is free.\n\n### Do trees use up my bat?\n\nMelee tools are owned equipment. Use the same one repeatedly. Higher tiers and Tree DMG upgrades make later trees easier to fell.\n\n### Why isn't Auto Chop doing anything?\n\nTake out your melee tool, switch Auto Chop on, face an eligible tree and get close enough. Wait if the target is still a stump. Menus, being down and carrying a wild pet can prevent a swing.\n\n### Does Auto Chop collect every tree in the biome?\n\nIt checks for a reachable trunk ahead. Your tool's sweep and cleave determine what the actual swing can hit. Move manually to new spots.\n\n### Which trees are worth the most Wood?\n\nGolden trees give five times their normal base amount. Reference base yield rises from 2 Wood in the Grassland to 150 in Enchanted Grove before boosters. Taller individuals can pay more.\n\n### Do melee hits take a player's health?\n\nThe system is built around knockback and ragdolls. A player can lose a carried sleeper outside the safe zone if they get hit.",
+          "imageIds": []
+        },
+        {
+          "id": "troubleshooting",
+          "title": "Rebirth, wildlife and rewards FAQ",
+          "markdown": "### Do I lose my animals when I rebirth?\n\nThe currency route resets Cash and pays the Wood cost. The required pet and the rest of your collection stay. The Robux skip keeps your balance too.\n\n### Does my next required animal change if I rejoin?\n\nThe requirement is saved for that stage. Look at **Rebirth**. Any owned specimen of the requested species, placed or stored, qualifies.\n\n### Why won't this gate open?\n\nCheck its rebirth number. The order is Grassland, Savanna, Snowland, Desert, Prehistoric, Enchanted Grove. The final enclosure requires one more stage after Enchanted opens.\n\n### Does a stronger mount let me skip a gate?\n\nThe same gate restrictions apply to ground movement and flying. Rebirth to gain access.\n\n### Where is the Legendary or Mystic that just spawned?\n\nThe ordinary announcement leaves out its biome. Check the relevant radar and the HUD. Common through Legendary scans ask for a biome. Mystic searches all biomes.\n\n### Why did my radar turn off and stay in Bag?\n\nA timeout or another player's capture can end the scan without spending it. Successful delivery of a matching tracked catch spends the radar.\n\n### Why didn't I see a rare spawn as soon as the timer hit zero?\n\nScheduling is per server. Finding valid spawn ground can fail, and a Mystic already alive prevents another scheduled Mystic. The timer also rotates between rarity labels.\n\n### Can Volted and Rainbow appear together?\n\nYes. Rainbow is an appearance and Volted is a mutation. A wild pet can have both. See [Spawns and weather](#wildlife) for the separate rolls.\n\n### Do the Index labels show exact wild odds?\n\nThe Index's “1 in N” values are flavor. Base wildlife uses species selection weights and caps, scheduled rarities use timers, and paid crates list probabilities for each outcome.\n\n### Can I claim the next daily reward if I missed yesterday?\n\nYes. The next claim advances one slot after UTC midnight. Skipping a day does not reset the calendar.\n\n### Why does another player have different daily missions?\n\nThe game picks three from the same pool for each player and UTC day. Quests are persistent and have the same thresholds.",
+          "imageIds": []
+        },
+        {
+          "id": "support-faq",
+          "title": "Shopping and troubleshooting FAQ",
+          "markdown": "### Where are the older gift bundles, pet displays and global Dart Levels?\n\nThe current Shop hides legacy Starter, Rider, Pro, Unlimited Radar and the old dart pack. Current premium pets come through crates and ordinary reward/capture paths. Dart stats now belong to the individual gun. Older snapshots can show different menus.\n\n### Why does a Robux button say Coming soon?\n\nThe server only enables a configured prompt when Roblox returns an expected product or pass price. A missing, unavailable or mismatched product can leave the button disabled.\n\n### Why are crates unavailable for me?\n\nThe game checks Roblox's eligibility result for paid random items. If eligibility cannot be established, the purchase flow remains unavailable.\n\n### Can I get pets without Robux?\n\nYes. Capture wild animals and claim eligible daily, invite and quest rewards. Some later prizes and premium options are simply additional routes.\n\n### When does a gift arrive?\n\nA player in your server may receive it after the purchase clears. Gifts to friends elsewhere can be queued. Keep the purchase details if delivery fails so the owner can trace the grant.\n\n### What if I already own a perk somebody sends?\n\nThe purchase flow tries to detect it before charging. A duplicate that arrives afterward can be credited as Cash according to the store's fallback logic.\n\n### Why wasn't I paid offline?\n\nCheck that animals were placed and you were away for at least 30 seconds. The **Welcome back!** card appears with a positive claim. A pet left stored after a ride is outside the placed roster.\n\n### How do I quiet the experience?\n\nUse **Settings** for Music, Sound effects, Full effects, Camera shake, Animal name tags and Tree hit flash. Roblox's Reduce Motion option also reduces decorative animation. The settings described here are wired in the current source.\n\n### Why is the loading bar near 99%?\n\nThe client may still be waiting for the world, profile, original assets, terrain near spawn, or the character. The loading-screen **Skip** dismisses the visual overlay while the underlying readiness checks continue. If the loader reports a failure, use its retry action if shown or rejoin. Loading-screen Skip and tutorial Skip are separate buttons.\n\n### Where do I report a bug?\n\nUse the hub's **Feedback** stand. Include the biome, what you pressed, what happened and the exact message if there was one. Use a short note and leave out payment credentials or personal contact details.",
+          "imageIds": []
+        }
+      ]
+    },
+    {
+      "slug": "gallery",
+      "number": "06",
+      "title": "Original visual archive",
+      "summary": "Archived gameplay and the original models and art from your folders.",
+      "internal": false,
+      "sections": [
+        {
+          "id": "gallery",
+          "title": "Gameplay and Studio pictures",
+          "markdown": "These pictures come from the owner's local Wild Ranch project. Captions distinguish the current loading capture, earlier play-client evidence, and older Studio composition views. The gameplay pictures show real game scenes. Old timer values, labels, player wallets, purchase signs and HUD controls are historical evidence. The version 260 instructions earlier in this guide are the current player reference.\n\n[image:new-animals-grassland]\n\n[image:ranch-v7-tutorial-day]\n\n[image:r8-pose-aim]\n\n[image:r8-ride-pose]\n\n[image:r8-feed-prompt]\n\n[image:r8-fly-above-dismount]",
+          "imageIds": [
+            "new-animals-grassland",
+            "ranch-v7-tutorial-day",
+            "r8-pose-aim",
+            "r8-ride-pose",
+            "r8-feed-prompt",
+            "r8-fly-above-dismount"
+          ]
+        },
+        {
+          "id": "gallery-map",
+          "title": "Across the world",
+          "markdown": "[image:overhaul-overview]\n\n[image:p2-savanna-play-client]\n\n[image:hosted-snowland-edit-capture]\n\n[image:hosted-desert-edit-capture]\n\n[image:p2-prehistoric-play-client]\n\n[image:hosted-enchanted-edit-capture]",
+          "imageIds": [
+            "overhaul-overview",
+            "p2-savanna-play-client",
+            "hosted-snowland-edit-capture",
+            "hosted-desert-edit-capture",
+            "p2-prehistoric-play-client",
+            "hosted-enchanted-edit-capture"
+          ]
+        },
+        {
+          "id": "gallery-ranch",
+          "title": "Hub, stores and enclosures",
+          "markdown": "[image:hosted-world-edit-capture]\n\n[image:ranch-v7-merchant]\n\n[image:ranch-v7-overview]\n\n[image:gate3-play-client]\n\n[image:p2-enchanted-enc-play]\n\n[image:native-studio-playtest]",
+          "imageIds": [
+            "hosted-world-edit-capture",
+            "ranch-v7-merchant",
+            "ranch-v7-overview",
+            "gate3-play-client",
+            "p2-enchanted-enc-play",
+            "native-studio-playtest"
+          ]
+        },
+        {
+          "id": "asset-art",
+          "title": "Original game art and model evidence",
+          "markdown": "### Artwork tied to current game slots\n\nThe current UI module points the food, radar and HUD icon keys at the same sets described beside the corresponding local files. The enclosure atlas has an additional ID link through the archived upload receipt. These are existing project images. The atlas itself shows older renderings of the enclosure kits.\n\n| In-game use | Local originals | Evidence in the reviewed place |\n| --- | --- | --- |\n| Main menu icons | `icons_20261120/hud_*.png` | Six keys and dedicated asset references in `WR.Art`. The active HUD requests those art keys. |\n| Food and radar cards | `icons_20261120/food1–10.png` and `radar1–6.png` | `WR.Config` and shop panels select art from the matching keys in `WR.Art`. |\n| Seven enclosure card images | `assets/ui/out/enclosures.png` | Local atlas upload `121498455639768` → verified reupload `105509614296295` → current `WR.Art` tiles `enc0–enc6`. |\n\n[image:icon-rebirth]\n\n[image:icon-upgrade]\n\n[image:icon-index]\n\n[image:icon-rewards]\n\n[image:icon-shop]\n\n[image:icon-invite]\n\n[image:icon-cabbage]\n\n[image:icon-apple]\n\n[image:icon-carrot]\n\n[image:icon-melon]\n\n[image:icon-pineapple]\n\n[image:icon-shrimp]\n\n[image:icon-salmon]\n\n[image:icon-drumstick]\n\n[image:icon-ham]\n\n[image:icon-steak]\n\n[image:icon-common]\n\n[image:icon-uncommon]\n\n[image:icon-rare]\n\n[image:icon-epic]\n\n[image:icon-legendary]\n\n[image:icon-mystic]",
+          "imageIds": [
+            "icon-rebirth",
+            "icon-upgrade",
+            "icon-index",
+            "icon-rewards",
+            "icon-shop",
+            "icon-invite",
+            "icon-cabbage",
+            "icon-apple",
+            "icon-carrot",
+            "icon-melon",
+            "icon-pineapple",
+            "icon-shrimp",
+            "icon-salmon",
+            "icon-drumstick",
+            "icon-ham",
+            "icon-steak",
+            "icon-common",
+            "icon-uncommon",
+            "icon-rare",
+            "icon-epic",
+            "icon-legendary",
+            "icon-mystic"
+          ]
+        },
+        {
+          "id": "asset-enclosures",
+          "title": "Enclosure art and source files",
+          "markdown": "[image:enclosures]\n\nThe archived atlas is the source image for the seven enclosure thumbnails. Version 260 uses [Starter, Meadow, Safari, Glacier, Oasis, Jurassic and Crystal](#rebirth) as their names. The server rebuilds the pen's actual style when the owner rebirths. Current models also include independent decoration props.\n\n### Source folders within the local Roblox project\n\n| Source | What is in it | How it was matched |\n| --- | --- | --- |\n| `Animal_Rig_Lab_20261028/export/` | A rigged animated GLB for each of the 72 current IDs, alongside rig and clip data. | All 72 current `WR.Species` IDs have a same-ID `WRAnimals` template and a same-ID local GLB. The project's import notes identify this Animal Rig Lab pack. |\n| `Animal_Rig_Lab_20261028/verification/rig/` | The 72 original three-view model pictures used in the next six chapters. | Each image is keyed by its current model ID, including the renamed Enchanted pets. The pictures show the source rigs before in-game appearances, lighting, pose overrides and sizing. |\n| `wild_ranch/sap_uploads_20261116/` | Local melee GLBs, decoration and shop revisions and owner-provided icons. | Named décor exports correspond to the twelve live template slots. Later uploads may use another local revision of a given GLB. |\n| `wild_ranch_build/assets/` and `wild_ranch/models/` | Terrain textures, biome meshes, hub works, enclosure art and source packs. | Each of the six biome namespaces is present in the current runtime library, alongside hub and enclosure packs. |\n| `wild_ranch/gun_models/` and `wild_ranch/All_15_Revised_Tranquilizer_Images_V11/` | Gun models and design images. | Version 260 uses 15 in-place gun models in `WRGuns` and `WRGunShow`. Some local reference filenames use old weapon names. Exact geometry revisions are not confirmed by filenames. |\n| `wild_ranch_build/docs/evidence/` and `wild_ranch/playtest_release_20261031/` | The original screenshots used in the visual archive. | Matching project archive and in-game scene contents. Old images are labeled as earlier builds. |\n\nThe checked model IDs and picture names establish correspondence with the active roster. File membership by name does not establish that an uploaded Roblox mesh is byte-for-byte identical to every local export. Whether a particular asset resolves for a hosted player was outside this review.",
+          "imageIds": [
+            "enclosures"
+          ]
+        },
+        {
+          "id": "rig-grassland",
+          "title": "Grassland original model pictures",
+          "markdown": "The 12 Grassland source models, in the current roster order. These original three-view pictures show the project’s rig assets.\n\n[image:rig-deer]\n\n[image:rig-fox]\n\n[image:rig-boar]\n\n[image:rig-addax]\n\n[image:rig-horse]\n\n[image:rig-bison]\n\n[image:rig-moose]\n\n[image:rig-bear]\n\n[image:rig-tiger]\n\n[image:rig-unicorn]\n\n[image:rig-kirin]\n\n[image:rig-griffin]",
+          "imageIds": [
+            "rig-deer",
+            "rig-fox",
+            "rig-boar",
+            "rig-addax",
+            "rig-horse",
+            "rig-bison",
+            "rig-moose",
+            "rig-bear",
+            "rig-tiger",
+            "rig-unicorn",
+            "rig-kirin",
+            "rig-griffin"
+          ]
+        },
+        {
+          "id": "rig-savanna",
+          "title": "Savanna original model pictures",
+          "markdown": "The 12 Savanna source models, in the current roster order. These original three-view pictures show the project’s rig assets.\n\n[image:rig-zebra]\n\n[image:rig-ostrich]\n\n[image:rig-hedgehog]\n\n[image:rig-hyena]\n\n[image:rig-wildebeest]\n\n[image:rig-cheetah]\n\n[image:rig-giraffe]\n\n[image:rig-hippopotamus]\n\n[image:rig-crocodile]\n\n[image:rig-lion]\n\n[image:rig-elephant]\n\n[image:rig-cerberus]",
+          "imageIds": [
+            "rig-zebra",
+            "rig-ostrich",
+            "rig-hedgehog",
+            "rig-hyena",
+            "rig-wildebeest",
+            "rig-cheetah",
+            "rig-giraffe",
+            "rig-hippopotamus",
+            "rig-crocodile",
+            "rig-lion",
+            "rig-elephant",
+            "rig-cerberus"
+          ]
+        },
+        {
+          "id": "rig-snowland",
+          "title": "Snowland original model pictures",
+          "markdown": "The 12 Snowland source models, in the current roster order. These original three-view pictures show the project’s rig assets.\n\n[image:rig-red-panda]\n\n[image:rig-snow-monkey]\n\n[image:rig-mountain-goat]\n\n[image:rig-arctic-wolf]\n\n[image:rig-yak]\n\n[image:rig-wolverine]\n\n[image:rig-snow-leopard]\n\n[image:rig-polar-bear]\n\n[image:rig-woolly-rhino]\n\n[image:rig-woolly-mammoth]\n\n[image:rig-ice-tortoise]\n\n[image:rig-yeti]",
+          "imageIds": [
+            "rig-red-panda",
+            "rig-snow-monkey",
+            "rig-mountain-goat",
+            "rig-arctic-wolf",
+            "rig-yak",
+            "rig-wolverine",
+            "rig-snow-leopard",
+            "rig-polar-bear",
+            "rig-woolly-rhino",
+            "rig-woolly-mammoth",
+            "rig-ice-tortoise",
+            "rig-yeti"
+          ]
+        },
+        {
+          "id": "rig-desert",
+          "title": "Desert original model pictures",
+          "markdown": "The 12 Desert source models, in the current roster order. These original three-view pictures show the project’s rig assets.\n\n[image:rig-mouse]\n\n[image:rig-rabbit]\n\n[image:rig-fennec-fox]\n\n[image:rig-sand-cat]\n\n[image:rig-tarantula]\n\n[image:rig-caracal]\n\n[image:rig-bighorn-ram]\n\n[image:rig-camel]\n\n[image:rig-kangaroo]\n\n[image:rig-ammit]\n\n[image:rig-chimera]\n\n[image:rig-sand-dragon]",
+          "imageIds": [
+            "rig-mouse",
+            "rig-rabbit",
+            "rig-fennec-fox",
+            "rig-sand-cat",
+            "rig-tarantula",
+            "rig-caracal",
+            "rig-bighorn-ram",
+            "rig-camel",
+            "rig-kangaroo",
+            "rig-ammit",
+            "rig-chimera",
+            "rig-sand-dragon"
+          ]
+        },
+        {
+          "id": "rig-prehistoric",
+          "title": "Prehistoric original model pictures",
+          "markdown": "The 12 Prehistoric source models, in the current roster order. These original three-view pictures show the project’s rig assets.\n\n[image:rig-velociraptor]\n\n[image:rig-pachycephalosaurus]\n\n[image:rig-iguanodon]\n\n[image:rig-parasaurolophus]\n\n[image:rig-stegosaurus]\n\n[image:rig-ankylosaurus]\n\n[image:rig-triceratops]\n\n[image:rig-therizinosaurus]\n\n[image:rig-brachiosaurus]\n\n[image:rig-spinosaurus]\n\n[image:rig-tyrannosaurus-rex]\n\n[image:rig-dragon]",
+          "imageIds": [
+            "rig-velociraptor",
+            "rig-pachycephalosaurus",
+            "rig-iguanodon",
+            "rig-parasaurolophus",
+            "rig-stegosaurus",
+            "rig-ankylosaurus",
+            "rig-triceratops",
+            "rig-therizinosaurus",
+            "rig-brachiosaurus",
+            "rig-spinosaurus",
+            "rig-tyrannosaurus-rex",
+            "rig-dragon"
+          ]
+        },
+        {
+          "id": "rig-enchanted",
+          "title": "Enchanted Grove model pictures",
+          "markdown": "The 12 Enchanted Grove source models, in the current roster order. These original three-view pictures show the project’s rig assets.\n\n[image:rig-glimmer-deer]\n\n[image:rig-duskwolf]\n\n[image:rig-spinecat]\n\n[image:rig-mossback]\n\n[image:rig-tuskhorn]\n\n[image:rig-glowmane]\n\n[image:rig-featherscale]\n\n[image:rig-thunder-bison]\n\n[image:rig-hammerhorn]\n\n[image:rig-shadowfang]\n\n[image:rig-astraeus]\n\n[image:rig-violet-wyvern]",
+          "imageIds": [
+            "rig-glimmer-deer",
+            "rig-duskwolf",
+            "rig-spinecat",
+            "rig-mossback",
+            "rig-tuskhorn",
+            "rig-glowmane",
+            "rig-featherscale",
+            "rig-thunder-bison",
+            "rig-hammerhorn",
+            "rig-shadowfang",
+            "rig-astraeus",
+            "rig-violet-wyvern"
+          ]
+        }
+      ]
+    }
+  ],
+  "images": {
+    "ranch-v7-overview": {
+      "id": "ranch-v7-overview",
+      "file": "ranch-v7-overview.jpg",
+      "url": "/guide/img/ranch-v7-overview.jpg",
+      "alt": "The hub square, shop stalls and surrounding ranch plots from above.",
+      "caption": "The hub square, shop stalls and surrounding ranch plots from above.",
+      "label": "Archived Studio view",
+      "width": 1300,
+      "height": 729
+    },
+    "r8-pose-aim": {
+      "id": "r8-pose-aim",
+      "file": "r8-pose-aim.jpg",
+      "url": "/guide/img/r8-pose-aim.jpg",
+      "alt": "An earlier aiming and held-weapon pose in the square. The shop signs date from that build.",
+      "caption": "An earlier aiming and held-weapon pose in the square. The shop signs date from that build.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 685
+    },
+    "new-animals-grassland": {
+      "id": "new-animals-grassland",
+      "file": "new-animals-grassland.jpg",
+      "url": "/guide/img/new-animals-grassland.jpg",
+      "alt": "Wild animals in an early Grassland play session.",
+      "caption": "Wild animals in an early Grassland play session.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "r8-feed-prompt": {
+      "id": "r8-feed-prompt",
+      "file": "r8-feed-prompt.jpg",
+      "url": "/guide/img/r8-feed-prompt.jpg",
+      "alt": "Feeding a Cheetah inside the ranch in an earlier build.",
+      "caption": "Feeding a Cheetah inside the ranch in an earlier build.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 685
+    },
+    "gate3-play-client": {
+      "id": "gate3-play-client",
+      "file": "gate3-play-client.jpg",
+      "url": "/guide/img/gate3-play-client.jpg",
+      "alt": "Approaching the enclosure gate and fence.",
+      "caption": "Approaching the enclosure gate and fence.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "r8-ride-pose": {
+      "id": "r8-ride-pose",
+      "file": "r8-ride-pose.jpg",
+      "url": "/guide/img/r8-ride-pose.jpg",
+      "alt": "A Cheetah mount in the square. The old key hint predates current Dismount controls.",
+      "caption": "A Cheetah mount in the square. The old key hint predates current Dismount controls.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 685
+    },
+    "r8-fly-above-dismount": {
+      "id": "r8-fly-above-dismount",
+      "file": "r8-fly-above-dismount.jpg",
+      "url": "/guide/img/r8-fly-above-dismount.jpg",
+      "alt": "A Griffin in the Grassland with earlier flight and dismount controls.",
+      "caption": "A Griffin in the Grassland with earlier flight and dismount controls.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 685
+    },
+    "hosted-world-edit-capture": {
+      "id": "hosted-world-edit-capture",
+      "file": "hosted-world-edit-capture.jpg",
+      "url": "/guide/img/hosted-world-edit-capture.jpg",
+      "alt": "Paved plaza and Grassland approach from the saved-world archive.",
+      "caption": "Paved plaza and Grassland approach from the saved-world archive.",
+      "label": "Archived Studio view",
+      "width": 1300,
+      "height": 685
+    },
+    "hosted-snowland-edit-capture": {
+      "id": "hosted-snowland-edit-capture",
+      "file": "hosted-snowland-edit-capture.jpg",
+      "url": "/guide/img/hosted-snowland-edit-capture.jpg",
+      "alt": "Snowland aerial from the saved-world archive.",
+      "caption": "Snowland aerial from the saved-world archive.",
+      "label": "Archived Studio view",
+      "width": 1380,
+      "height": 727
+    },
+    "ranch-v7-tutorial-day": {
+      "id": "ranch-v7-tutorial-day",
+      "file": "ranch-v7-tutorial-day.jpg",
+      "url": "/guide/img/ranch-v7-tutorial-day.jpg",
+      "alt": "The ranch square and an earlier version of the welcome tutorial.",
+      "caption": "The ranch square and an earlier version of the welcome tutorial.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "ranch-v7-night": {
+      "id": "ranch-v7-night",
+      "file": "ranch-v7-night.jpg",
+      "url": "/guide/img/ranch-v7-night.jpg",
+      "alt": "The ranch square at night in an earlier build. Creature display prices and UI are historical.",
+      "caption": "The ranch square at night in an earlier build. Creature display prices and UI are historical.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "overhaul-overview": {
+      "id": "overhaul-overview",
+      "file": "overhaul-overview.jpg",
+      "url": "/guide/img/overhaul-overview.jpg",
+      "alt": "Grassland’s open meadows, soil banks and rock formations.",
+      "caption": "Grassland’s open meadows, soil banks and rock formations.",
+      "label": "Archived Studio view",
+      "width": 1380,
+      "height": 774
+    },
+    "p2-savanna-play-client": {
+      "id": "p2-savanna-play-client",
+      "file": "p2-savanna-play-client.jpg",
+      "url": "/guide/img/p2-savanna-play-client.jpg",
+      "alt": "Savanna play-client scene with rock arches and dry grass.",
+      "caption": "Savanna play-client scene with rock arches and dry grass.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "p2-snowland-play-client": {
+      "id": "p2-snowland-play-client",
+      "file": "p2-snowland-play-client.jpg",
+      "url": "/guide/img/p2-snowland-play-client.jpg",
+      "alt": "Snowland play-client scene with snowy shelves and conifers.",
+      "caption": "Snowland play-client scene with snowy shelves and conifers.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "p2-desert-play-client": {
+      "id": "p2-desert-play-client",
+      "file": "p2-desert-play-client.jpg",
+      "url": "/guide/img/p2-desert-play-client.jpg",
+      "alt": "Desert play-client scene with cacti and layered rock.",
+      "caption": "Desert play-client scene with cacti and layered rock.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "p2-prehistoric-play-client": {
+      "id": "p2-prehistoric-play-client",
+      "file": "p2-prehistoric-play-client.jpg",
+      "url": "/guide/img/p2-prehistoric-play-client.jpg",
+      "alt": "Prehistoric play-client scene with vegetation and layered ground.",
+      "caption": "Prehistoric play-client scene with vegetation and layered ground.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "p2-enchanted-play-client": {
+      "id": "p2-enchanted-play-client",
+      "file": "p2-enchanted-play-client.jpg",
+      "url": "/guide/img/p2-enchanted-play-client.jpg",
+      "alt": "Enchanted Grove play-client scene with blue trees and purple crystal formations.",
+      "caption": "Enchanted Grove play-client scene with blue trees and purple crystal formations.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "r8-pose-reload": {
+      "id": "r8-pose-reload",
+      "file": "r8-pose-reload.jpg",
+      "url": "/guide/img/r8-pose-reload.jpg",
+      "alt": "An older dart-gun reload pose in the ranch square.",
+      "caption": "An older dart-gun reload pose in the ranch square.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 685
+    },
+    "p2-enchanted-enc-play": {
+      "id": "p2-enchanted-enc-play",
+      "file": "p2-enchanted-enc-play.jpg",
+      "url": "/guide/img/p2-enchanted-enc-play.jpg",
+      "alt": "An earlier Enchanted-style enclosure in the hub.",
+      "caption": "An earlier Enchanted-style enclosure in the hub.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 729
+    },
+    "hosted-desert-edit-capture": {
+      "id": "hosted-desert-edit-capture",
+      "file": "hosted-desert-edit-capture.jpg",
+      "url": "/guide/img/hosted-desert-edit-capture.jpg",
+      "alt": "Desert aerial showing mesas and open flats.",
+      "caption": "Desert aerial showing mesas and open flats.",
+      "label": "Archived Studio view",
+      "width": 1380,
+      "height": 727
+    },
+    "hosted-enchanted-edit-capture": {
+      "id": "hosted-enchanted-edit-capture",
+      "file": "hosted-enchanted-edit-capture.jpg",
+      "url": "/guide/img/hosted-enchanted-edit-capture.jpg",
+      "alt": "Enchanted Grove aerial showing contrasting foliage and crystal fields.",
+      "caption": "Enchanted Grove aerial showing contrasting foliage and crystal fields.",
+      "label": "Archived Studio view",
+      "width": 1380,
+      "height": 727
+    },
+    "ranch-v7-merchant": {
+      "id": "ranch-v7-merchant",
+      "file": "ranch-v7-merchant.jpg",
+      "url": "/guide/img/ranch-v7-merchant.jpg",
+      "alt": "The Food Market’s green-awning model in an earlier plaza layout.",
+      "caption": "The Food Market’s green-awning model in an earlier plaza layout.",
+      "label": "Archived Studio view",
+      "width": 1300,
+      "height": 729
+    },
+    "native-studio-playtest": {
+      "id": "native-studio-playtest",
+      "file": "native-studio-playtest.jpg",
+      "url": "/guide/img/native-studio-playtest.jpg",
+      "alt": "An earlier Studio test at an enclosure. The original frame includes the Studio interface.",
+      "caption": "An earlier Studio test at an enclosure. The original frame includes the Studio interface.",
+      "label": "Archived play",
+      "width": 1300,
+      "height": 813
+    },
+    "icon-rebirth": {
+      "id": "icon-rebirth",
+      "file": "icon-rebirth.webp",
+      "url": "/guide/img/icon-rebirth.webp",
+      "alt": "Rebirth icon",
+      "caption": "Rebirth",
+      "label": "Rebirth",
+      "width": 240,
+      "height": 240
+    },
+    "icon-upgrade": {
+      "id": "icon-upgrade",
+      "file": "icon-upgrade.webp",
+      "url": "/guide/img/icon-upgrade.webp",
+      "alt": "Upgrade icon",
+      "caption": "Upgrade",
+      "label": "Upgrade",
+      "width": 240,
+      "height": 240
+    },
+    "icon-index": {
+      "id": "icon-index",
+      "file": "icon-index.webp",
+      "url": "/guide/img/icon-index.webp",
+      "alt": "Index icon",
+      "caption": "Index",
+      "label": "Index",
+      "width": 240,
+      "height": 240
+    },
+    "icon-rewards": {
+      "id": "icon-rewards",
+      "file": "icon-rewards.webp",
+      "url": "/guide/img/icon-rewards.webp",
+      "alt": "Rewards icon",
+      "caption": "Rewards",
+      "label": "Rewards",
+      "width": 240,
+      "height": 240
+    },
+    "icon-shop": {
+      "id": "icon-shop",
+      "file": "icon-shop.webp",
+      "url": "/guide/img/icon-shop.webp",
+      "alt": "Shop icon",
+      "caption": "Shop",
+      "label": "Shop",
+      "width": 240,
+      "height": 240
+    },
+    "icon-invite": {
+      "id": "icon-invite",
+      "file": "icon-invite.webp",
+      "url": "/guide/img/icon-invite.webp",
+      "alt": "Invite icon",
+      "caption": "Invite",
+      "label": "Invite",
+      "width": 240,
+      "height": 240
+    },
+    "icon-cabbage": {
+      "id": "icon-cabbage",
+      "file": "icon-cabbage.webp",
+      "url": "/guide/img/icon-cabbage.webp",
+      "alt": "Cabbage icon",
+      "caption": "Cabbage",
+      "label": "Cabbage",
+      "width": 240,
+      "height": 240
+    },
+    "icon-apple": {
+      "id": "icon-apple",
+      "file": "icon-apple.webp",
+      "url": "/guide/img/icon-apple.webp",
+      "alt": "Apple icon",
+      "caption": "Apple",
+      "label": "Apple",
+      "width": 240,
+      "height": 240
+    },
+    "icon-carrot": {
+      "id": "icon-carrot",
+      "file": "icon-carrot.webp",
+      "url": "/guide/img/icon-carrot.webp",
+      "alt": "Carrot icon",
+      "caption": "Carrot",
+      "label": "Carrot",
+      "width": 240,
+      "height": 240
+    },
+    "icon-melon": {
+      "id": "icon-melon",
+      "file": "icon-melon.webp",
+      "url": "/guide/img/icon-melon.webp",
+      "alt": "Melon icon",
+      "caption": "Melon",
+      "label": "Melon",
+      "width": 240,
+      "height": 240
+    },
+    "icon-pineapple": {
+      "id": "icon-pineapple",
+      "file": "icon-pineapple.webp",
+      "url": "/guide/img/icon-pineapple.webp",
+      "alt": "Pineapple icon",
+      "caption": "Pineapple",
+      "label": "Pineapple",
+      "width": 240,
+      "height": 240
+    },
+    "icon-shrimp": {
+      "id": "icon-shrimp",
+      "file": "icon-shrimp.webp",
+      "url": "/guide/img/icon-shrimp.webp",
+      "alt": "Shrimp icon",
+      "caption": "Shrimp",
+      "label": "Shrimp",
+      "width": 240,
+      "height": 240
+    },
+    "icon-salmon": {
+      "id": "icon-salmon",
+      "file": "icon-salmon.webp",
+      "url": "/guide/img/icon-salmon.webp",
+      "alt": "Salmon icon",
+      "caption": "Salmon",
+      "label": "Salmon",
+      "width": 240,
+      "height": 240
+    },
+    "icon-drumstick": {
+      "id": "icon-drumstick",
+      "file": "icon-drumstick.webp",
+      "url": "/guide/img/icon-drumstick.webp",
+      "alt": "Drumstick icon",
+      "caption": "Drumstick",
+      "label": "Drumstick",
+      "width": 240,
+      "height": 240
+    },
+    "icon-ham": {
+      "id": "icon-ham",
+      "file": "icon-ham.webp",
+      "url": "/guide/img/icon-ham.webp",
+      "alt": "Ham icon",
+      "caption": "Ham",
+      "label": "Ham",
+      "width": 240,
+      "height": 240
+    },
+    "icon-steak": {
+      "id": "icon-steak",
+      "file": "icon-steak.webp",
+      "url": "/guide/img/icon-steak.webp",
+      "alt": "Steak icon",
+      "caption": "Steak",
+      "label": "Steak",
+      "width": 240,
+      "height": 240
+    },
+    "icon-common": {
+      "id": "icon-common",
+      "file": "icon-common.webp",
+      "url": "/guide/img/icon-common.webp",
+      "alt": "Common icon",
+      "caption": "Common",
+      "label": "Common",
+      "width": 240,
+      "height": 240
+    },
+    "icon-uncommon": {
+      "id": "icon-uncommon",
+      "file": "icon-uncommon.webp",
+      "url": "/guide/img/icon-uncommon.webp",
+      "alt": "Uncommon icon",
+      "caption": "Uncommon",
+      "label": "Uncommon",
+      "width": 240,
+      "height": 240
+    },
+    "icon-rare": {
+      "id": "icon-rare",
+      "file": "icon-rare.webp",
+      "url": "/guide/img/icon-rare.webp",
+      "alt": "Rare icon",
+      "caption": "Rare",
+      "label": "Rare",
+      "width": 240,
+      "height": 240
+    },
+    "icon-epic": {
+      "id": "icon-epic",
+      "file": "icon-epic.webp",
+      "url": "/guide/img/icon-epic.webp",
+      "alt": "Epic icon",
+      "caption": "Epic",
+      "label": "Epic",
+      "width": 240,
+      "height": 240
+    },
+    "icon-legendary": {
+      "id": "icon-legendary",
+      "file": "icon-legendary.webp",
+      "url": "/guide/img/icon-legendary.webp",
+      "alt": "Legendary icon",
+      "caption": "Legendary",
+      "label": "Legendary",
+      "width": 240,
+      "height": 240
+    },
+    "icon-mystic": {
+      "id": "icon-mystic",
+      "file": "icon-mystic.webp",
+      "url": "/guide/img/icon-mystic.webp",
+      "alt": "Mystic icon",
+      "caption": "Mystic",
+      "label": "Mystic",
+      "width": 240,
+      "height": 240
+    },
+    "enclosures": {
+      "id": "enclosures",
+      "file": "enclosures.jpg",
+      "url": "/guide/img/enclosures.jpg",
+      "alt": "Seven enclosure thumbnails from the atlas used by the current art slots. Read each tile from left to right, top row first.",
+      "caption": "Seven enclosure thumbnails from the atlas used by the current art slots. Read each tile from left to right, top row first.",
+      "label": "Original game art",
+      "width": 1024,
+      "height": 512
+    },
+    "rig-deer": {
+      "id": "rig-deer",
+      "file": "rig-deer.jpg",
+      "url": "/guide/img/rig-deer.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Deer",
+      "caption": "Common",
+      "label": "Deer",
+      "width": 780,
+      "height": 260
+    },
+    "rig-fox": {
+      "id": "rig-fox",
+      "file": "rig-fox.jpg",
+      "url": "/guide/img/rig-fox.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Fox",
+      "caption": "Common",
+      "label": "Fox",
+      "width": 780,
+      "height": 260
+    },
+    "rig-boar": {
+      "id": "rig-boar",
+      "file": "rig-boar.jpg",
+      "url": "/guide/img/rig-boar.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Boar",
+      "caption": "Common",
+      "label": "Boar",
+      "width": 780,
+      "height": 260
+    },
+    "rig-addax": {
+      "id": "rig-addax",
+      "file": "rig-addax.jpg",
+      "url": "/guide/img/rig-addax.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Addax",
+      "caption": "Uncommon",
+      "label": "Addax",
+      "width": 780,
+      "height": 260
+    },
+    "rig-horse": {
+      "id": "rig-horse",
+      "file": "rig-horse.jpg",
+      "url": "/guide/img/rig-horse.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Horse",
+      "caption": "Uncommon",
+      "label": "Horse",
+      "width": 780,
+      "height": 260
+    },
+    "rig-bison": {
+      "id": "rig-bison",
+      "file": "rig-bison.jpg",
+      "url": "/guide/img/rig-bison.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Bison",
+      "caption": "Rare",
+      "label": "Bison",
+      "width": 780,
+      "height": 260
+    },
+    "rig-moose": {
+      "id": "rig-moose",
+      "file": "rig-moose.jpg",
+      "url": "/guide/img/rig-moose.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Moose",
+      "caption": "Rare",
+      "label": "Moose",
+      "width": 780,
+      "height": 260
+    },
+    "rig-bear": {
+      "id": "rig-bear",
+      "file": "rig-bear.jpg",
+      "url": "/guide/img/rig-bear.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Bear",
+      "caption": "Epic",
+      "label": "Bear",
+      "width": 780,
+      "height": 260
+    },
+    "rig-tiger": {
+      "id": "rig-tiger",
+      "file": "rig-tiger.jpg",
+      "url": "/guide/img/rig-tiger.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Tiger",
+      "caption": "Epic",
+      "label": "Tiger",
+      "width": 780,
+      "height": 260
+    },
+    "rig-unicorn": {
+      "id": "rig-unicorn",
+      "file": "rig-unicorn.jpg",
+      "url": "/guide/img/rig-unicorn.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Unicorn",
+      "caption": "Legendary",
+      "label": "Unicorn",
+      "width": 780,
+      "height": 260
+    },
+    "rig-kirin": {
+      "id": "rig-kirin",
+      "file": "rig-kirin.jpg",
+      "url": "/guide/img/rig-kirin.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Kirin",
+      "caption": "Legendary",
+      "label": "Kirin",
+      "width": 780,
+      "height": 260
+    },
+    "rig-griffin": {
+      "id": "rig-griffin",
+      "file": "rig-griffin.jpg",
+      "url": "/guide/img/rig-griffin.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Griffin",
+      "caption": "Mystic Fly",
+      "label": "Griffin",
+      "width": 780,
+      "height": 260
+    },
+    "rig-zebra": {
+      "id": "rig-zebra",
+      "file": "rig-zebra.jpg",
+      "url": "/guide/img/rig-zebra.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Zebra",
+      "caption": "Common",
+      "label": "Zebra",
+      "width": 780,
+      "height": 260
+    },
+    "rig-ostrich": {
+      "id": "rig-ostrich",
+      "file": "rig-ostrich.jpg",
+      "url": "/guide/img/rig-ostrich.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Ostrich",
+      "caption": "Common",
+      "label": "Ostrich",
+      "width": 780,
+      "height": 260
+    },
+    "rig-hedgehog": {
+      "id": "rig-hedgehog",
+      "file": "rig-hedgehog.jpg",
+      "url": "/guide/img/rig-hedgehog.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Hedgehog",
+      "caption": "Common",
+      "label": "Hedgehog",
+      "width": 780,
+      "height": 260
+    },
+    "rig-hyena": {
+      "id": "rig-hyena",
+      "file": "rig-hyena.jpg",
+      "url": "/guide/img/rig-hyena.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Hyena",
+      "caption": "Uncommon",
+      "label": "Hyena",
+      "width": 780,
+      "height": 260
+    },
+    "rig-wildebeest": {
+      "id": "rig-wildebeest",
+      "file": "rig-wildebeest.jpg",
+      "url": "/guide/img/rig-wildebeest.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Wildebeest",
+      "caption": "Uncommon",
+      "label": "Wildebeest",
+      "width": 780,
+      "height": 260
+    },
+    "rig-cheetah": {
+      "id": "rig-cheetah",
+      "file": "rig-cheetah.jpg",
+      "url": "/guide/img/rig-cheetah.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Cheetah",
+      "caption": "Rare",
+      "label": "Cheetah",
+      "width": 780,
+      "height": 260
+    },
+    "rig-giraffe": {
+      "id": "rig-giraffe",
+      "file": "rig-giraffe.jpg",
+      "url": "/guide/img/rig-giraffe.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Giraffe",
+      "caption": "Rare",
+      "label": "Giraffe",
+      "width": 780,
+      "height": 260
+    },
+    "rig-hippopotamus": {
+      "id": "rig-hippopotamus",
+      "file": "rig-hippopotamus.jpg",
+      "url": "/guide/img/rig-hippopotamus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Hippopotamus",
+      "caption": "Epic",
+      "label": "Hippopotamus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-crocodile": {
+      "id": "rig-crocodile",
+      "file": "rig-crocodile.jpg",
+      "url": "/guide/img/rig-crocodile.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Crocodile",
+      "caption": "Epic",
+      "label": "Crocodile",
+      "width": 780,
+      "height": 260
+    },
+    "rig-lion": {
+      "id": "rig-lion",
+      "file": "rig-lion.jpg",
+      "url": "/guide/img/rig-lion.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Lion",
+      "caption": "Legendary",
+      "label": "Lion",
+      "width": 780,
+      "height": 260
+    },
+    "rig-elephant": {
+      "id": "rig-elephant",
+      "file": "rig-elephant.jpg",
+      "url": "/guide/img/rig-elephant.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Elephant",
+      "caption": "Legendary",
+      "label": "Elephant",
+      "width": 780,
+      "height": 260
+    },
+    "rig-cerberus": {
+      "id": "rig-cerberus",
+      "file": "rig-cerberus.jpg",
+      "url": "/guide/img/rig-cerberus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Cerberus",
+      "caption": "Mystic",
+      "label": "Cerberus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-red-panda": {
+      "id": "rig-red-panda",
+      "file": "rig-red-panda.jpg",
+      "url": "/guide/img/rig-red-panda.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Red Panda",
+      "caption": "Common",
+      "label": "Red Panda",
+      "width": 780,
+      "height": 260
+    },
+    "rig-snow-monkey": {
+      "id": "rig-snow-monkey",
+      "file": "rig-snow-monkey.jpg",
+      "url": "/guide/img/rig-snow-monkey.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Snow Monkey",
+      "caption": "Common",
+      "label": "Snow Monkey",
+      "width": 780,
+      "height": 260
+    },
+    "rig-mountain-goat": {
+      "id": "rig-mountain-goat",
+      "file": "rig-mountain-goat.jpg",
+      "url": "/guide/img/rig-mountain-goat.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Mountain Goat",
+      "caption": "Common",
+      "label": "Mountain Goat",
+      "width": 780,
+      "height": 260
+    },
+    "rig-arctic-wolf": {
+      "id": "rig-arctic-wolf",
+      "file": "rig-arctic-wolf.jpg",
+      "url": "/guide/img/rig-arctic-wolf.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Arctic Wolf",
+      "caption": "Uncommon",
+      "label": "Arctic Wolf",
+      "width": 780,
+      "height": 260
+    },
+    "rig-yak": {
+      "id": "rig-yak",
+      "file": "rig-yak.jpg",
+      "url": "/guide/img/rig-yak.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Yak",
+      "caption": "Uncommon",
+      "label": "Yak",
+      "width": 780,
+      "height": 260
+    },
+    "rig-wolverine": {
+      "id": "rig-wolverine",
+      "file": "rig-wolverine.jpg",
+      "url": "/guide/img/rig-wolverine.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Wolverine",
+      "caption": "Rare",
+      "label": "Wolverine",
+      "width": 780,
+      "height": 260
+    },
+    "rig-snow-leopard": {
+      "id": "rig-snow-leopard",
+      "file": "rig-snow-leopard.jpg",
+      "url": "/guide/img/rig-snow-leopard.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Snow Leopard",
+      "caption": "Rare",
+      "label": "Snow Leopard",
+      "width": 780,
+      "height": 260
+    },
+    "rig-polar-bear": {
+      "id": "rig-polar-bear",
+      "file": "rig-polar-bear.jpg",
+      "url": "/guide/img/rig-polar-bear.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Polar Bear",
+      "caption": "Epic",
+      "label": "Polar Bear",
+      "width": 780,
+      "height": 260
+    },
+    "rig-woolly-rhino": {
+      "id": "rig-woolly-rhino",
+      "file": "rig-woolly-rhino.jpg",
+      "url": "/guide/img/rig-woolly-rhino.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Woolly Rhino",
+      "caption": "Epic",
+      "label": "Woolly Rhino",
+      "width": 780,
+      "height": 260
+    },
+    "rig-woolly-mammoth": {
+      "id": "rig-woolly-mammoth",
+      "file": "rig-woolly-mammoth.jpg",
+      "url": "/guide/img/rig-woolly-mammoth.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Woolly Mammoth",
+      "caption": "Legendary",
+      "label": "Woolly Mammoth",
+      "width": 780,
+      "height": 260
+    },
+    "rig-ice-tortoise": {
+      "id": "rig-ice-tortoise",
+      "file": "rig-ice-tortoise.jpg",
+      "url": "/guide/img/rig-ice-tortoise.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Ice Tortoise",
+      "caption": "Legendary",
+      "label": "Ice Tortoise",
+      "width": 780,
+      "height": 260
+    },
+    "rig-yeti": {
+      "id": "rig-yeti",
+      "file": "rig-yeti.jpg",
+      "url": "/guide/img/rig-yeti.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Yeti",
+      "caption": "Mystic",
+      "label": "Yeti",
+      "width": 780,
+      "height": 260
+    },
+    "rig-mouse": {
+      "id": "rig-mouse",
+      "file": "rig-mouse.jpg",
+      "url": "/guide/img/rig-mouse.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Mouse",
+      "caption": "Common",
+      "label": "Mouse",
+      "width": 780,
+      "height": 260
+    },
+    "rig-rabbit": {
+      "id": "rig-rabbit",
+      "file": "rig-rabbit.jpg",
+      "url": "/guide/img/rig-rabbit.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Rabbit",
+      "caption": "Common",
+      "label": "Rabbit",
+      "width": 780,
+      "height": 260
+    },
+    "rig-fennec-fox": {
+      "id": "rig-fennec-fox",
+      "file": "rig-fennec-fox.jpg",
+      "url": "/guide/img/rig-fennec-fox.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Fennec Fox",
+      "caption": "Common",
+      "label": "Fennec Fox",
+      "width": 780,
+      "height": 260
+    },
+    "rig-sand-cat": {
+      "id": "rig-sand-cat",
+      "file": "rig-sand-cat.jpg",
+      "url": "/guide/img/rig-sand-cat.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Sand Cat",
+      "caption": "Uncommon",
+      "label": "Sand Cat",
+      "width": 780,
+      "height": 260
+    },
+    "rig-tarantula": {
+      "id": "rig-tarantula",
+      "file": "rig-tarantula.jpg",
+      "url": "/guide/img/rig-tarantula.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Tarantula",
+      "caption": "Uncommon",
+      "label": "Tarantula",
+      "width": 780,
+      "height": 260
+    },
+    "rig-caracal": {
+      "id": "rig-caracal",
+      "file": "rig-caracal.jpg",
+      "url": "/guide/img/rig-caracal.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Caracal",
+      "caption": "Rare",
+      "label": "Caracal",
+      "width": 780,
+      "height": 260
+    },
+    "rig-bighorn-ram": {
+      "id": "rig-bighorn-ram",
+      "file": "rig-bighorn-ram.jpg",
+      "url": "/guide/img/rig-bighorn-ram.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Bighorn Ram",
+      "caption": "Rare",
+      "label": "Bighorn Ram",
+      "width": 780,
+      "height": 260
+    },
+    "rig-camel": {
+      "id": "rig-camel",
+      "file": "rig-camel.jpg",
+      "url": "/guide/img/rig-camel.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Camel",
+      "caption": "Epic",
+      "label": "Camel",
+      "width": 780,
+      "height": 260
+    },
+    "rig-kangaroo": {
+      "id": "rig-kangaroo",
+      "file": "rig-kangaroo.jpg",
+      "url": "/guide/img/rig-kangaroo.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Kangaroo",
+      "caption": "Epic",
+      "label": "Kangaroo",
+      "width": 780,
+      "height": 260
+    },
+    "rig-ammit": {
+      "id": "rig-ammit",
+      "file": "rig-ammit.jpg",
+      "url": "/guide/img/rig-ammit.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Ammit",
+      "caption": "Legendary",
+      "label": "Ammit",
+      "width": 780,
+      "height": 260
+    },
+    "rig-chimera": {
+      "id": "rig-chimera",
+      "file": "rig-chimera.jpg",
+      "url": "/guide/img/rig-chimera.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Chimera",
+      "caption": "Legendary",
+      "label": "Chimera",
+      "width": 780,
+      "height": 260
+    },
+    "rig-sand-dragon": {
+      "id": "rig-sand-dragon",
+      "file": "rig-sand-dragon.jpg",
+      "url": "/guide/img/rig-sand-dragon.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Sand Dragon",
+      "caption": "Mystic Fly",
+      "label": "Sand Dragon",
+      "width": 780,
+      "height": 260
+    },
+    "rig-velociraptor": {
+      "id": "rig-velociraptor",
+      "file": "rig-velociraptor.jpg",
+      "url": "/guide/img/rig-velociraptor.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Velociraptor",
+      "caption": "Common",
+      "label": "Velociraptor",
+      "width": 780,
+      "height": 260
+    },
+    "rig-pachycephalosaurus": {
+      "id": "rig-pachycephalosaurus",
+      "file": "rig-pachycephalosaurus.jpg",
+      "url": "/guide/img/rig-pachycephalosaurus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Pachycephalosaurus",
+      "caption": "Common",
+      "label": "Pachycephalosaurus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-iguanodon": {
+      "id": "rig-iguanodon",
+      "file": "rig-iguanodon.jpg",
+      "url": "/guide/img/rig-iguanodon.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Iguanodon",
+      "caption": "Common",
+      "label": "Iguanodon",
+      "width": 780,
+      "height": 260
+    },
+    "rig-parasaurolophus": {
+      "id": "rig-parasaurolophus",
+      "file": "rig-parasaurolophus.jpg",
+      "url": "/guide/img/rig-parasaurolophus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Parasaurolophus",
+      "caption": "Uncommon",
+      "label": "Parasaurolophus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-stegosaurus": {
+      "id": "rig-stegosaurus",
+      "file": "rig-stegosaurus.jpg",
+      "url": "/guide/img/rig-stegosaurus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Stegosaurus",
+      "caption": "Uncommon",
+      "label": "Stegosaurus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-ankylosaurus": {
+      "id": "rig-ankylosaurus",
+      "file": "rig-ankylosaurus.jpg",
+      "url": "/guide/img/rig-ankylosaurus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Ankylosaurus",
+      "caption": "Rare",
+      "label": "Ankylosaurus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-triceratops": {
+      "id": "rig-triceratops",
+      "file": "rig-triceratops.jpg",
+      "url": "/guide/img/rig-triceratops.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Triceratops",
+      "caption": "Rare",
+      "label": "Triceratops",
+      "width": 780,
+      "height": 260
+    },
+    "rig-therizinosaurus": {
+      "id": "rig-therizinosaurus",
+      "file": "rig-therizinosaurus.jpg",
+      "url": "/guide/img/rig-therizinosaurus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Therizinosaurus",
+      "caption": "Epic",
+      "label": "Therizinosaurus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-brachiosaurus": {
+      "id": "rig-brachiosaurus",
+      "file": "rig-brachiosaurus.jpg",
+      "url": "/guide/img/rig-brachiosaurus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Brachiosaurus",
+      "caption": "Epic",
+      "label": "Brachiosaurus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-spinosaurus": {
+      "id": "rig-spinosaurus",
+      "file": "rig-spinosaurus.jpg",
+      "url": "/guide/img/rig-spinosaurus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Spinosaurus",
+      "caption": "Legendary",
+      "label": "Spinosaurus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-tyrannosaurus-rex": {
+      "id": "rig-tyrannosaurus-rex",
+      "file": "rig-tyrannosaurus-rex.jpg",
+      "url": "/guide/img/rig-tyrannosaurus-rex.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Tyrannosaurus Rex",
+      "caption": "Legendary",
+      "label": "Tyrannosaurus Rex",
+      "width": 780,
+      "height": 260
+    },
+    "rig-dragon": {
+      "id": "rig-dragon",
+      "file": "rig-dragon.jpg",
+      "url": "/guide/img/rig-dragon.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Dragon",
+      "caption": "Mystic Fly",
+      "label": "Dragon",
+      "width": 780,
+      "height": 260
+    },
+    "rig-glimmer-deer": {
+      "id": "rig-glimmer-deer",
+      "file": "rig-glimmer-deer.jpg",
+      "url": "/guide/img/rig-glimmer-deer.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Glimmer Deer",
+      "caption": "Common",
+      "label": "Glimmer Deer",
+      "width": 780,
+      "height": 260
+    },
+    "rig-duskwolf": {
+      "id": "rig-duskwolf",
+      "file": "rig-duskwolf.jpg",
+      "url": "/guide/img/rig-duskwolf.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Duskwolf",
+      "caption": "Common",
+      "label": "Duskwolf",
+      "width": 780,
+      "height": 260
+    },
+    "rig-spinecat": {
+      "id": "rig-spinecat",
+      "file": "rig-spinecat.jpg",
+      "url": "/guide/img/rig-spinecat.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Spinecat",
+      "caption": "Common",
+      "label": "Spinecat",
+      "width": 780,
+      "height": 260
+    },
+    "rig-mossback": {
+      "id": "rig-mossback",
+      "file": "rig-mossback.jpg",
+      "url": "/guide/img/rig-mossback.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Mossback",
+      "caption": "Uncommon",
+      "label": "Mossback",
+      "width": 780,
+      "height": 260
+    },
+    "rig-tuskhorn": {
+      "id": "rig-tuskhorn",
+      "file": "rig-tuskhorn.jpg",
+      "url": "/guide/img/rig-tuskhorn.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Tuskhorn",
+      "caption": "Uncommon",
+      "label": "Tuskhorn",
+      "width": 780,
+      "height": 260
+    },
+    "rig-glowmane": {
+      "id": "rig-glowmane",
+      "file": "rig-glowmane.jpg",
+      "url": "/guide/img/rig-glowmane.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Glowmane",
+      "caption": "Rare",
+      "label": "Glowmane",
+      "width": 780,
+      "height": 260
+    },
+    "rig-featherscale": {
+      "id": "rig-featherscale",
+      "file": "rig-featherscale.jpg",
+      "url": "/guide/img/rig-featherscale.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Featherscale",
+      "caption": "Rare",
+      "label": "Featherscale",
+      "width": 780,
+      "height": 260
+    },
+    "rig-thunder-bison": {
+      "id": "rig-thunder-bison",
+      "file": "rig-thunder-bison.jpg",
+      "url": "/guide/img/rig-thunder-bison.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Thunder Bison",
+      "caption": "Epic",
+      "label": "Thunder Bison",
+      "width": 780,
+      "height": 260
+    },
+    "rig-hammerhorn": {
+      "id": "rig-hammerhorn",
+      "file": "rig-hammerhorn.jpg",
+      "url": "/guide/img/rig-hammerhorn.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Hammerhorn",
+      "caption": "Epic",
+      "label": "Hammerhorn",
+      "width": 780,
+      "height": 260
+    },
+    "rig-shadowfang": {
+      "id": "rig-shadowfang",
+      "file": "rig-shadowfang.jpg",
+      "url": "/guide/img/rig-shadowfang.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Shadowfang",
+      "caption": "Legendary",
+      "label": "Shadowfang",
+      "width": 780,
+      "height": 260
+    },
+    "rig-astraeus": {
+      "id": "rig-astraeus",
+      "file": "rig-astraeus.jpg",
+      "url": "/guide/img/rig-astraeus.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Astraeus",
+      "caption": "Legendary",
+      "label": "Astraeus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-violet-wyvern": {
+      "id": "rig-violet-wyvern",
+      "file": "rig-violet-wyvern.jpg",
+      "url": "/guide/img/rig-violet-wyvern.jpg",
+      "alt": "Original Animal Rig Lab three-view picture of Violet Wyvern",
+      "caption": "Mystic Fly",
+      "label": "Violet Wyvern",
+      "width": 780,
+      "height": 260
+    }
+  }
+}

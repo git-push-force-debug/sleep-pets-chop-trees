@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { PlayIcon } from '../../../../packages/shared/src/ui/icons.tsx';
 import { RaisedPillLink } from '../../../../packages/shared/src/ui/RaisedPill.tsx';
-import { openChat, ROBLOX_URL } from '../guide.ts';
+import { openChat, ROBLOX_URL } from '../site.ts';
 
 const LOOP = [
   { n: 1, title: 'Sleep', text: 'Aim the dart gun and fill sleep progress to 100%.', color: 'var(--sky)' },

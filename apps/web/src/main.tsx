@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router';
 import '../../../packages/shared/src/tokens.css';
 import '../../../packages/shared/src/ui/ui.css';
 import './web.css';
+import './chat/chat.css';
 import { AppRoutes } from './App.tsx';
 
 createRoot(document.getElementById('root')!).render(

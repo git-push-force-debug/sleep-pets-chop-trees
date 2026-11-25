@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
 import { PlayIcon } from '../../../packages/shared/src/ui/icons.tsx';
 import { RaisedPillLink } from '../../../packages/shared/src/ui/RaisedPill.tsx';
-import { NAV, ROBLOX_URL } from './guide.ts';
+import { ChatProvider } from './chat/ChatLauncher.tsx';
+import { NAV, ROBLOX_URL } from './site.ts';
 
 export function Layout() {
   const { pathname, hash } = useLocation();
@@ -12,7 +13,7 @@ export function Layout() {
   }, [pathname, hash]);
 
   return (
-    <>
+    <ChatProvider>
       <a className="skip-link" href="#main">Skip to content</a>
       <header className={`site-header ${pathname === '/' ? 'over-hero' : ''}`}>
         <div className="wrap header-row">
@@ -60,6 +61,6 @@ export function Layout() {
           <span>Not affiliated with Roblox Corporation.</span>
         </div>
       </footer>
-    </>
+    </ChatProvider>
   );
 }

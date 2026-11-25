@@ -4,7 +4,8 @@ import { useParams } from 'react-router';
 import remarkGfm from 'remark-gfm';
 import type { GuideImage } from '../../../../packages/shared/src/guide.ts';
 import { Lightbox } from '../../../../packages/shared/src/ui/Lightbox.tsx';
-import { chapterBySlug, openChat, piecesOf } from '../guide.ts';
+import { chapterBySlug, piecesOf } from '../guide.ts';
+import { openChat } from '../site.ts';
 import { NotFound } from './NotFound.tsx';
 
 const searchable = (s: { title: string; markdown: string }) => `${s.title}\n${s.markdown}`.toLowerCase();

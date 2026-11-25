@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { MemoryRouter } from 'react-router';
@@ -13,35 +13,39 @@ beforeEach(() => {
 });
 afterEach(cleanup);
 
-const at = (path: string) =>
-  render(
+// Guide pages are lazy-loaded, so wait for the loading text to go away.
+async function at(path: string) {
+  const view = render(
     <MemoryRouter initialEntries={[path]}>
       <AppRoutes />
     </MemoryRouter>,
   );
+  await waitFor(() => expect(screen.queryByText('Loading the guide…')).toBeNull());
+  return view;
+}
 
 describe('guide chapter page', () => {
-  it('renders section anchors that bot sources link to', () => {
-    const { container } = at('/guide/player-guide');
+  it('renders section anchors that bot sources link to', async () => {
+    const { container } = await at('/guide/player-guide');
     expect(container.querySelector('#rebirth')).not.toBeNull();
     expect(screen.getByRole('heading', { level: 1, name: 'Player guide' })).toBeTruthy();
   });
 
-  it('renders guide tables and pictures', () => {
-    const { container } = at('/guide/player-guide');
+  it('renders guide tables and pictures', async () => {
+    const { container } = await at('/guide/player-guide');
     expect(screen.getAllByText('$16,000,000,000').length).toBeGreaterThan(0);
     expect(container.querySelector('img[src^="/guide/img/"]')).not.toBeNull();
   });
 
-  it('filters sections with the search box', () => {
-    at('/guide/player-guide');
+  it('filters sections with the search box', async () => {
+    await at('/guide/player-guide');
     fireEvent.change(screen.getByLabelText('Search this chapter'), { target: { value: 'golden tree' } });
     expect(screen.queryByRole('heading', { name: 'Unlock the six ranch tiers' })).toBeNull();
     expect(screen.getByRole('heading', { name: 'Chop trees and handle knockback' })).toBeTruthy();
   });
 
-  it('has no page for the admin-only creator chapter', () => {
-    at('/guide/creator');
+  it('has no page for the admin-only creator chapter', async () => {
+    await at('/guide/creator');
     expect(screen.getByRole('heading', { name: 'Page not found' })).toBeTruthy();
   });
 });

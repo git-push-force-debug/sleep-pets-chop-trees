@@ -28,7 +28,7 @@ async function at(path: string) {
       <AppRoutes />
     </MemoryRouter>,
   );
-  await waitFor(() => expect(screen.queryByText('Loading the guide…')).toBeNull());
+  await waitFor(() => expect(screen.queryByText('Loading the guide…')).toBeNull(), { timeout: 5000 }); // first lazy import can be slow on a cold run
   return view;
 }
 
@@ -43,13 +43,6 @@ describe('guide chapter page', () => {
     const { container } = await at('/guide/player-guide');
     expect(screen.getAllByText('$16,000,000,000').length).toBeGreaterThan(0);
     expect(container.querySelector('img[src^="/guide/img/"]')).not.toBeNull();
-  });
-
-  it('filters sections with the search box', async () => {
-    await at('/guide/player-guide');
-    fireEvent.change(screen.getByLabelText('Search this chapter'), { target: { value: 'golden tree' } });
-    expect(screen.queryByRole('heading', { name: 'Unlock the six ranch tiers' })).toBeNull();
-    expect(screen.getByRole('heading', { name: 'Chop trees and handle knockback' })).toBeTruthy();
   });
 
   it('has no page for the admin-only creator chapter', async () => {

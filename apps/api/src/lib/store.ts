@@ -47,6 +47,25 @@ export interface AgentRow {
   display_name: string;
 }
 
+export interface FaqRow {
+  id: string;
+  question: string;
+  answer: string;
+  dify_segment_id: string | null;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface GapRow {
+  id: string;
+  session_id: string | null;
+  question: string;
+  top_score: number | null;
+  resolved: boolean;
+  created_at: string;
+}
+
 export interface Store {
   getAgent(userId: string): Promise<AgentRow | null>;
   latestOpenSession(userId: string): Promise<SessionRow | null>;
@@ -66,6 +85,23 @@ export interface Store {
   addGap(gap: { session_id: string; question: string; top_score: number }): Promise<void>;
   getChatwootContact(userId: string): Promise<{ auth_token: string } | null>;
   saveChatwootContact(userId: string, authToken: string, sourceId: string): Promise<void>;
+  // Admin
+  listSessions(statuses: SessionStatus[], limit: number): Promise<SessionRow[]>;
+  statsData(fromIso: string, toIso: string): Promise<{ sessions: SessionRow[]; messages: MessageRow[] }>;
+  listFaq(): Promise<FaqRow[]>;
+  createFaq(row: Pick<FaqRow, 'question' | 'answer' | 'created_by'>): Promise<FaqRow>;
+  updateFaq(id: string, patch: Partial<Pick<FaqRow, 'question' | 'answer' | 'dify_segment_id'>>): Promise<FaqRow | null>;
+  deleteFaq(id: string): Promise<FaqRow | null>;
+  listGaps(): Promise<GapRow[]>;
+  resolveGap(id: string): Promise<void>;
+  listAgents(): Promise<(AgentRow & { email: string | null })[]>;
+  upsertAgent(row: AgentRow): Promise<void>;
+  updateAgent(userId: string, patch: Partial<Pick<AgentRow, 'role' | 'display_name'>>): Promise<AgentRow | null>;
+  deleteAgent(userId: string): Promise<void>;
+  /** Creates a confirmed email+password user; returns its id. */
+  createAuthUser(email: string, password: string): Promise<string>;
+  deleteAuthUser(userId: string): Promise<void>;
+  saveSettings(data: Settings): Promise<void>;
 }
 
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
@@ -125,6 +161,52 @@ export function createSupabaseStore(db: SupabaseClient): Store {
     getChatwootContact: (userId) => one(db.from('chatwoot_contacts').select('auth_token').eq('user_id', userId).maybeSingle()),
     saveChatwootContact: async (userId, authToken, sourceId) => {
       await one(db.from('chatwoot_contacts').upsert({ user_id: userId, auth_token: authToken, source_id: sourceId }));
+    },
+    listSessions: async (statuses, limit) =>
+      (await one(db.from('chat_sessions').select('*').in('status', statuses).order('updated_at', { ascending: false }).limit(limit))) ?? [],
+    statsData: async (fromIso, toIso) => {
+      const sessions =
+        (await one(db.from('chat_sessions').select('*').gte('created_at', fromIso).lt('created_at', toIso).limit(5000))) ?? [];
+      const ids = (sessions as SessionRow[]).map((x) => x.id);
+      const messages = ids.length
+        ? ((await one(db.from('messages').select('*').in('session_id', ids).in('role', ['bot', 'agent']).limit(20000))) ?? [])
+        : [];
+      return { sessions: sessions as SessionRow[], messages: messages as MessageRow[] };
+    },
+    listFaq: async () => (await one(db.from('faq_entries').select('*').order('created_at', { ascending: false }))) ?? [],
+    createFaq: async (row) => (await one(db.from('faq_entries').insert(row).select('*').single()))!,
+    updateFaq: (id, patch) => one(db.from('faq_entries').update(patch).eq('id', id).select('*').maybeSingle()),
+    deleteFaq: (id) => one(db.from('faq_entries').delete().eq('id', id).select('*').maybeSingle()),
+    listGaps: async () =>
+      (await one(db.from('bot_gaps').select('*').eq('resolved', false).order('created_at', { ascending: false }).limit(200))) ?? [],
+    resolveGap: async (id) => {
+      await one(db.from('bot_gaps').update({ resolved: true }).eq('id', id));
+    },
+    listAgents: async () => {
+      const agents = ((await one(db.from('agents').select('user_id, role, display_name').order('created_at'))) ?? []) as AgentRow[];
+      const { data } = await db.auth.admin.listUsers({ perPage: 1000 });
+      const emails = new Map((data?.users ?? []).map((u) => [u.id, u.email ?? null]));
+      return agents.map((a) => ({ ...a, email: emails.get(a.user_id) ?? null }));
+    },
+    upsertAgent: async (row) => {
+      await one(db.from('agents').upsert(row));
+    },
+    updateAgent: (userId, patch) =>
+      one(db.from('agents').update(patch).eq('user_id', userId).select('user_id, role, display_name').maybeSingle()),
+    deleteAgent: async (userId) => {
+      await one(db.from('agents').delete().eq('user_id', userId));
+    },
+    createAuthUser: async (email, password) => {
+      const { data, error } = await db.auth.admin.createUser({ email, password, email_confirm: true });
+      if (error || !data.user) throw new Error(error?.message ?? 'could not create user');
+      return data.user.id;
+    },
+    deleteAuthUser: async (userId) => {
+      const { error } = await db.auth.admin.deleteUser(userId);
+      if (error) throw new Error(error.message);
+    },
+    saveSettings: async (data) => {
+      await one(db.from('settings').update({ data }).eq('id', 1));
     },
   };
 }

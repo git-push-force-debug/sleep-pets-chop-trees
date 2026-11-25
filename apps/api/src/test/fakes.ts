@@ -2,7 +2,7 @@
 import { vi } from 'vitest';
 import type { Deps } from '../app.ts';
 import type { Evidence } from '../lib/dify.ts';
-import type { AgentRow, MessageRow, SessionRow, Settings, Store } from '../lib/store.ts';
+import type { AgentRow, FaqRow, GapRow, MessageRow, SessionRow, Settings, Store } from '../lib/store.ts';
 
 export const SETTINGS: Settings = {
   botEnabled: true,
@@ -25,6 +25,9 @@ export function createFakeStore() {
   const hits = new Map<string, number>();
   const gaps: { session_id: string; question: string; top_score: number }[] = [];
   const settings: Settings = { ...SETTINGS };
+  const faq: FaqRow[] = [];
+  const gapRows: GapRow[] = [];
+  const authUsers = new Map<string, string>();
 
   const store: Store = {
     getAgent: async (userId) => agents.find((a) => a.user_id === userId) ?? null,
@@ -74,8 +77,50 @@ export function createFakeStore() {
     addGap: async (gap) => void gaps.push(gap),
     getChatwootContact: async (userId) => (contacts.has(userId) ? { auth_token: contacts.get(userId)! } : null),
     saveChatwootContact: async (userId, token) => void contacts.set(userId, token),
+    listSessions: async (statuses, limit) => sessions.filter((s) => statuses.includes(s.status)).slice(0, limit),
+    statsData: async () => ({ sessions, messages }),
+    listFaq: async () => faq,
+    createFaq: async (row) => {
+      const created: FaqRow = { id: id(), dify_segment_id: null, created_at: now(), updated_at: now(), ...row };
+      faq.push(created);
+      return created;
+    },
+    updateFaq: async (fid, patch) => {
+      const row = faq.find((x) => x.id === fid);
+      return row ? Object.assign(row, patch) : null;
+    },
+    deleteFaq: async (fid) => {
+      const i = faq.findIndex((x) => x.id === fid);
+      return i < 0 ? null : faq.splice(i, 1)[0]!;
+    },
+    listGaps: async () => gapRows.filter((g) => !g.resolved),
+    resolveGap: async (gid) => {
+      const g = gapRows.find((x) => x.id === gid);
+      if (g) g.resolved = true;
+    },
+    listAgents: async () => agents.map((a) => ({ ...a, email: authUsers.get(a.user_id) ?? null })),
+    upsertAgent: async (row) => {
+      const i = agents.findIndex((a) => a.user_id === row.user_id);
+      if (i >= 0) agents[i] = row;
+      else agents.push(row);
+    },
+    updateAgent: async (userId, patch) => {
+      const a = agents.find((x) => x.user_id === userId);
+      return a ? Object.assign(a, patch) : null;
+    },
+    deleteAgent: async (userId) => {
+      const i = agents.findIndex((a) => a.user_id === userId);
+      if (i >= 0) agents.splice(i, 1);
+    },
+    createAuthUser: async (email) => {
+      const uid = id();
+      authUsers.set(uid, email);
+      return uid;
+    },
+    deleteAuthUser: async (userId) => void authUsers.delete(userId),
+    saveSettings: async (data) => void Object.assign(settings, data),
   };
-  return { store, sessions, messages, agents, gaps, settings, hits, contacts };
+  return { store, sessions, messages, agents, gaps, settings, hits, contacts, faq, gapRows, authUsers };
 }
 
 export const evidence = (sectionId = 'rebirth', score = 0.74): Evidence => ({

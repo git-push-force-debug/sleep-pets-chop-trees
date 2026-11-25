@@ -7,6 +7,7 @@ import type { DifyClient } from './lib/dify.ts';
 import type { Env } from './lib/env.ts';
 import type { GeminiClient } from './lib/gemini.ts';
 import type { Store } from './lib/store.ts';
+import { registerAdminRoutes } from './routes/admin.ts';
 import { registerChatRoutes } from './routes/chat.ts';
 
 export interface Deps {
@@ -41,5 +42,6 @@ export function buildApp(deps: Deps) {
 
   app.get('/health', async () => ({ ok: true }));
   registerChatRoutes(app, deps);
+  registerAdminRoutes(app, deps);
   return app;
 }

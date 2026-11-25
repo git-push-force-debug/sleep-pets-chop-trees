@@ -67,6 +67,20 @@ describe('BotReply', () => {
     expect(container.innerHTML).not.toContain('javascript:');
   });
 
+  it('renders off-site links as plain text and never renders markdown images', () => {
+    const { container } = render(
+      <BotReply
+        reply={{ ...reply, blocks: [{ type: 'text', markdown: 'Get [Free Robux](https://phish.example) ![x](https://tracker.example/p.png) or read [the guide](/guide/faq)' }] }}
+        onSuggestion={() => {}}
+        onHandoff={() => {}}
+      />,
+    );
+    expect(container.querySelector('img')).toBeNull();
+    expect(container.innerHTML).not.toContain('phish.example');
+    expect(screen.getByText('Free Robux').tagName).not.toBe('A');
+    expect(screen.getByRole('link', { name: 'the guide' }).getAttribute('href')).toBe('/guide/faq');
+  });
+
   it('shows the full text at first render when the player prefers reduced motion', () => {
     render(<BotReply reply={reply} onSuggestion={() => {}} onHandoff={() => {}} animate />);
     expect(screen.getByText('Rebirth')).toBeTruthy();

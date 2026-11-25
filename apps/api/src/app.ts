@@ -31,6 +31,7 @@ export function buildApp(deps: Deps) {
   app.decorateRequest('agent', null);
   app.register(cors, {
     origin: (origin, cb) => cb(null, !origin || allowed.has(origin) || (!production && LOCALHOST.test(origin))),
+    methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'],
   });
 
   // Never leak internal error details to the browser.

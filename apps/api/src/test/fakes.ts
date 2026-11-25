@@ -31,8 +31,7 @@ export function createFakeStore() {
 
   const store: Store = {
     getAgent: async (userId) => agents.find((a) => a.user_id === userId) ?? null,
-    latestOpenSession: async (userId) =>
-      [...sessions].reverse().find((s) => s.user_id === userId && s.status !== 'resolved') ?? null,
+    latestSession: async (userId) => [...sessions].reverse().find((s) => s.user_id === userId) ?? null,
     createSession: async (userId, meta) => {
       const row: SessionRow = {
         id: id(), user_id: userId, status: 'bot', bot_paused: false, chatwoot_display_id: null, last_chatwoot_message_id: 0,

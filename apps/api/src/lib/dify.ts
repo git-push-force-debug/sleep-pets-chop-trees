@@ -40,8 +40,8 @@ export function createDifyClient(cfg: { apiBase: string; apiKey: string }, fetch
       body: body === undefined ? undefined : JSON.stringify(body),
       signal: AbortSignal.timeout(15_000),
     });
-    if (res.status === 429) throw new DifyRateLimitError();
     const text = await res.text();
+    if (res.status === 429 || (res.status === 403 && /rate/i.test(text))) throw new DifyRateLimitError();
     if (!res.ok) throw new Error(`Dify ${method} ${path} → HTTP ${res.status} ${text.slice(0, 200)}`);
     return (text ? JSON.parse(text) : {}) as T;
   }

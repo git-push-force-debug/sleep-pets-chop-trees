@@ -41,9 +41,9 @@ export function useChat(enabled: boolean): Chat {
   const fail = (error: unknown) => dispatch({ type: 'failed', error: error instanceof ApiError ? error.message : 'Something went wrong. Please try again.' });
 
   // The API returns the newest open session, or creates one (so after a resolved chat this starts a new one).
-  const load = useCallback(async () => {
+  const load = useCallback(async (fresh = false) => {
     try {
-      const created = await api<{ session: ChatSession }>('/chat/sessions', { method: 'POST', body: { pageUrl: location.pathname } });
+      const created = await api<{ session: ChatSession }>('/chat/sessions', { method: 'POST', body: { pageUrl: location.pathname, fresh } });
       const full = await api<{ session: ChatSession; messages: ChatMessage[] }>(`/chat/sessions/${created.session.id}`);
       dispatch({ type: 'loaded', session: full.session, messages: full.messages });
     } catch (error) {
@@ -124,7 +124,7 @@ export function useChat(enabled: boolean): Chat {
     }
   }, [sessionId]);
 
-  const startNew = load;
+  const startNew = useCallback(() => load(true), [load]);
 
   const feedback = useCallback(async (messageId: string, value: 1 | -1) => {
     try {

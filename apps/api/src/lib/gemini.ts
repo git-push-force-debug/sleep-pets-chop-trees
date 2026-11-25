@@ -14,12 +14,23 @@ export class GeminiUnavailableError extends Error {
 export type GeminiClient = ReturnType<typeof createGeminiClient>;
 
 // Plain REST call (the request shape was verified live); tries the primary model, then the fallback.
-export function createGeminiClient(cfg: { apiKey: string; model: string; fallbackModel: string }, fetchImpl: typeof fetch = fetch) {
+// Vercel stops the function at 30 s and Dify can use up to 15 s first, so both models share one 20 s budget.
+const BUDGET_MS = 20_000;
+const FIRST_TRY_MS = 12_000;
+
+export function createGeminiClient(
+  cfg: { apiKey: string; model: string; fallbackModel: string; budgetMs?: number },
+  fetchImpl: typeof fetch = fetch,
+) {
   const schema = geminiResponseSchema();
 
   return {
     async generate<T>(system: string, contents: GeminiContent[], parse: (raw: unknown) => T | null): Promise<T> {
-      for (const model of [cfg.model, cfg.fallbackModel]) {
+      const budget = cfg.budgetMs ?? BUDGET_MS;
+      const deadline = Date.now() + budget;
+      for (const [i, model] of [cfg.model, cfg.fallbackModel].entries()) {
+        const remaining = deadline - Date.now();
+        if (remaining <= 0) break;
         try {
           const res = await fetchImpl(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
             method: 'POST',
@@ -34,7 +45,7 @@ export function createGeminiClient(cfg: { apiKey: string; model: string; fallbac
                 thinkingConfig: { thinkingLevel: 'minimal' },
               },
             }),
-            signal: AbortSignal.timeout(25_000),
+            signal: AbortSignal.timeout(i === 0 ? Math.min(remaining, Math.round(budget * (FIRST_TRY_MS / BUDGET_MS))) : remaining),
           });
           if (!res.ok) continue;
           const data = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };

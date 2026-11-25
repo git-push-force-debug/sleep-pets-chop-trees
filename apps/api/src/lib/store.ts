@@ -68,7 +68,8 @@ export interface GapRow {
 
 export interface Store {
   getAgent(userId: string): Promise<AgentRow | null>;
-  latestOpenSession(userId: string): Promise<SessionRow | null>;
+  /** The user's newest chat, resolved or not (a returning player sees how their ticket ended). */
+  latestSession(userId: string): Promise<SessionRow | null>;
   createSession(userId: string, meta: { page_url?: string | null; user_agent?: string | null }): Promise<SessionRow>;
   getSession(id: string): Promise<SessionRow | null>;
   /** Conditional update: returns null when `onlyIfStatus` is given and the row no longer has that status. */
@@ -115,11 +116,8 @@ export function createSupabaseStore(db: SupabaseClient): Store {
 
   return {
     getAgent: (userId) => one(db.from('agents').select('user_id, role, display_name').eq('user_id', userId).maybeSingle()),
-    latestOpenSession: (userId) =>
-      one(
-        db.from('chat_sessions').select('*').eq('user_id', userId).neq('status', 'resolved')
-          .order('created_at', { ascending: false }).limit(1).maybeSingle(),
-      ),
+    latestSession: (userId) =>
+      one(db.from('chat_sessions').select('*').eq('user_id', userId).order('created_at', { ascending: false }).limit(1).maybeSingle()),
     createSession: async (userId, meta) =>
       (await one(db.from('chat_sessions').insert({ user_id: userId, ...meta }).select('*').single()))!,
     getSession: (id) => one(db.from('chat_sessions').select('*').eq('id', id).maybeSingle()),

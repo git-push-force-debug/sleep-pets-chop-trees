@@ -3,6 +3,7 @@ import { buildApp } from '../app.ts';
 import { DifyRateLimitError } from '../lib/dify.ts';
 import { GeminiUnavailableError } from '../lib/gemini.ts';
 import { createFakeDeps } from '../test/fakes.ts';
+import { OUTAGE_COPY } from './chat.ts';
 
 const auth = (user = 'u1') => ({ authorization: `Bearer user:${user}` });
 
@@ -122,4 +123,30 @@ describe('chat routes', () => {
     expect((await app.inject({ method: 'POST', url: `/chat/messages/${botId}/feedback`, headers: auth(), payload: { value: -1 } })).statusCode).toBe(204);
     expect(messages.find((m) => m.id === botId)?.feedback).toBe(-1);
   });
+
+  it('allows the admin site to send PUT, PATCH and DELETE (CORS preflight)', async () => {
+    const { app } = await setup();
+    const res = await app.inject({ method: 'OPTIONS', url: '/admin/settings', headers: { origin: 'https://admin.test', 'access-control-request-method': 'PUT' } });
+    expect(res.headers['access-control-allow-methods']).toMatch(/PUT/);
+    expect(res.headers['access-control-allow-methods']).toMatch(/PATCH/);
+    expect(res.headers['access-control-allow-methods']).toMatch(/DELETE/);
+  });
+
+  it('brings a returning player back to their resolved chat, and starts fresh only when asked', async () => {
+    const { app, sessionId, sessions } = await setup();
+    sessions[0]!.status = 'resolved';
+    const back = await app.inject({ method: 'POST', url: '/chat/sessions', headers: auth(), payload: {} });
+    expect(back.json().session).toMatchObject({ id: sessionId, status: 'resolved' });
+    const fresh = await app.inject({ method: 'POST', url: '/chat/sessions', headers: auth(), payload: { fresh: true } });
+    expect(fresh.json().session.id).not.toBe(sessionId);
+    expect(fresh.json().session.status).toBe('bot');
+  });
+
+  it('answers any other retrieval failure with the outage copy and a hand-off', async () => {
+    const { app, sessionId } = await setup({ dify: { retrieve: vi.fn(async () => { throw new Error('Dify 502'); }) } });
+    const res = await send(app, sessionId, 'how do I rebirth?');
+    expect(res.statusCode).toBe(200);
+    expect(res.json().messages[1].content).toBe(OUTAGE_COPY);
+  });
 });
+

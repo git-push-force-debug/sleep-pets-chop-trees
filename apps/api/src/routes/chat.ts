@@ -34,7 +34,7 @@ export const toChatMessage = (m: MessageRow): ChatMessage => ({
 });
 
 const MessageBody = z.object({ text: z.string().trim().min(1).max(1000) });
-const SessionBody = z.object({ pageUrl: z.string().max(500).optional() }).optional();
+const SessionBody = z.object({ pageUrl: z.string().max(500).optional(), fresh: z.boolean().optional() }).optional();
 const FeedbackBody = z.object({ value: z.union([z.literal(1), z.literal(-1)]) });
 const HandoffBody = z.object({
   robloxUsername: z.string().trim().max(50).optional(),
@@ -71,8 +71,9 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
   app.post('/chat/sessions', auth, async (req, reply) => {
     const body = SessionBody.safeParse(req.body);
     if (!body.success) return reply.code(400).send({ error: 'Invalid request' });
-    const existing = await deps.store.latestOpenSession(req.userId);
-    if (existing) return { session: toChatSession(existing) };
+    // Return the newest chat even if resolved, so a returning player sees how it ended; `fresh` starts a new one.
+    const existing = await deps.store.latestSession(req.userId);
+    if (existing && (!body.data?.fresh || existing.status !== 'resolved')) return { session: toChatSession(existing) };
     if (await limited(deps, reply, `session:ip:${req.ip}`, 10, 3600)) return;
     const created = await deps.store.createSession(req.userId, {
       page_url: body.data?.pageUrl ?? null,
@@ -84,7 +85,13 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
   app.get<{ Params: { id: string } }>('/chat/sessions/:id', auth, async (req, reply) => {
     const session = await ownSession(req.userId, req.params.id);
     if (!session) return reply.code(404).send({ error: 'Chat not found' });
-    if (session.status !== 'bot') await syncSession(deps, session.id);
+    if (session.status !== 'bot') {
+      try {
+        await syncSession(deps, session.id);
+      } catch (error) {
+        req.log.error(error); // Chatwoot down: still show what we have
+      }
+    }
     const [current, messages] = await Promise.all([deps.store.getSession(session.id), deps.store.listMessages(session.id)]);
     return { session: toChatSession(current!), messages: messages.map(toChatMessage) };
   });
@@ -131,8 +138,10 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
         }
       } catch (error) {
         if (error instanceof DifyRateLimitError) bot = fallback(BUSY_COPY);
-        else if (error instanceof GeminiUnavailableError) bot = fallback(OUTAGE_COPY);
-        else throw error;
+        else {
+          if (!(error instanceof GeminiUnavailableError)) req.log.error(error);
+          bot = fallback(OUTAGE_COPY); // any other failure still gets a polite reply and a person
+        }
       }
     }
 

@@ -26,4 +26,12 @@ describe('gemini client', () => {
     const f = vi.fn(async () => new Response('{}', { status: 503 }));
     await expect(createGeminiClient(cfg, f).generate('sys', [], parseOk)).rejects.toBeInstanceOf(GeminiUnavailableError);
   });
+
+  it('gives up within one shared time budget when the models hang', async () => {
+    const hang = vi.fn((_url: string, init?: RequestInit) => new Promise<Response>((_, reject) => init?.signal?.addEventListener('abort', () => reject(new Error('aborted')))));
+    const started = Date.now();
+    await expect(createGeminiClient({ ...cfg, budgetMs: 120 }, hang).generate('sys', [], parseOk)).rejects.toBeInstanceOf(GeminiUnavailableError);
+    expect(Date.now() - started).toBeLessThan(400);
+  });
 });
+

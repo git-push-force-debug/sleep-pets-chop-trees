@@ -104,4 +104,14 @@ describe('syncSession', () => {
     expect(res.session.status).toBe('resolved');
     expect(res.messages.map((m: { role: string; content: string }) => [m.role, m.content])).toContainEqual(['agent', 'Fixed it — enjoy!']);
   });
+
+  it('still loads a chat from the database when Chatwoot is down', async () => {
+    const { app, deps, cw, sessionId } = await setup();
+    await startHandoff(deps, sessionId, form);
+    cw.client.getConversation.mockRejectedValue(new Error('Chatwoot down'));
+    const res = await app.inject({ url: `/chat/sessions/${sessionId}`, headers: auth });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().session.status).toBe('waiting_human');
+  });
 });
+

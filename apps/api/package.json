@@ -1,5 +1,11 @@
 {
   "name": "@spct/api",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@fastify/cors": "^11.4.3",
+    "@supabase/supabase-js": "^2.109.0",
+    "fastify": "^5.12.8",
+    "ws": "^8.23.0"
+  }
 }

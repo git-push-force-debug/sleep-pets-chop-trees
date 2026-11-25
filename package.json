@@ -20,6 +20,7 @@
     "@joplin/turndown-plugin-gfm": "^1.0.71",
     "@types/node": "^26.6.7",
     "@types/turndown": "^5.0.6",
+    "@types/ws": "^8.18.2",
     "cheerio": "^1.2.0",
     "tsx": "^4.23.15",
     "turndown": "^7.2.5",

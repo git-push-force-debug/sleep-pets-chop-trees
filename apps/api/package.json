@@ -1,0 +1,5 @@
+{
+  "name": "@spct/api",
+  "private": true,
+  "type": "module"
+}

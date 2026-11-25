@@ -24,14 +24,15 @@ async function step<T>(label: string, fn: () => Promise<T>): Promise<T> {
 }
 
 function setEnv(key: string, value: string) {
-  for (const file of ['.env.local', '.env.example']) {
-    let text = readFileSync(file, 'utf8');
-    const line = `${key}=${file === '.env.local' ? value : ''}`;
-    text = new RegExp(`^${key}=.*$`, 'm').test(text)
-      ? text.replace(new RegExp(`^${key}=.*$`, 'm'), file === '.env.local' ? line : (m) => m)
-      : text.replace(/(^DIFY_INTERNAL_DATASET_ID=.*$)/m, `$1\n${line}`);
-    writeFileSync(file, text);
-  }
+  const file = '.env.local';
+  const line = `${key}=${value}`;
+  const text = readFileSync(file, 'utf8');
+  writeFileSync(
+    file,
+    new RegExp(`^${key}=.*$`, 'm').test(text)
+      ? text.replace(new RegExp(`^${key}=.*$`, 'm'), line)
+      : text.replace(/(^DIFY_INTERNAL_DATASET_ID=.*$)/m, `$1\n${line}`),
+  );
 }
 
 const datasets = await step('list datasets', () => dify.listDatasets());

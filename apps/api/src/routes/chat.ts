@@ -5,6 +5,9 @@ import type { ChatMessage, ChatSession } from '../../../../packages/shared/src/a
 import type { Deps } from '../app.ts';
 import { answerQuestion, replyToText } from '../lib/answer.ts';
 import { requireUser } from '../lib/auth.ts';
+import { ChatwootClosedError } from '../lib/chatwoot.ts';
+import { contactToken, startHandoff } from '../lib/handoff.ts';
+import { syncSession } from '../lib/sync.ts';
 import { DifyRateLimitError } from '../lib/dify.ts';
 import { GeminiUnavailableError } from '../lib/gemini.ts';
 import type { MessageRow, SessionRow } from '../lib/store.ts';
@@ -33,6 +36,11 @@ export const toChatMessage = (m: MessageRow): ChatMessage => ({
 const MessageBody = z.object({ text: z.string().trim().min(1).max(1000) });
 const SessionBody = z.object({ pageUrl: z.string().max(500).optional() }).optional();
 const FeedbackBody = z.object({ value: z.union([z.literal(1), z.literal(-1)]) });
+const HandoffBody = z.object({
+  robloxUsername: z.string().trim().max(50).optional(),
+  email: z.union([z.literal(''), z.string().trim().email().max(200)]).optional(),
+  summary: z.string().trim().min(1).max(1000),
+});
 
 const handoffOnly = (text: string, reason: string): BotReply => ({
   blocks: [{ type: 'text', markdown: text }, { type: 'handoff', reason }],
@@ -76,8 +84,9 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
   app.get<{ Params: { id: string } }>('/chat/sessions/:id', auth, async (req, reply) => {
     const session = await ownSession(req.userId, req.params.id);
     if (!session) return reply.code(404).send({ error: 'Chat not found' });
-    const messages = await deps.store.listMessages(session.id);
-    return { session: toChatSession(session), messages: messages.map(toChatMessage) };
+    if (session.status !== 'bot') await syncSession(deps, session.id);
+    const [current, messages] = await Promise.all([deps.store.getSession(session.id), deps.store.listMessages(session.id)]);
+    return { session: toChatSession(current!), messages: messages.map(toChatMessage) };
   });
 
   app.post<{ Params: { id: string } }>('/chat/sessions/:id/messages', auth, async (req, reply) => {
@@ -90,6 +99,19 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
     if (await limited(deps, reply, `msg:ip:${req.ip}`, 40, 60)) return;
 
     const question = body.data.text;
+    if (session.bot_paused) {
+      try {
+        const sent = await deps.chatwoot.sendMessage(await contactToken(deps, req.userId), question);
+        const rows = await deps.store.insertMessages([
+          { session_id: session.id, role: 'user', content: question, chatwoot_message_id: sent.id },
+        ]);
+        return { messages: rows.map(toChatMessage) };
+      } catch (error) {
+        if (!(error instanceof ChatwootClosedError)) throw error;
+        await deps.store.updateSession(session.id, { status: 'resolved', resolved_at: new Date().toISOString() });
+        return reply.code(409).send({ error: 'This chat is closed.' });
+      }
+    }
     const history = (await deps.store.listMessages(session.id))
       .filter((m) => m.role === 'user' || m.role === 'bot')
       .map((m) => ({ role: m.role as 'user' | 'bot', text: m.content }));
@@ -119,6 +141,28 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
       { session_id: session.id, role: 'bot', content: bot.content, reply: bot.reply },
     ]);
     return { messages: rows.map(toChatMessage) };
+  });
+
+  app.post<{ Params: { id: string } }>('/chat/sessions/:id/handoff', auth, async (req, reply) => {
+    const body = HandoffBody.safeParse(req.body);
+    if (!body.success) return reply.code(400).send({ error: 'Please tell us what you need help with.' });
+    const session = await ownSession(req.userId, req.params.id);
+    if (!session) return reply.code(404).send({ error: 'Chat not found' });
+    if (session.status === 'resolved') return reply.code(409).send({ error: 'This chat is closed.' });
+    if (await limited(deps, reply, `handoff:user:${req.userId}`, 3, 3600)) return;
+    try {
+      return { session: toChatSession(await startHandoff(deps, session.id, body.data)) };
+    } catch (error) {
+      req.log.error(error);
+      return reply.code(502).send({ error: "We couldn't reach the team right now. Please try again in a minute." });
+    }
+  });
+
+  app.post<{ Params: { id: string } }>('/chat/sessions/:id/sync', auth, async (req, reply) => {
+    const session = await ownSession(req.userId, req.params.id);
+    if (!session) return reply.code(404).send({ error: 'Chat not found' });
+    const { added } = await syncSession(deps, session.id);
+    return { session: toChatSession((await deps.store.getSession(session.id))!), added };
   });
 
   app.post<{ Params: { id: string } }>('/chat/messages/:id/feedback', auth, async (req, reply) => {

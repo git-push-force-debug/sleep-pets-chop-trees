@@ -4,9 +4,9 @@ import type { BotReply } from '../../../../packages/shared/src/blocks.ts';
 import { api, ApiError, supabase } from './api.ts';
 import { chatReducer, initialChat, type ChatState } from './chatReducer.ts';
 
-// Free Chatwoot plan: no webhooks, so agent replies are polled — faster while waiting for the first reply.
-const POLL_WAITING_MS = 3000;
-const POLL_HUMAN_MS = 5000;
+// Realtime is the fast path; this poll is the fallback while a person is involved (team replies come from the
+// admin panel or, with no Chatwoot webhooks on the free plan, from Chatwoot via the API's sync).
+const POLL_MS = 3000;
 
 export interface HandoffForm {
   robloxUsername: string;
@@ -21,6 +21,8 @@ export interface Chat {
   handoff(form: HandoffForm): Promise<boolean>;
   startNew(): Promise<void>;
   feedback(messageId: string, value: 1 | -1): Promise<void>;
+  /** The player's answer to the team's "Did this solve your problem?". */
+  resolve(solved: boolean): Promise<void>;
   /** A reply finished its entrance animation; never replay it (e.g. when the panel reopens). */
   markPlayed(messageId: string): void;
 }
@@ -78,23 +80,20 @@ export function useChat(enabled: boolean): Chat {
     return () => void supabase.removeChannel(channel);
   }, [sessionId]);
 
-  // Poll Chatwoot (via our API) while a person is involved and the page is visible.
+  // While a person is involved, re-read the chat (the GET also syncs Chatwoot) so replies show even if realtime misses.
   useEffect(() => {
     if (!sessionId || (status !== 'waiting_human' && status !== 'human')) return;
     const tick = async () => {
       if (document.visibilityState !== 'visible') return;
       try {
-        const res = await api<{ session: ChatSession; added: number }>(`/chat/sessions/${sessionId}/sync`, { method: 'POST' });
-        dispatch({ type: 'status', session: res.session });
-        if (res.added) {
-          const full = await api<{ session: ChatSession; messages: ChatMessage[] }>(`/chat/sessions/${sessionId}`);
-          full.messages.forEach((message) => dispatch({ type: 'received', message }));
-        }
+        const full = await api<{ session: ChatSession; messages: ChatMessage[] }>(`/chat/sessions/${sessionId}`);
+        dispatch({ type: 'status', session: full.session });
+        full.messages.forEach((message) => dispatch({ type: 'received', message }));
       } catch {
         // transient: the next tick retries
       }
     };
-    const timer = setInterval(tick, status === 'waiting_human' ? POLL_WAITING_MS : POLL_HUMAN_MS);
+    const timer = setInterval(tick, POLL_MS);
     return () => clearInterval(timer);
   }, [sessionId, status]);
 
@@ -130,6 +129,19 @@ export function useChat(enabled: boolean): Chat {
 
   const startNew = useCallback(() => load(true), [load]);
 
+  const resolve = useCallback(async (solved: boolean) => {
+    if (!sessionId) return;
+    dispatch({ type: 'sending' });
+    try {
+      const res = await api<{ session: ChatSession; messages: ChatMessage[] }>(`/chat/sessions/${sessionId}/resolve`, { method: 'POST', body: { solved } });
+      dispatch({ type: 'status', session: res.session });
+      dispatch({ type: 'sent', messages: res.messages });
+      if (solved) await load(true); // solved: straight back to Pip in a fresh chat
+    } catch (error) {
+      fail(error);
+    }
+  }, [sessionId, load]);
+
   const feedback = useCallback(async (messageId: string, value: 1 | -1) => {
     try {
       await api(`/chat/messages/${messageId}/feedback`, { method: 'POST', body: { value } });
@@ -140,5 +152,5 @@ export function useChat(enabled: boolean): Chat {
 
   const markPlayed = useCallback((id: string) => dispatch({ type: 'played', id }), []);
 
-  return { state, settings, send, handoff, startNew, feedback, markPlayed };
+  return { state, settings, send, handoff, startNew, feedback, resolve, markPlayed };
 }

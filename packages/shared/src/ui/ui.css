@@ -103,6 +103,9 @@
 .spct-handoff { display: flex; flex-direction: column; gap: 10px; padding: 14px; border: 2px solid var(--meadow-tint); }
 .spct-handoff p { margin: 0; font: var(--t-body); color: var(--ink-soft); }
 .spct-handoff .spct-handoff-title { display: flex; gap: 8px; align-items: center; font: 800 15px var(--font); color: var(--meadow); }
+.spct-yesno { display: flex; flex-wrap: wrap; gap: 8px; }
+.spct-yesno .spct-pill { min-height: 44px; font-size: 15px; }
+.spct-handoff .spct-handoff-note { font: 600 14px var(--font); color: var(--ink-soft); }
 
 .spct-sources { margin: 0; font: 600 12px/1.4 var(--font); color: var(--ink-soft); }
 .spct-sources a { color: var(--sky); text-decoration: none; font-weight: 700; }

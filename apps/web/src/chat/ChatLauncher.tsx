@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { ChatIcon } from '../../../../packages/shared/src/ui/icons.tsx';
 import { usePrefersReducedMotion } from '../../../../packages/shared/src/ui/motion.ts';
 import { ChatPanel } from './ChatPanel.tsx';
 import { useChat, type Chat } from './useChat.ts';
@@ -87,8 +88,14 @@ export function ChatProvider({ children }: { children: ReactNode }) {
           </AnimatePresence>
           {!open && (
             <button ref={launcher} type="button" className="chat-launcher" onClick={() => setOpen(true)} aria-label="Ask Pip — open chat">
-              <span className="pip-avatar launcher-avatar" aria-hidden="true"><img src="/art/mascot.png" alt="" /></span>
-              <span className="launcher-label">Ask Pip</span>
+              <span className="launcher-bubble" aria-hidden="true">
+                <b>Hi! I'm Pip</b>
+                <span>Ask me anything <span className="typing"><i /><i /><i /></span></span>
+              </span>
+              <span className="launcher-orb" aria-hidden="true">
+                <span className="pip-avatar pose launcher-avatar"><img src="/art/v3/pip-head.webp" alt="" onError={(e) => ((e.target as HTMLImageElement).src = '/art/mascot.png')} /></span>
+                <span className="launcher-badge"><ChatIcon size={14} /></span>
+              </span>
             </button>
           )}
         </>

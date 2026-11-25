@@ -13,6 +13,7 @@ export const WarnIcon = ({ size = 18 }: P) => svg(size, <><path d="M12 3 2 21h20
 export const PersonIcon = ({ size = 20 }: P) => svg(size, <><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6" /></>);
 export const CloseIcon = ({ size = 20 }: P) => svg(size, <path d="M6 6l12 12M18 6 6 18" />);
 export const SendIcon = ({ size = 20 }: P) => svg(size, <path d="M5 12h14M13 6l6 6-6 6" />);
+export const ChatIcon = ({ size = 18 }: P) => svg(size, <path d="M4 5h16v11H9l-5 4V5z" />);
 export const CheckIcon = ({ size = 18 }: P) => svg(size, <path d="M20 6 9 17l-5-5" />);
 export const ClockIcon = ({ size = 14 }: P) => svg(size, <><circle cx="12" cy="12" r="9" /><path d="M12 8v5l3 2" /></>);
 export const ThumbIcon = ({ size = 16, down = false }: P & { down?: boolean }) => (

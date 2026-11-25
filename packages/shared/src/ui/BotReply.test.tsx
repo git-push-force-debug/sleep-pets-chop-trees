@@ -106,7 +106,7 @@ describe('BotReply', () => {
     const onHandoff = vi.fn();
     const onSuggestion = vi.fn();
     render(<BotReply reply={reply} onSuggestion={onSuggestion} onHandoff={onHandoff} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Talk to a person' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Yes, talk to a person' }));
     fireEvent.click(screen.getByRole('button', { name: 'What pet do I need?' }));
     expect(onHandoff).toHaveBeenCalledOnce();
     expect(onSuggestion).toHaveBeenCalledWith('What pet do I need?');

@@ -8,10 +8,12 @@ import { RaisedPill } from '../../../../packages/shared/src/ui/RaisedPill.tsx';
 import type { Chat, HandoffForm } from './useChat.ts';
 
 const Pip = ({ size = 44, pose = 'mascot' }: { size?: number; pose?: 'mascot' | 'think' | 'headset' }) => (
-  <span className={`pip-avatar ${pose !== 'mascot' ? 'pose' : ''}`} style={{ width: size, height: size }} aria-hidden="true">
-    <img src={pose === 'mascot' ? '/art/mascot.png' : `/art/v2/pip-${pose}.webp`} alt="" onError={(e) => ((e.target as HTMLImageElement).src = '/art/mascot.png')} />
+  <span className="pip-avatar pose" style={{ width: size, height: size }} aria-hidden="true">
+    <img src={pose === 'mascot' ? '/art/v3/pip-head.webp' : `/art/v2/pip-${pose}.webp`} alt="" onError={(e) => ((e.target as HTMLImageElement).src = '/art/mascot.png')} />
   </span>
 );
+
+const STARTERS = ['How do I rebirth?', 'Best gun for Snowland?', 'Why did my pet wake up?'];
 
 const THINKING_STEPS = ['Reading your question', 'Searching the guide', 'Writing the answer'];
 
@@ -49,21 +51,16 @@ function Thinking({ toPerson }: { toPerson: boolean }) {
   );
 }
 
-/** In-chat ticket: shows the full ticket number and a live "joining" pulse until a person replies. */
+/** In-chat ticket with a live "joining" pulse; it goes away once a person replies (the header keeps the ticket number). */
 function TicketCard({ chat }: { chat: Chat }) {
   const s = chat.state.session!;
-  const agent = [...chat.state.messages].reverse().find((m) => m.role === 'agent')?.agentName;
   return (
     <motion.div className="ticket-card" initial={{ opacity: 0, y: 10, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }}>
       <Pip size={40} pose="headset" />
       <div>
         <b>Ticket {ticketLabel(s.ticket)}</b>
         <span>Connected to the team</span>
-        {agent ? (
-          <span className="joined"><CheckIcon size={14} /> {agent} joined the chat</span>
-        ) : (
-          <span className="joining"><span className="pulse" aria-hidden="true" />A person is joining…</span>
-        )}
+        <span className="joining"><span className="pulse" aria-hidden="true" />A person is joining…</span>
       </div>
     </motion.div>
   );
@@ -143,7 +140,7 @@ function Feedback({ chat, m }: { chat: Chat; m: ChatMessage }) {
   );
 }
 
-function Message({ m, chat, animate, onHandoff }: { m: ChatMessage; chat: Chat; animate: boolean; onHandoff: () => void }) {
+function Message({ m, chat, animate, latest, onHandoff }: { m: ChatMessage; chat: Chat; animate: boolean; latest: boolean; onHandoff: () => void }) {
   if (m.role === 'user') return <div className="bubble me">{m.content}</div>;
   if (m.role === 'system') return <div className="system-note">{m.content}</div>;
   if (m.role === 'agent') {
@@ -163,7 +160,10 @@ function Message({ m, chat, animate, onHandoff }: { m: ChatMessage; chat: Chat; 
       onSuggestion={(q) => void chat.send(q)}
       onHandoff={onHandoff}
       handoffDisabled={paused}
-      footer={<Feedback chat={chat} m={m} />}
+      showSuggestions={latest && !paused}
+      onResolve={(solved) => void chat.resolve(solved)}
+      askActive={latest && chat.state.session?.status !== 'resolved' && !chat.state.sending}
+      footer={m.reply.ask ? undefined : <Feedback chat={chat} m={m} />}
     />
   ) : (
     <div className="bubble bot">{m.content}</div>
@@ -213,14 +213,17 @@ export function ChatPanel({ chat, onClose, variant = 'sheet', handoffSignal = 0 
   return (
     <section className={`chat-panel ${variant}`} aria-label="Chat with Pip">
       <header className="chat-head">
-        <Pip pose={withPerson ? 'headset' : 'mascot'} />
+        <span className={`head-avatar ${ready && !error ? 'online' : ''}`}><Pip pose={withPerson ? 'headset' : 'mascot'} /></span>
         <div className="chat-title">
           <h2 className="chat-name">{withPerson && agentName ? agentName : 'Pip'}</h2>
-          {withPerson && <span className="chat-chip">{session?.status === 'human' ? 'Team' : 'Connecting'} · {ticketLabel(session?.ticket)}</span>}
+          {!withPerson && !resolved && <span className="chat-sub">{error ? 'Offline right now' : ready ? 'Online · answers from the official guide' : 'Waking up…'}</span>}
+          {withPerson && <span className="chat-chip">Ticket {ticketLabel(session?.ticket)}</span>}
           {resolved && <span className="chat-chip done">Resolved · {ticketLabel(session?.ticket)}</span>}
         </div>
-        {!withPerson && !resolved && !askingPerson && (
-          <button type="button" className="mini-pill" onClick={() => setAskingPerson(true)}>Talk to a person</button>
+        {withPerson && agentName && (
+          <button type="button" className="mini-pill resolve-pill" disabled={sending} onClick={() => void chat.resolve(true)}>
+            <CheckIcon size={16} /> Resolved
+          </button>
         )}
         {onClose && (
           <button type="button" className="spct-icon-btn" aria-label="Close chat" onClick={onClose}><CloseIcon /></button>
@@ -236,7 +239,7 @@ export function ChatPanel({ chat, onClose, variant = 'sheet', handoffSignal = 0 
       </AnimatePresence>
 
       <div className="chat-list" ref={list} aria-live="polite">
-        {ready && messages.length === 0 && (
+        {messages.length === 0 && !resolved && (
           <div className="chat-empty">
             <motion.img
               src="/art/v2/pip-wave.webp"
@@ -249,24 +252,26 @@ export function ChatPanel({ chat, onClose, variant = 'sheet', handoffSignal = 0 
             />
             <p>{chat.settings?.greeting ?? "Hi, I'm Pip! Ask me anything about Sleep Pets & Chop Trees."}</p>
             <div className="spct-chips">
-              {(chat.settings?.starterQuestions ?? []).map((q) => (
-                <button key={q} type="button" className="spct-chip" onClick={() => void chat.send(q)}>{q}</button>
+              {(chat.settings?.starterQuestions ?? STARTERS).map((q, i) => (
+                <motion.button key={q} type="button" className="spct-chip" disabled={!ready} onClick={() => void chat.send(q)}
+                  initial={reduced ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.07, type: 'spring', stiffness: 320, damping: 26 }}>
+                  {q}
+                </motion.button>
               ))}
             </div>
           </div>
         )}
-        {!ready && !error && <div className="chat-skeleton" aria-label="Loading chat"><span /><span /></div>}
-        {messages.map((m) => (
-          <Message key={m.id} m={m} chat={chat} animate={fresh.includes(m.id)} onHandoff={() => setAskingPerson(true)} />
+        {messages.map((m, i) => (
+          <Message key={m.id} m={m} chat={chat} animate={fresh.includes(m.id)} latest={i === messages.length - 1} onHandoff={() => setAskingPerson(true)} />
         ))}
-        {withPerson && <TicketCard chat={chat} />}
+        {withPerson && !agentName && <TicketCard chat={chat} />}
         {sending && !askingPerson && <Thinking toPerson={withPerson} />}
         {askingPerson && !withPerson && !resolved && <Handoff chat={chat} onDone={() => setAskingPerson(false)} />}
         {resolved && (
           <div className="resolved-card">
-            <p className="handoff-title"><CheckIcon /> This chat is closed</p>
-            <p>Ticket {ticketLabel(session?.ticket)} was resolved. Need something else? Start a fresh chat with Pip.</p>
-            <RaisedPill onClick={() => void chat.startNew()}>Start new chat</RaisedPill>
+            <p className="handoff-title"><CheckIcon /> Glad we sorted it!</p>
+            <p>{session?.ticket ? `Ticket ${ticketLabel(session.ticket)} is closed. ` : ''}Pip is here for anything else.</p>
+            <RaisedPill onClick={() => void chat.startNew()}>Ask Pip something else</RaisedPill>
           </div>
         )}
       </div>

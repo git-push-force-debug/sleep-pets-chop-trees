@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { Block, BotReply as Reply } from '../blocks.ts';
 import type { GuideImage } from '../guide.ts';
-import { CalloutBlock, CardBlock, HandoffBlock, ImagesBlock, StatsBlock, StepsBlock, TableBlock, TextBlock } from './Blocks.tsx';
+import { CalloutBlock, CardBlock, HandoffBlock, ImagesBlock, ResolveAsk, StatsBlock, StepsBlock, TableBlock, TextBlock } from './Blocks.tsx';
 import { Lightbox } from './Lightbox.tsx';
 import { usePrefersReducedMotion } from './motion.ts';
 import { Typewriter } from './Typewriter.tsx';
@@ -22,13 +22,18 @@ interface Props {
   footer?: ReactNode;
   /** Called once the entrance has finished (immediately when nothing animates). */
   onDone?: () => void;
+  /** Reply chips only on the latest answer, before the player has replied (default true). */
+  showSuggestions?: boolean;
+  /** Answer to a "solved?" question (reply.ask === 'resolve'); buttons show only when `askActive`. */
+  onResolve?: (solved: boolean) => void;
+  askActive?: boolean;
 }
 
 /**
  * Generative UI reply: the first text block types out (M10), then the other blocks enter in layers,
  * then sources and reply chips. Every mode ends in the same final content.
  */
-export function BotReply({ reply, onSuggestion, onHandoff, animate = false, handoffDisabled, footer, onDone }: Props) {
+export function BotReply({ reply, onSuggestion, onHandoff, animate = false, handoffDisabled, footer, onDone, showSuggestions = true, onResolve, askActive = false }: Props) {
   const reduced = usePrefersReducedMotion();
   const live = animate && !reduced;
   const [first, ...rest] = reply.blocks;
@@ -87,8 +92,9 @@ export function BotReply({ reply, onSuggestion, onHandoff, animate = false, hand
               ))}
             </motion.p>
           )}
+          {reply.ask === 'resolve' && onResolve && <ResolveAsk active={askActive} onAnswer={onResolve} />}
           {footer}
-          {reply.suggestions.length > 0 && (
+          {showSuggestions && reply.suggestions.length > 0 && (
             <div className="spct-chips">
               {reply.suggestions.map((text, i) => (
                 <motion.button key={text} type="button" className="spct-chip" onClick={() => onSuggestion(text)} {...layer(blocks.length + 1 + i)}>

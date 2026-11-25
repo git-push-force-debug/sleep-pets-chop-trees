@@ -153,14 +153,36 @@ export const CardBlock = ({ block, images, onOpen }: { block: Of<'card'>; images
   );
 };
 
-export const HandoffBlock = ({ block, onHandoff, disabled }: { block: Of<'handoff'>; onHandoff: () => void; disabled?: boolean }) => (
-  <div className="spct-card spct-handoff">
-    <p className="spct-handoff-title">
-      <PersonIcon /> A person can help with this
-    </p>
-    <p>{block.reason}</p>
-    <RaisedPill variant="green" onClick={onHandoff} disabled={disabled}>
-      Talk to a person
-    </RaisedPill>
-  </div>
-);
+/** Offered only when Pip can't answer: a plain Yes / No question instead of an always-on button. */
+export function HandoffBlock({ block, onHandoff, disabled }: { block: Of<'handoff'>; onHandoff: () => void; disabled?: boolean }) {
+  const [declined, setDeclined] = useState(false);
+  return (
+    <div className="spct-card spct-handoff">
+      <p className="spct-handoff-title">
+        <PersonIcon /> Want me to bring in a person from the team?
+      </p>
+      <p>{block.reason}</p>
+      {declined ? (
+        <p className="spct-handoff-note">No problem — ask me something else anytime.</p>
+      ) : (
+        !disabled && (
+          <div className="spct-yesno">
+            <RaisedPill variant="green" onClick={onHandoff}>Yes, talk to a person</RaisedPill>
+            <RaisedPill variant="secondary" onClick={() => setDeclined(true)}>No thanks</RaisedPill>
+          </div>
+        )
+      )}
+    </div>
+  );
+}
+
+/** "Did this solve your problem?" — sent by the team from the admin panel. */
+export function ResolveAsk({ onAnswer, active }: { onAnswer: (solved: boolean) => void; active: boolean }) {
+  if (!active) return null;
+  return (
+    <div className="spct-yesno">
+      <RaisedPill variant="green" onClick={() => onAnswer(true)}>Yes, it's solved</RaisedPill>
+      <RaisedPill variant="secondary" onClick={() => onAnswer(false)}>No, I still need help</RaisedPill>
+    </div>
+  );
+}

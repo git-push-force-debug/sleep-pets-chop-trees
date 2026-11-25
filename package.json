@@ -1,0 +1,9 @@
+{
+  "name": "sleep-pets-chop-trees",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20.6" },
+  "scripts": {
+    "check:connections": "node --env-file=.env.local scripts/check-connections.mjs"
+  }
+}

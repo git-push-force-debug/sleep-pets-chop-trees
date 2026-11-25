@@ -85,13 +85,15 @@ describe('syncSession', () => {
     expect(sessions[0]!.last_chatwoot_message_id).toBeGreaterThan(0);
   });
 
-  it('marks the session resolved when Chatwoot resolves it, and reopens it when Chatwoot does', async () => {
+  it('marks the session resolved when Chatwoot resolves it, and reopens it only on a new team reply', async () => {
     const { deps, cw, sessionId, token, sessions } = await setup();
     await startHandoff(deps, sessionId, form);
     cw.resolve(token());
     expect((await syncSession(deps, sessionId)).status).toBe('resolved');
     expect(sessions[0]!.resolved_at).not.toBeNull();
-    cw.conversations.get(token())!.status = 'open';
+    cw.conversations.get(token())!.status = 'open'; // also how a chat resolved in our admin panel looks to Chatwoot
+    expect((await syncSession(deps, sessionId)).status).toBe('resolved');
+    cw.agentReply(token(), 'One more thing…');
     expect((await syncSession(deps, sessionId)).status).toBe('human');
   });
 

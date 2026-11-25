@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { z } from 'zod';
 import type { BotReply } from '../../../../packages/shared/src/blocks.ts';
-import type { ChatMessage, ChatSession } from '../../../../packages/shared/src/api.ts';
+import { ticketLabel, type ChatMessage, type ChatSession } from '../../../../packages/shared/src/api.ts';
 import type { Deps } from '../app.ts';
 import { answerQuestion, replyToText } from '../lib/answer.ts';
 import { requireUser } from '../lib/auth.ts';
@@ -35,7 +35,8 @@ export const toChatMessage = (m: MessageRow): ChatMessage => ({
 
 const MessageBody = z.object({ text: z.string().trim().min(1).max(1000) });
 const SessionBody = z.object({ pageUrl: z.string().max(500).optional(), fresh: z.boolean().optional() }).optional();
-const FeedbackBody = z.object({ value: z.union([z.literal(1), z.literal(-1)]) });
+const ResolveBody = z.object({ solved: z.boolean() });
+const FeedbackBody =z.object({ value: z.union([z.literal(1), z.literal(-1)]) });
 const HandoffBody = z.object({
   robloxUsername: z.string().trim().max(50).optional(),
   email: z.union([z.literal(''), z.string().trim().email().max(200)]).optional(),
@@ -79,6 +80,10 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
       page_url: body.data?.pageUrl ?? null,
       user_agent: req.headers['user-agent']?.slice(0, 300) ?? null,
     });
+    if (existing?.status === 'resolved' && existing.chatwoot_display_id) {
+      const text = `Ticket ${ticketLabel(existing.chatwoot_display_id)} is resolved. You're back with Pip — ask me anything!`;
+      await deps.store.insertMessages([{ session_id: created.id, role: 'bot', content: text, reply: { blocks: [{ type: 'text', markdown: text }], suggestions: [], sources: [], images: [] } }]);
+    }
     return { session: toChatSession(created) };
   });
 
@@ -165,6 +170,33 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
       req.log.error(error);
       return reply.code(502).send({ error: "We couldn't reach the team right now. Please try again in a minute." });
     }
+  });
+
+  // The player's answer to "Did this solve your problem?" — Yes closes the ticket, No tells the team.
+  app.post<{ Params: { id: string } }>('/chat/sessions/:id/resolve', auth, async (req, reply) => {
+    const body = ResolveBody.safeParse(req.body);
+    if (!body.success) return reply.code(400).send({ error: 'Invalid request' });
+    const session = await ownSession(req.userId, req.params.id);
+    if (!session) return reply.code(404).send({ error: 'Chat not found' });
+    if (session.status === 'resolved') return reply.code(409).send({ error: 'This chat is closed.' });
+    if (await limited(deps, reply, `resolve:user:${req.userId}`, 10, 3600)) return;
+    if (body.data.solved) {
+      await deps.store.updateSession(session.id, { status: 'resolved', resolved_at: new Date().toISOString() });
+      await deps.store.insertMessages([{ session_id: session.id, role: 'system', content: 'Player confirmed it’s solved' }]);
+    } else {
+      const text = 'No, I still need help.';
+      let chatwootId: number | null = null;
+      if (session.bot_paused) {
+        try {
+          chatwootId = (await deps.chatwoot.sendMessage(await contactToken(deps, req.userId), text)).id;
+        } catch (error) {
+          req.log.error(error); // best effort: the admin panel still shows it
+        }
+      }
+      await deps.store.insertMessages([{ session_id: session.id, role: 'user', content: text, chatwoot_message_id: chatwootId }]);
+    }
+    const [current, messages] = await Promise.all([deps.store.getSession(session.id), deps.store.listMessages(session.id)]);
+    return { session: toChatSession(current!), messages: messages.map(toChatMessage) };
   });
 
   app.post<{ Params: { id: string } }>('/chat/sessions/:id/sync', auth, async (req, reply) => {

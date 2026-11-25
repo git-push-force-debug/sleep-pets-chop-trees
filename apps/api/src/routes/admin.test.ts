@@ -22,6 +22,9 @@ const ROUTES: [string, string][] = [
   ['POST', '/admin/sync'],
   ['POST', '/admin/sessions/s1/hand-back'],
   ['POST', '/admin/sessions/s1/suggest'],
+  ['POST', '/admin/sessions/s1/reply'],
+  ['POST', '/admin/sessions/s1/ask-resolved'],
+  ['POST', '/admin/sessions/s1/resolve'],
   ['GET', '/admin/faq'],
   ['POST', '/admin/faq'],
   ['PATCH', '/admin/faq/f1'],
@@ -76,6 +79,32 @@ describe('admin hand-back', () => {
     s.bot_paused = true;
     expect((await app.inject({ method: 'POST', url: `/admin/sessions/${s.id}/hand-back`, headers: as('agent1') })).statusCode).toBe(200);
     expect(sessions[0]).toMatchObject({ status: 'bot', bot_paused: false });
+  });
+});
+
+describe('admin replies and resolving', () => {
+  it('posts a team reply into the chat and moves it to a person', async () => {
+    const { app, store, sessions, messages } = setup();
+    const s = await store.createSession('player1', {});
+    const res = await app.inject({ method: 'POST', url: `/admin/sessions/${s.id}/reply`, headers: as('agent1'), payload: { text: ' On it! ' } });
+    expect(res.statusCode).toBe(200);
+    expect(messages.at(-1)).toMatchObject({ role: 'agent', content: 'On it!', agent_name: 'Maya' });
+    expect(sessions[0]).toMatchObject({ status: 'human', bot_paused: true });
+    expect((await app.inject({ method: 'POST', url: `/admin/sessions/${s.id}/reply`, headers: as('agent1'), payload: { text: '  ' } })).statusCode).toBe(400);
+    expect((await app.inject({ method: 'POST', url: '/admin/sessions/nope/reply', headers: as('agent1'), payload: { text: 'hi' } })).statusCode).toBe(404);
+  });
+
+  it('asks the player if it is solved, resolves, and refuses replies after that', async () => {
+    const { app, store, sessions, messages } = setup();
+    const s = await store.createSession('player1', {});
+    s.status = 'human';
+    expect((await app.inject({ method: 'POST', url: `/admin/sessions/${s.id}/ask-resolved`, headers: as('agent1') })).statusCode).toBe(200);
+    expect(messages.at(-1)).toMatchObject({ role: 'bot', reply: expect.objectContaining({ ask: 'resolve' }) });
+    expect((await app.inject({ method: 'POST', url: `/admin/sessions/${s.id}/resolve`, headers: as('agent1') })).statusCode).toBe(200);
+    expect(sessions[0]!.status).toBe('resolved');
+    expect(sessions[0]!.resolved_at).not.toBeNull();
+    expect(messages.at(-1)).toMatchObject({ role: 'system', content: 'Resolved by Maya' });
+    expect((await app.inject({ method: 'POST', url: `/admin/sessions/${s.id}/reply`, headers: as('agent1'), payload: { text: 'hi' } })).statusCode).toBe(409);
   });
 });
 

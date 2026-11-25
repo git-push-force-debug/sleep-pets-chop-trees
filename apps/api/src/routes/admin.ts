@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
+import type { BotReply } from '../../../../packages/shared/src/blocks.ts';
 import { formatSegmentHeader } from '../../../../packages/shared/src/guide.ts';
 import type { Deps } from '../app.ts';
 import { answerQuestion, replyToText } from '../lib/answer.ts';
@@ -11,6 +12,9 @@ import { syncSession } from '../lib/sync.ts';
 const BATCH_SYNC_LIMIT = 25;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
+const ReplyBody = z.object({ text: z.string().trim().min(1).max(2000) });
+export const RESOLVE_QUESTION = 'Did this solve your problem?';
+const resolveQuestion = (): BotReply => ({ blocks: [{ type: 'text', markdown: RESOLVE_QUESTION }], suggestions: [], sources: [], images: [], ask: 'resolve' });
 const FaqBody = z.object({ question: z.string().trim().min(3).max(300), answer: z.string().trim().min(3).max(3000) });
 const TeamBody = z.object({
   email: z.string().trim().email().max(200),
@@ -54,6 +58,36 @@ export function registerAdminRoutes(app: FastifyInstance, deps: Deps) {
     const updated = await deps.store.updateSession(req.params.id, { status: 'bot', bot_paused: false });
     if (!updated) return reply.code(404).send({ error: 'Chat not found' });
     await deps.store.insertMessages([{ session_id: updated.id, role: 'system', content: `Handed back to Pip by ${req.agent!.display_name}` }]);
+    return { ok: true };
+  });
+
+  // Replies from the admin panel go straight to our database (the free Chatwoot plan can't post as an agent);
+  // realtime delivers them to the player's chat.
+  app.post<{ Params: { id: string } }>('/admin/sessions/:id/reply', agent, async (req, reply) => {
+    const body = ReplyBody.safeParse(req.body);
+    if (!body.success) return reply.code(400).send({ error: 'Replies must be 1 to 2,000 characters.' });
+    const session = await deps.store.getSession(req.params.id);
+    if (!session) return reply.code(404).send({ error: 'Chat not found' });
+    if (session.status === 'resolved') return reply.code(409).send({ error: 'This chat is resolved.' });
+    const [message] = await deps.store.insertMessages([
+      { session_id: session.id, role: 'agent', content: body.data.text, agent_name: req.agent!.display_name },
+    ]);
+    await deps.store.updateSession(session.id, { status: 'human', bot_paused: true });
+    return { message };
+  });
+
+  app.post<{ Params: { id: string } }>('/admin/sessions/:id/ask-resolved', agent, async (req, reply) => {
+    const session = await deps.store.getSession(req.params.id);
+    if (!session) return reply.code(404).send({ error: 'Chat not found' });
+    if (session.status === 'resolved') return reply.code(409).send({ error: 'This chat is resolved.' });
+    await deps.store.insertMessages([{ session_id: session.id, role: 'bot', content: RESOLVE_QUESTION, reply: resolveQuestion() }]);
+    return { ok: true };
+  });
+
+  app.post<{ Params: { id: string } }>('/admin/sessions/:id/resolve', agent, async (req, reply) => {
+    const updated = await deps.store.updateSession(req.params.id, { status: 'resolved', resolved_at: new Date().toISOString() });
+    if (!updated) return reply.code(404).send({ error: 'Chat not found' });
+    await deps.store.insertMessages([{ session_id: updated.id, role: 'system', content: `Resolved by ${req.agent!.display_name}` }]);
     return { ok: true };
   });
 

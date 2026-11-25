@@ -132,6 +132,29 @@ describe('chat routes', () => {
     expect(res.headers['access-control-allow-methods']).toMatch(/DELETE/);
   });
 
+  it('lets the player answer "solved?": No tells the team, Yes closes the ticket', async () => {
+    const { app, sessionId, sessions, messages } = await setup();
+    sessions[0]!.status = 'human';
+    const resolve = (solved: boolean, user = 'u1') =>
+      app.inject({ method: 'POST', url: `/chat/sessions/${sessionId}/resolve`, headers: auth(user), payload: { solved } });
+    expect((await resolve(true, 'u2')).statusCode).toBe(404);
+    const no = await resolve(false);
+    expect(no.json().session.status).toBe('human');
+    expect(messages.at(-1)).toMatchObject({ role: 'user', content: 'No, I still need help.' });
+    const yes = await resolve(true);
+    expect(yes.json().session.status).toBe('resolved');
+    expect(messages.at(-1)).toMatchObject({ role: 'system' });
+    expect((await resolve(true)).statusCode).toBe(409);
+  });
+
+  it('opens the fresh chat after a resolved ticket with Pip saying the ticket is resolved', async () => {
+    const { app, sessions } = await setup();
+    Object.assign(sessions[0]!, { status: 'resolved', chatwoot_display_id: 4 });
+    const fresh = await app.inject({ method: 'POST', url: '/chat/sessions', headers: auth(), payload: { fresh: true } });
+    const full = await app.inject({ url: `/chat/sessions/${fresh.json().session.id}`, headers: auth() });
+    expect(full.json().messages).toEqual([expect.objectContaining({ role: 'bot', content: "Ticket #10004 is resolved. You're back with Pip — ask me anything!" })]);
+  });
+
   it('brings a returning player back to their resolved chat, and starts fresh only when asked', async () => {
     const { app, sessionId, sessions } = await setup();
     sessions[0]!.status = 'resolved';

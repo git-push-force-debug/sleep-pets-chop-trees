@@ -59,6 +59,8 @@ export const BotReplySchema = z.object({
   suggestions: z.array(z.string()),
   sources: z.array(SourceSchema),
   images: z.array(GuideImageSchema),
+  /** Set only by the server (never by the model): 'resolve' shows the player "solved? Yes / No" buttons. */
+  ask: z.literal('resolve').optional(),
 });
 
 export type Intent = z.infer<typeof IntentSchema>;

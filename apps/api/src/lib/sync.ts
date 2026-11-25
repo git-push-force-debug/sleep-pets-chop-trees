@@ -41,8 +41,10 @@ export async function syncSession(deps: Deps, sessionId: string): Promise<{ adde
   );
 
   let status: SessionStatus = session.status;
+  // A chat resolved here (player said "solved" or the admin panel) leaves the Chatwoot conversation open,
+  // so only a new team reply reopens it.
   if (conversation.status === 'resolved') status = 'resolved';
-  else if (session.status === 'resolved' || agentMessages.length) status = 'human';
+  else if (agentMessages.length) status = 'human';
 
   const patch: Partial<SessionRow> = {};
   const lastId = Math.max(session.last_chatwoot_message_id, ...fresh.map((m) => m.id));

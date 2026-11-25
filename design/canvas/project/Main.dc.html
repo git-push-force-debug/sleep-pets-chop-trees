@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Design system — Sleep Pets &amp; Chop Trees</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;650;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Nunito,system-ui,sans-serif;color:#2A1E14}
+a{color:#1F6FB5}a:hover{color:#174F82}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border:0;border-radius:999px;font:800 16px Nunito,sans-serif;cursor:pointer}
+.pill-gold{background:#FFC93C;color:#2A1E14;box-shadow:0 5px 0 #E07A1F,0 10px 18px rgba(42,30,20,.18)}
+.pill-green{background:#23772F;color:#FFFFFF;box-shadow:0 5px 0 #145020,0 10px 18px rgba(42,30,20,.18)}
+.pill-white{background:#FFFFFF;color:#2A1E14;box-shadow:0 5px 0 #D8C9AE,0 10px 18px rgba(42,30,20,.12)}
+.pill-pressed{transform:translateY(4px);box-shadow:0 1px 0 #E07A1F,0 3px 6px rgba(42,30,20,.18)}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;background:#FFFFFF;border:2px solid #EADFCB;font:700 14px Nunito,sans-serif;color:#2A1E14}
+.sw{display:flex;flex-direction:column;gap:6px;font:650 13px Nunito,sans-serif}
+.sw div{height:64px;border-radius:12px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.12)}
+</style>
+</helmet>
+<div style="width:1280px;height:1080px;box-sizing:border-box;padding:56px 64px;background:#FFF8EC;display:flex;flex-direction:column;gap:36px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <p style="margin:0;font:800 14px Nunito;letter-spacing:.08em;text-transform:uppercase;color:#5C4A3A">Design system · v1 proposal</p>
+      <h1 style="margin:6px 0 0;font:900 44px/1.05 Nunito">Sleep Pets &amp; Chop Trees</h1>
+      <p style="margin:8px 0 0;font:500 17px/1.5 Nunito;color:#5C4A3A;max-width:640px">A cozy ranch diorama: meadow green, sky blue, warm brick and wood, with Lance's golden 2.5D raised pills. Ink-on-cream text; colour always paired with an icon or word.</p>
+    </div>
+    <div style="display:flex;gap:10px"><span class="chip">Nunito 500–900</span><span class="chip">WCAG AA</span><span class="chip">Targets ≥ 48px</span></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px">
+    <section style="display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font:800 20px Nunito">Core palette</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px">
+        <div class="sw"><div style="background:#2A1E14"></div>Ink #2A1E14</div>
+        <div class="sw"><div style="background:#FFF8EC;border:2px solid #EADFCB"></div>Paper #FFF8EC</div>
+        <div class="sw"><div style="background:#23772F"></div>Meadow #23772F</div>
+        <div class="sw"><div style="background:#1F6FB5"></div>Sky #1F6FB5</div>
+        <div class="sw"><div style="background:#FFC93C"></div>Gold #FFC93C</div>
+        <div class="sw"><div style="background:#E07A1F"></div>Gold base #E07A1F</div>
+        <div class="sw"><div style="background:#D9917A"></div>Brick #D9917A</div>
+        <div class="sw"><div style="background:#C2412D"></div>Alert #C2412D</div>
+      </div>
+      <h2 style="margin:10px 0 0;font:800 20px Nunito">Biome tints</h2>
+      <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px">
+        <div class="sw"><div style="background:#3FA34D"></div>Grassland</div>
+        <div class="sw"><div style="background:#E9B949"></div>Savanna</div>
+        <div class="sw"><div style="background:#8FD0F5"></div>Snowland</div>
+        <div class="sw"><div style="background:#E8A86A"></div>Desert</div>
+        <div class="sw"><div style="background:#6E9F3A"></div>Prehistoric</div>
+        <div class="sw"><div style="background:#8B5CF6"></div>Enchanted</div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font:800 20px Nunito">Type scale</h2>
+      <p style="margin:0;font:900 30px/1.1 Nunito">Display 30 / 900 — Rebirth unlocked!</p>
+      <p style="margin:0;font:800 22px/1.2 Nunito">Title 22 / 800 — Unlock the six ranch tiers</p>
+      <p style="margin:0;font:700 17px/1.3 Nunito">Heading 17 / 700 — Carry the catch home</p>
+      <p style="margin:0;font:500 15px/1.55 Nunito">Body 15 / 500 — Placed pets earn Cash on their own. Cut trees for Wood, then rebirth to open more of the map.</p>
+      <p style="margin:0;font:650 13px/1.3 Nunito">Label 13 / 650 — Ticket #128</p>
+      <p style="margin:0;font:500 12px/1.4 Nunito;color:#5C4A3A">Caption 12 / 500 — Archived play · r8_feed_prompt.jpg</p>
+      <h2 style="margin:12px 0 0;font:800 20px Nunito">Radius &amp; elevation</h2>
+      <div style="display:flex;gap:14px;align-items:flex-end">
+        <div style="width:56px;height:56px;border-radius:8px;background:#FFFFFF;box-shadow:0 2px 8px rgba(42,30,20,.10)"></div>
+        <div style="width:56px;height:56px;border-radius:12px;background:#FFFFFF;box-shadow:0 2px 8px rgba(42,30,20,.10)"></div>
+        <div style="width:56px;height:56px;border-radius:18px;background:#FFFFFF;box-shadow:0 6px 20px rgba(42,30,20,.16)"></div>
+        <div style="width:72px;height:56px;border-radius:26px 26px 0 0;background:#FFFFFF;box-shadow:0 12px 32px rgba(42,30,20,.2)"></div>
+        <span style="font:650 13px Nunito;color:#5C4A3A">8 · 12 · 18 · 26 (sheet top) · pill 999</span>
+      </div>
+    </section>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font:800 20px Nunito">Buttons — 2.5D raised pill (M14: base edge compresses on press)</h2>
+    <div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap">
+      <button class="pill pill-gold">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+        Play on Roblox
+      </button>
+      <button class="pill pill-gold pill-pressed">Pressed</button>
+      <button class="pill pill-green">Talk to a person</button>
+      <button class="pill pill-white">Read the guide</button>
+      <button class="pill" style="background:#EFE6D6;color:#8A7A69;box-shadow:none" disabled>Disabled</button>
+      <span class="chip">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#23772F" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5z"></path></svg>
+        Unlock the six ranch tiers
+      </span>
+      <span class="chip" style="border-color:#BFD9F2">What pet do I need?</span>
+    </div>
+  </section>
+
+  <section style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+    <div style="background:#FFFFFF;border-radius:18px;padding:18px;box-shadow:0 2px 8px rgba(42,30,20,.10);display:flex;flex-direction:column;gap:8px">
+      <span style="font:800 13px Nunito;color:#1F6FB5;display:flex;gap:6px;align-items:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5l3 2"></path></svg>Waiting for a person · Ticket #128</span>
+      <span style="font:500 14px Nunito;color:#5C4A3A">Status chips always pair an icon with words.</span>
+    </div>
+    <div style="background:#FFF2C9;border-radius:18px;padding:18px;display:flex;gap:10px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A5A0B" stroke-width="2.5" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"></path></svg>
+      <span style="font:600 14px/1.45 Nunito;color:#5A3A08"><b>Tip</b> · Night speeds ranch recovery 10×.</span>
+    </div>
+    <div style="background:#2A1E14;color:#FFF8EC;border-radius:999px;padding:14px 22px;display:flex;gap:10px;align-items:center;box-shadow:0 6px 20px rgba(42,30,20,.16)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7FD28B" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+      <span style="font:700 15px Nunito">Connected to a person (M4 toast)</span>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

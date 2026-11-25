@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chat — bot answer</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;650;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Nunito,system-ui,sans-serif;color:#2A1E14}
+a{color:#1F6FB5}a:hover{color:#174F82}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;background:#FFFFFF;border:2px solid #BFD9F2;font:750 13px Nunito,sans-serif;color:#2A1E14;cursor:pointer}
+.src{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 10px;border-radius:999px;background:#F6EFE3;font:750 12px Nunito,sans-serif;color:#2A1E14;text-decoration:none}
+table{border-collapse:collapse;width:100%;font:650 13px Nunito}
+th{text-align:left;font:800 12px Nunito;color:#5C4A3A;padding:6px 8px;background:#F6EFE3}
+td{padding:7px 8px;border-top:1px solid #EFE6D6}
+</style>
+</helmet>
+<div style="width:390px;height:844px;background:rgba(42,30,20,.45);position:relative;overflow:hidden">
+  <section aria-label="Chat with Pip" style="position:absolute;left:0;right:0;top:36px;bottom:0;background:#FFF8EC;border-radius:26px 26px 0 0;display:flex;flex-direction:column;box-shadow:0 -12px 32px rgba(42,30,20,.25)">
+    <div style="display:flex;justify-content:center;padding-top:8px" aria-hidden="true"><span style="width:44px;height:5px;border-radius:999px;background:#D8C9AE"></span></div>
+    <header style="display:flex;align-items:center;gap:10px;padding:8px 12px 12px 16px;border-bottom:2px solid #EFE6D6">
+      <span style="position:relative;width:44px;height:44px;border-radius:999px;background:#FFC93C;display:grid;place-items:center;box-shadow:inset 0 -4px 0 #E07A1F">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2A1E14" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 4c0 2 1 3 2 3M17 4c0 2-1 3-2 3"></path><circle cx="12" cy="13" r="7"></circle><path d="M9 12.5c.6.5 1.4.5 2 0M13 12.5c.6.5 1.4.5 2 0M11 16h2"></path></svg>
+      </span>
+      <div style="flex:1;min-width:0">
+        <b style="font:900 17px Nunito">Pip</b>
+        <div style="display:flex;align-items:center;gap:4px;font:650 12px Nunito;color:#1F5A2A">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5z"></path></svg>Bot · answers from the game guide
+        </div>
+      </div>
+      <button style="min-height:40px;padding:0 12px;border:0;border-radius:999px;background:#FFFFFF;font:800 13px Nunito;color:#23772F;box-shadow:0 3px 0 #D8C9AE">Talk to a person</button>
+      <button aria-label="Close chat" style="width:44px;height:44px;border:0;border-radius:999px;background:transparent;display:grid;place-items:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2A1E14" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+      </button>
+    </header>
+
+    <div style="flex:1;overflow:hidden;padding:14px 14px 8px;display:flex;flex-direction:column;gap:12px">
+      <div style="align-self:flex-end;max-width:78%;background:#1F6FB5;color:#FFFFFF;border-radius:18px 18px 4px 18px;padding:10px 14px;font:650 15px/1.4 Nunito">How do I rebirth and what does it cost?</div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:96%">
+        <div style="background:#FFFFFF;border-radius:4px 18px 18px 18px;padding:12px 14px;font:500 15px/1.5 Nunito;box-shadow:0 2px 8px rgba(42,30,20,.08)">Open <b>Rebirth</b> and keep the required pet from the biome you're finishing. Each stage resets Cash, takes Wood, and opens the next biome:</div>
+
+        <div style="background:#FFFFFF;border-radius:18px;overflow:hidden;box-shadow:0 2px 8px rgba(42,30,20,.08)">
+          <div style="padding:10px 12px 6px;font:800 14px Nunito">Ranch tiers</div>
+          <table>
+            <thead><tr><th scope="col">Stage</th><th scope="col">Cash</th><th scope="col">Wood</th><th scope="col">Opens</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>$280,000</td><td>250</td><td>Savanna</td></tr>
+              <tr><td>2</td><td>$4,000,000</td><td>800</td><td>Snowland</td></tr>
+              <tr><td>3</td><td>$20,000,000</td><td>5,000</td><td>Desert</td></tr>
+            </tbody>
+          </table>
+          <button style="width:100%;min-height:40px;border:0;border-top:1px solid #EFE6D6;background:#FFFFFF;font:800 13px Nunito;color:#1F6FB5">Show all 6 stages</button>
+        </div>
+
+        <div style="background:#FFF2C9;border-radius:14px;padding:10px 12px;display:flex;gap:8px;font:600 14px/1.45 Nunito;color:#5A3A08">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="flex:0 0 auto"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"></path></svg>
+          <span><b>Tip</b> · A pet in your Bag counts. Keep it until you rebirth.</span>
+        </div>
+
+        <figure style="margin:0;background:#FFFFFF;border-radius:18px;overflow:hidden;box-shadow:0 2px 8px rgba(42,30,20,.08)">
+          <button aria-label="Open picture: feeding a Cheetah inside the ranch" style="display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in">
+            <img src="/_blob/4a7fe36c9efed93992c8404038dea5ab" alt="Feeding a Cheetah inside the ranch" style="display:block;width:100%;height:150px;object-fit:cover">
+          </button>
+          <figcaption style="padding:8px 12px;font:600 12px Nunito;color:#5C4A3A">Archived play · Feeding a Cheetah inside the ranch</figcaption>
+        </figure>
+
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          <span style="font:700 12px Nunito;color:#5C4A3A">Sources</span>
+          <a class="src" href="#"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#23772F" stroke-width="2.5" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5z"></path></svg>Unlock the six ranch tiers</a>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <button aria-label="Helpful" style="width:36px;height:36px;border:0;border-radius:999px;background:#FFFFFF;display:grid;place-items:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5C4A3A" stroke-width="2.5" aria-hidden="true"><path d="M7 11v9H4v-9h3zm0 0 4-8a2 2 0 0 1 2 2v4h5a2 2 0 0 1 2 2.3l-1.2 7A2 2 0 0 1 16.8 20H7"></path></svg></button>
+          <button aria-label="Not helpful" style="width:36px;height:36px;border:0;border-radius:999px;background:#FFFFFF;display:grid;place-items:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5C4A3A" stroke-width="2.5" aria-hidden="true" style="transform:rotate(180deg)"><path d="M7 11v9H4v-9h3zm0 0 4-8a2 2 0 0 1 2 2v4h5a2 2 0 0 1 2 2.3l-1.2 7A2 2 0 0 1 16.8 20H7"></path></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:6px 14px;display:flex;gap:8px;overflow:hidden">
+      <button class="chip">What pet do I need?</button>
+      <button class="chip">Fastest way to get Wood?</button>
+    </div>
+    <form style="display:flex;gap:8px;align-items:center;padding:10px 12px 18px;border-top:2px solid #EFE6D6;background:#FFF8EC" onsubmit="return false">
+      <label for="msg" style="position:absolute;left:-9999px">Message Pip</label>
+      <input id="msg" placeholder="Ask about the game…" style="flex:1;min-height:48px;padding:0 16px;border:2px solid #EADFCB;border-radius:999px;font:600 15px Nunito;background:#FFFFFF;color:#2A1E14">
+      <button aria-label="Send" style="width:52px;height:48px;border:0;border-radius:999px;background:#FFC93C;display:grid;place-items:center;box-shadow:0 4px 0 #E07A1F">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2A1E14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </button>
+    </form>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

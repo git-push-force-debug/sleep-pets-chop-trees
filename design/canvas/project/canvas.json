@@ -1,0 +1,19 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-25T04:10:00Z" },
+  "title": "Sleep Pets & Chop Trees — Website Design",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1280, "h": 1080, "title": "Design system" },
+    "Home.dc.html": { "x": 1360, "y": 0, "w": 1440, "h": 2360, "title": "Home — desktop", "expand": "fill" },
+    "HomePhone.dc.html": { "x": 2880, "y": 0, "w": 390, "h": 1960, "title": "Home — phone" },
+    "ChatAnswer.dc.html": { "x": 0, "y": 2480, "w": 390, "h": 844, "title": "Chat — bot answer (generative UI)" },
+    "ChatStates.dc.html": { "x": 470, "y": 2480, "w": 1330, "h": 844, "title": "Chat — hand-off, person, resolved" },
+    "Guide.dc.html": { "x": 1880, "y": 2480, "w": 1440, "h": 1500, "title": "Guide chapter — desktop", "expand": "fill" },
+    "Admin.dc.html": { "x": 0, "y": 4100, "w": 1440, "h": 900, "title": "Admin — inbox and conversation", "expand": "fill" }
+  },
+  "order": ["Main.dc.html", "Home.dc.html", "HomePhone.dc.html", "ChatAnswer.dc.html", "ChatStates.dc.html", "Guide.dc.html", "Admin.dc.html"],
+  "notes": {},
+  "designSystems": []
+}

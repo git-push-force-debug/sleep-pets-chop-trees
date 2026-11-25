@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
+import { useSearchParams } from 'react-router';
 import type { BotReply as Reply } from '../../../../packages/shared/src/blocks.ts';
 import { BotReply } from '../../../../packages/shared/src/ui/BotReply.tsx';
 import { ticketLabel } from '../../../../packages/shared/src/api.ts';
@@ -157,7 +158,15 @@ export function Inbox({ agent }: { agent: Agent }) {
   const { sessions, refresh } = useSessions();
   const [tab, setTab] = useState('waiting');
   const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState<string | null>(null);
+  const [params] = useSearchParams();
+  const [selected, setSelected] = useState<string | null>(params.get('chat'));
+
+  // Opened from the Leads page (/?chat=<id>): switch to the tab that holds that chat.
+  const linked = params.get('chat');
+  useEffect(() => {
+    const s = linked && sessions.find((x) => x.id === linked);
+    if (s) setTab(TABS.find((t) => t.statuses.includes(s.status))!.key);
+  }, [linked, sessions]);
 
   useEffect(() => {
     if ('Notification' in window && Notification.permission === 'default') void Notification.requestPermission();

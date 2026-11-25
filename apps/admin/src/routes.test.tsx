@@ -42,6 +42,12 @@ describe('admin routes', () => {
     expect(screen.getByRole('link', { name: 'Settings' })).toBeTruthy();
   });
 
+  it('shows the Leads page with a CSV export to any team member', () => {
+    at(auth({ agent: { user_id: 'a', role: 'agent', display_name: 'Maya' } }), '/leads');
+    expect(screen.getByRole('heading', { name: 'Leads · 0' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Export leads (CSV)' })).toBeTruthy();
+  });
+
   it('builds the exact Chatwoot conversation link', () => {
     expect(chatwootUrl(42)).toBe(`https://app.chatwoot.com/app/accounts/${import.meta.env.VITE_CHATWOOT_ACCOUNT_ID}/conversations/42`);
   });

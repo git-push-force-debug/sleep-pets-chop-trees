@@ -5,6 +5,7 @@ import type { AdminAuth } from './auth.ts';
 import { Analytics } from './pages/Analytics.tsx';
 import { Inbox } from './pages/Inbox.tsx';
 import { Knowledge } from './pages/Knowledge.tsx';
+import { Leads } from './pages/Leads.tsx';
 import { Settings } from './pages/Settings.tsx';
 import { Team } from './pages/Team.tsx';
 
@@ -42,6 +43,7 @@ export function AdminRoutes({ auth }: { auth: AdminAuth }) {
       <nav className="rail" aria-label="Admin">
         <b className="rail-brand">Pip Support</b>
         <NavLink to="/" end>Inbox</NavLink>
+        <NavLink to="/leads">Leads</NavLink>
         <NavLink to="/knowledge">Knowledge</NavLink>
         <NavLink to="/analytics">Analytics</NavLink>
         {admin && <NavLink to="/team">Team</NavLink>}
@@ -54,6 +56,7 @@ export function AdminRoutes({ auth }: { auth: AdminAuth }) {
       <main className="workspace">
         <Routes>
           <Route index element={<Inbox agent={auth.agent} />} />
+          <Route path="leads" element={<Leads />} />
           <Route path="knowledge" element={<Knowledge />} />
           <Route path="analytics" element={<Analytics />} />
           {admin && <Route path="team" element={<Team me={auth.agent.user_id} />} />}

@@ -97,6 +97,27 @@ label { display: flex; flex-direction: column; gap: 4px; font: 750 13px var(--fo
 .bar-col { flex: 1 0 22px; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; }
 .bar { width: 100%; min-height: 4px; border-radius: 6px 6px 0 0; background: var(--meadow); }
 .bar-col small { font: 650 10px var(--font); color: var(--ink-soft); }
+/* Dashboard: shared filters, chart grid, stacked day bars, horizontal bars */
+.row-between { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.filters { display: flex; gap: 12px; flex-wrap: wrap; }
+.filters label { display: flex; flex-direction: column; gap: 4px; font: 750 12px var(--font); color: var(--ink-soft); }
+.charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.chart-wide { grid-column: 1 / -1; }
+.bar-stack { width: 100%; min-height: 4px; display: flex; flex-direction: column; border-radius: 6px 6px 0 0; overflow: hidden; }
+.bar-stack .bar { min-height: 0; border-radius: 0; }
+.bar.person { background: var(--sky); }
+.legend { display: flex; align-items: center; gap: 8px; font: 650 12px var(--font); color: var(--ink-soft); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--meadow); }
+.dot.person { background: var(--sky); margin-left: 8px; }
+.hbars { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.hbars li { display: grid; grid-template-columns: minmax(110px, 38%) 1fr 36px; align-items: center; gap: 10px; font: 650 13px var(--font); }
+.hbar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hbar-track { height: 14px; border-radius: var(--r-pill); background: var(--paper-deep); overflow: hidden; }
+.hbar { display: block; height: 100%; min-width: 3px; border-radius: inherit; background: var(--meadow); transition: width 300ms ease; }
+.hbars b { text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) { .charts { grid-template-columns: 1fr; } }
+.leads-page { max-width: 1200px; }
+.table-wrap { overflow-x: auto; }
 .table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: var(--r-md); box-shadow: var(--elev-raised); overflow: hidden; }
 .table th { text-align: left; padding: 10px 12px; background: var(--paper-deep); color: var(--ink-soft); font: 800 13px var(--font); }
 .table td { padding: 10px 12px; border-top: 1px solid var(--line); }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import type { BotReply as Reply } from '../../../../packages/shared/src/blocks.ts';
 import { BotReply } from '../../../../packages/shared/src/ui/BotReply.tsx';
 import { ticketLabel } from '../../../../packages/shared/src/api.ts';
@@ -22,11 +22,13 @@ const waited = (iso: string | null) => {
   return min < 60 ? `${min} min` : `${Math.round(min / 60)} h`;
 };
 
-function Conversation({ session, agent }: { session: SessionRow; agent: Agent }) {
+function Conversation({ session, agent, onChanged }: { session: SessionRow; agent: Agent; onChanged: () => void }) {
   const [messages, setMessages] = useState<Msg[]>([]);
-  const [suggestion, setSuggestion] = useState<string | null>(null);
+  const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
+  const transcript = useRef<HTMLDivElement>(null);
+  const resolved = session.status === 'resolved';
 
   const load = useCallback(async () => {
     const { data } = await supabase.from('messages').select('*').eq('session_id', session.id).order('created_at');
@@ -34,74 +36,119 @@ function Conversation({ session, agent }: { session: SessionRow; agent: Agent })
   }, [session.id]);
 
   useEffect(() => {
-    setSuggestion(null);
+    setDraft('');
+    setNote(null);
     void load();
     if (session.status !== 'bot') void adminApi('/admin/sync', { method: 'POST' }).then(load).catch(() => {});
     const channel = supabase
       .channel(`admin-msgs-${session.id}`)
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `session_id=eq.${session.id}` }, () => void load())
       .subscribe();
-    return () => void supabase.removeChannel(channel);
+    // Fallback re-read in case realtime misses an insert (player messages, Chatwoot replies).
+    const timer = setInterval(() => document.visibilityState === 'visible' && void load(), 4000);
+    return () => {
+      clearInterval(timer);
+      void supabase.removeChannel(channel);
+    };
   }, [session.id, session.status, load]);
 
-  const run = async (label: string, fn: () => Promise<void>) => {
+  useEffect(() => {
+    transcript.current?.scrollTo?.({ top: transcript.current.scrollHeight });
+  }, [messages.length]);
+
+  const run = async (label: string, fn: () => Promise<unknown>) => {
     setBusy(label);
     setNote(null);
     try {
       await fn();
+      await load();
+      onChanged();
     } catch (e) {
       setNote((e as Error).message);
     } finally {
       setBusy(null);
     }
   };
+  const post = (path: string, body?: unknown) => adminApi(`/admin/sessions/${session.id}/${path}`, { method: 'POST', body });
+
+  const send = (e?: FormEvent) => {
+    e?.preventDefault();
+    const text = draft.trim();
+    if (!text || busy || resolved) return;
+    void run('reply', async () => {
+      const { message } = await adminApi<{ message: Msg }>(`/admin/sessions/${session.id}/reply`, { method: 'POST', body: { text } });
+      setMessages((list) => (list.some((m) => m.id === message.id) ? list : [...list, message])); // show it at once
+      setDraft('');
+    });
+  };
 
   return (
     <section className="conversation" aria-label="Conversation">
       <header className="conv-head">
         <div>
-          <h2>{session.chatwoot_display_id ? `Ticket ${ticketLabel(session.chatwoot_display_id)} (Chatwoot #${session.chatwoot_display_id})` : 'Bot chat'} · {session.roblox_username ?? 'Player'}</h2>
+          <h2>{session.chatwoot_display_id ? `Ticket ${ticketLabel(session.chatwoot_display_id)}` : 'Bot chat'} · {session.roblox_username ?? 'Player'}</h2>
           <p className={`status-line s-${session.status}`}>{session.status.replace('_', ' ')}{session.handoff_at && session.status === 'waiting_human' ? ` · waiting ${waited(session.handoff_at)}` : ''}</p>
         </div>
         <div className="conv-actions">
-          {session.chatwoot_display_id && (
-            <a className="spct-pill spct-pill-green" href={chatwootUrl(session.chatwoot_display_id)} target="_blank" rel="noopener noreferrer">Open in Chatwoot ↗</a>
+          {!resolved && (
+            <>
+              <button type="button" className="spct-pill spct-pill-secondary" disabled={!!busy} onClick={() => run('ask', () => post('ask-resolved'))}>
+                Ask if solved
+              </button>
+              <button type="button" className="spct-pill spct-pill-green" disabled={!!busy} onClick={() => run('resolve', () => post('resolve'))}>
+                Resolve
+              </button>
+            </>
           )}
-          {session.bot_paused && session.status !== 'resolved' && (
-            <button type="button" className="spct-pill spct-pill-secondary" disabled={!!busy}
-              onClick={() => run('back', () => adminApi(`/admin/sessions/${session.id}/hand-back`, { method: 'POST' }).then(() => {}))}>
-              Hand back to bot
+          {session.bot_paused && !resolved && (
+            <button type="button" className="spct-pill spct-pill-secondary" disabled={!!busy} onClick={() => run('back', () => post('hand-back'))}>
+              Hand back to Pip
             </button>
+          )}
+          {session.chatwoot_display_id && (
+            <a className="spct-pill spct-pill-secondary" href={chatwootUrl(session.chatwoot_display_id)} target="_blank" rel="noopener noreferrer">Open in Chatwoot ↗</a>
           )}
         </div>
       </header>
-      <div className="transcript">
+      <div className="transcript" ref={transcript}>
         {messages.map((m) =>
           m.role === 'bot' && m.reply ? (
-            <div key={m.id} className="t-bot"><span className="who">Pip · bot</span><BotReply reply={m.reply} onSuggestion={() => {}} onHandoff={() => {}} handoffDisabled /></div>
+            <div key={m.id} className="t-bot"><span className="who">Pip · bot</span><BotReply reply={m.reply} onSuggestion={() => {}} onHandoff={() => {}} handoffDisabled showSuggestions={false} /></div>
           ) : (
             <div key={m.id} className={`t-${m.role}`}>
-              {m.role !== 'system' && <span className="who">{m.role === 'user' ? 'Player' : `${m.agent_name ?? 'Team'} · team`}</span>}
+              {m.role !== 'system' && <span className="who">{m.role === 'user' ? session.roblox_username ?? 'Player' : `${m.agent_name ?? 'Team'} · team`}</span>}
               <p>{m.content}</p>
             </div>
           ),
         )}
       </div>
-      <div className="suggest">
-        <button type="button" className="spct-pill spct-pill-secondary" disabled={!!busy}
-          onClick={() => run('suggest', async () => setSuggestion((await adminApi<{ text: string }>(`/admin/sessions/${session.id}/suggest`, { method: 'POST' })).text))}>
-          {busy === 'suggest' ? 'Thinking…' : 'Suggest reply'}
-        </button>
-        {suggestion && (
-          <div className="suggestion">
-            <b>Suggested reply · from the guide + creator notes</b>
-            <p>{suggestion}</p>
-            <button type="button" className="link-btn" onClick={() => void navigator.clipboard.writeText(suggestion)}>Copy</button>
-          </div>
-        )}
+      <form className="reply-box" onSubmit={send}>
+        <label className="spct-sr-only" htmlFor="admin-reply">Reply to the player</label>
+        <textarea
+          id="admin-reply"
+          className="input reply-input"
+          rows={3}
+          maxLength={2000}
+          value={draft}
+          disabled={resolved}
+          placeholder={resolved ? 'This chat is resolved.' : 'Reply to the player… (Enter sends, Shift+Enter for a new line)'}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) send(e);
+          }}
+        />
+        <div className="reply-row">
+          <button type="button" className="spct-pill spct-pill-secondary" disabled={!!busy || resolved}
+            onClick={() => run('suggest', async () => setDraft((await adminApi<{ text: string }>(`/admin/sessions/${session.id}/suggest`, { method: 'POST' })).text))}>
+            {busy === 'suggest' ? 'Thinking…' : 'Suggest reply'}
+          </button>
+          <span className="hint">Reply here or in Chatwoot — both reach the player. Signed in as {agent.display_name}.</span>
+          <button type="submit" className="spct-pill spct-pill-primary" disabled={!draft.trim() || !!busy || resolved}>
+            {busy === 'reply' ? 'Sending…' : 'Send'}
+          </button>
+        </div>
         {note && <p className="alert" role="alert">{note}</p>}
-        <p className="hint">Reply, assign and resolve in Chatwoot — replies appear here and in the player's chat automatically. Signed in as {agent.display_name}.</p>
-      </div>
+      </form>
     </section>
   );
 }
@@ -159,7 +206,7 @@ export function Inbox({ agent }: { agent: Agent }) {
       </section>
       {session ? (
         <>
-          <Conversation session={session} agent={agent} />
+          <Conversation session={session} agent={agent} onChanged={refresh} />
           <aside className="player" aria-label="Player">
             <h3>Player</h3>
             <dl>

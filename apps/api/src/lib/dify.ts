@@ -32,6 +32,14 @@ export function toEvidence(content: string, score: number): Evidence | null {
   };
 }
 
+const PROCESS_RULE = {
+  mode: 'custom',
+  rules: {
+    pre_processing_rules: [{ id: 'remove_extra_spaces', enabled: true }],
+    segmentation: { separator: '=====', max_tokens: 2000 },
+  },
+};
+
 export function createDifyClient(cfg: { apiBase: string; apiKey: string }, fetchImpl: typeof fetch = fetch) {
   async function call<T>(method: string, path: string, body?: unknown): Promise<T> {
     const res = await fetchImpl(`${cfg.apiBase}${path}`, {
@@ -93,30 +101,14 @@ export function createDifyClient(cfg: { apiBase: string; apiKey: string }, fetch
         name,
         text,
         indexing_technique: 'high_quality',
-        process_rule: {
-          mode: 'custom',
-          rules: {
-            pre_processing_rules: [{ id: 'remove_extra_spaces', enabled: true }],
-            segmentation: { separator: '=====', max_tokens: 2000 },
-          },
-        },
+        process_rule: PROCESS_RULE,
       });
       return data.document.id;
     },
 
-    async addSegment(datasetId: string, documentId: string, content: string): Promise<string> {
-      const data = await call<{ data: { id: string }[] }>('POST', `/datasets/${datasetId}/documents/${documentId}/segments`, {
-        segments: [{ content }],
-      });
-      return data.data[0]!.id;
-    },
-
-    async updateSegment(datasetId: string, documentId: string, segmentId: string, content: string): Promise<void> {
-      await call('POST', `/datasets/${datasetId}/documents/${documentId}/segments/${segmentId}`, { segment: { content } });
-    },
-
-    async deleteSegment(datasetId: string, documentId: string, segmentId: string): Promise<void> {
-      await call('DELETE', `/datasets/${datasetId}/documents/${documentId}/segments/${segmentId}`);
+    // Replaces a document's whole text. The free (Sandbox) plan refuses per-segment add/edit/delete with HTTP 403.
+    async updateDocumentByText(datasetId: string, documentId: string, name: string, text: string): Promise<void> {
+      await call('POST', `/datasets/${datasetId}/documents/${documentId}/update-by-text`, { name, text, process_rule: PROCESS_RULE });
     },
   };
 }

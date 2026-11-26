@@ -350,6 +350,7 @@ const zh: Strings = {
     'There is no player question to answer yet.': '还没有需要回答的玩家问题。',
     'This chat is resolved.': '这个聊天已解决。',
     "You can't remove your own admin role.": '你不能移除自己的管理员角色。',
+    "Saved, but Pip's knowledge didn't update. Save it again in a minute.": '已保存，但 Pip 的知识库没有更新。请一分钟后再保存一次。',
   },
   requestFailed: (status) => `请求失败（${status}）`,
 };

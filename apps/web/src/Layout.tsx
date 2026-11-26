@@ -9,7 +9,7 @@ export function Layout() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
     if (hash) document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView();
-    else window.scrollTo(0, 0);
+    else window.scrollTo({ top: 0, behavior: 'instant' }); // never smooth-scroll back through the long Home page
   }, [pathname, hash]);
 
   const [scrolled, setScrolled] = useState(false);

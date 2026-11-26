@@ -57,6 +57,8 @@
 .chat-status { display: inline-flex; align-items: center; gap: 4px; font: 700 12px var(--font); color: var(--meadow); }
 .chat-status.wait { color: var(--sky-deep); }
 .chat-status.ok { color: var(--meadow); }
+.chat-lang { flex: none; }
+.chat-lang button { min-width: 36px; min-height: 34px; padding: 0 9px; font-size: 13px; }
 .mini-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: var(--meadow); color: #fff; font: 800 13px var(--font); cursor: pointer; box-shadow: 0 4px 0 #1b5e26; white-space: nowrap; transition: transform 120ms ease, box-shadow 120ms ease; -webkit-tap-highlight-color: transparent; }
 .mini-pill:hover { filter: brightness(1.06); }
 .mini-pill:active { transform: translateY(3px); box-shadow: 0 1px 0 #1b5e26; }

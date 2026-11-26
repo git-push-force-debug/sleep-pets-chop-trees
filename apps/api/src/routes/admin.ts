@@ -28,6 +28,9 @@ const SettingsBody = z.object({
   greeting: z.string().trim().min(1).max(300),
   starterQuestions: z.array(z.string().trim().min(1).max(80)).max(3),
   offlineMessage: z.string().trim().min(1).max(500),
+  greetingZh: z.string().trim().max(300).optional(),
+  starterQuestionsZh: z.array(z.string().trim().min(1).max(80)).max(3).optional(),
+  offlineMessageZh: z.string().trim().max(500).optional(),
   evidenceThreshold: z.number().min(0).max(1),
   supportHours: z.string().trim().max(120),
 });

@@ -1,5 +1,6 @@
 import {
   motion,
+  useInView,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -44,6 +45,7 @@ export function ParallaxScene({ layers, contentAt, contentDepth, band = false, c
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = !!useReducedMotion();
+  const visible = useInView(ref);
   const { scrollYProgress: raw } = useScroll({ target: ref, offset: band ? ['start end', 'end start'] : ['start start', 'end start'] });
   const scrollYProgress = useTransform(raw, (v) => (band ? v - 0.5 : v));
   const rawX = useMotionValue(0);
@@ -60,11 +62,11 @@ export function ParallaxScene({ layers, contentAt, contentDepth, band = false, c
   const shared = { progress: scrollYProgress, px, py, reduced };
 
   return (
-    <div ref={ref} className={`plx ${className}`} onPointerMove={onMove} onPointerLeave={() => (rawX.set(0), rawY.set(0))}>
+    <div ref={ref} className={`plx ${className} ${visible ? '' : 'offscreen'}`} onPointerMove={onMove} onPointerLeave={() => (rawX.set(0), rawY.set(0))}>
       {layers.map((l, i) => (
         <DepthLayer key={i} {...shared} depth={l.depth} z={i * 2} className={`plx-layer ${l.className ?? ''}`}>
           <div aria-hidden="true" className="plx-fill">
-            {l.src ? <img src={l.src} alt="" draggable={false} className="plx-img" /> : l.node}
+            {l.src ? <img src={l.src} alt="" draggable={false} className="plx-img" loading="lazy" decoding="async" /> : l.node}
           </div>
         </DepthLayer>
       ))}

@@ -1,9 +1,9 @@
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { useLayoutEffect, useRef, useState, type ComponentProps, type ReactNode } from 'react';
 import type { Layer } from '../motion/Parallax.tsx';
 
 const V3 = '/art/v3';
-const img = (file: string, className = 'plx-img') => <img className={className} src={`${V3}/${file}.webp`} alt="" draggable={false} />;
+const img = (file: string, className = 'plx-img') => <img className={className} src={`${V3}/${file}.webp`} alt="" draggable={false} decoding="async" />;
 
 /** [file, top %, width px, seconds per crossing, start offset s, opacity] — spread out so the sky is never empty. */
 type Cloud = [file: 1 | 2 | 3, top: number, width: number, dur: number, delay: number, opacity: number];
@@ -29,7 +29,7 @@ const Sleepers = ({ list }: { list: Sleeper[] }) => (
   <>
     {list.map((a, i) => (
       <div key={a.file} className="sleeper" style={{ left: `${a.left}%`, bottom: `${a.bottom}%`, width: `clamp(${a.width * 0.5}px, ${a.width / 14}vw, ${a.width}px)` }}>
-        <img className="sleeper-body" src={`${V3}/animal-${a.file}.webp`} alt="" style={{ animationDelay: `${-i * 1.1}s` }} />
+        <img className="sleeper-body" src={`${V3}/animal-${a.file}.webp`} alt="" loading="lazy" decoding="async" style={{ animationDelay: `${-i * 1.1}s` }} />
         <img className="sprite zzz" src={`${V3}/zzz.webp`} alt="" style={{ animationDelay: `${-i * 0.9}s` }} />
       </div>
     ))}
@@ -60,7 +60,7 @@ const BIOME_ANIMALS: Sleeper[] = [
   { file: 'glimmerdeer', left: 86, bottom: 22, width: 170 },
 ];
 const Strip = ({ file, children }: { file: string; children?: ReactNode }) => (
-  <div className="biome-strip">{img(file, 'biome-strip-img')}{children}</div>
+  <div className="biome-strip"><img className="biome-strip-img" src={`${V3}/${file}.webp`} alt="" draggable={false} loading="lazy" decoding="async" />{children}</div>
 );
 export const BAND_LAYERS: Layer[] = [
   { src: `${V3}/sky.webp`, depth: 0, className: 'plx-sky' },
@@ -88,6 +88,7 @@ export function HeroTransition({ hero, next, video }: { hero: ReactNode; next: R
   const pin = useRef<HTMLDivElement>(null);
   const fg = useRef<HTMLDivElement>(null);
   const zoom = !useReducedMotion();
+  const visible = useInView(pin);
   const { scrollYProgress: p } = useScroll({ target: track, offset: ['start start', 'end end'] });
 
   // How far the foreground must rise so its bottom meets the bottom of the stage at p = 1.
@@ -126,7 +127,7 @@ export function HeroTransition({ hero, next, video }: { hero: ReactNode; next: R
 
   return (
     <div ref={track} className="ht-track">
-      <div ref={pin} className="ht-pin">
+      <div ref={pin} className={`ht-pin ${visible ? '' : 'offscreen'}`}>
         <Plate z={1} style={{ scale: skyS }}>{img('sky')}</Plate>
         <Plate z={2}><Clouds list={FAR_CLOUDS} /></Plate>
         <Plate z={3} style={{ scale: mtnS, y: mtnY }}>{img('mountains', 'plx-img plx-bottom')}</Plate>

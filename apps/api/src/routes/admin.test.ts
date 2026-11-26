@@ -3,15 +3,14 @@ import { buildApp, type Deps } from '../app.ts';
 import { computeStats } from '../lib/stats.ts';
 import type { MessageRow, SessionRow } from '../lib/store.ts';
 import { createFakeDeps } from '../test/fakes.ts';
+import { FAQ_SYNC_ERROR } from './admin.ts';
 
 const as = (user: string) => ({ authorization: `Bearer user:${user}` });
 
 function setup() {
   const dify = {
     retrieve: vi.fn(async () => []),
-    addSegment: vi.fn(async () => 'seg-1'),
-    updateSegment: vi.fn(async () => {}),
-    deleteSegment: vi.fn(async () => {}),
+    updateDocumentByText: vi.fn(async () => {}),
   } as unknown as Deps['dify'];
   const fake = createFakeDeps({ dify });
   fake.agents.push({ user_id: 'admin1', role: 'admin', display_name: 'Lance' }, { user_id: 'agent1', role: 'agent', display_name: 'Maya' });
@@ -59,16 +58,33 @@ describe('admin access', () => {
 });
 
 describe('admin FAQ', () => {
-  it('mirrors a new FAQ entry into the admin-faq Dify document in segment format', async () => {
+  const lastDoc = (dify: Deps['dify']) => (dify.updateDocumentByText as ReturnType<typeof vi.fn>).mock.calls.at(-1)!;
+
+  it('rebuilds the whole admin-faq Dify document after add, edit and delete', async () => {
     const { app, dify } = setup();
     const res = await app.inject({
       method: 'POST', url: '/admin/faq', headers: as('agent1'),
       payload: { question: 'Is there a trading system?', answer: 'Not yet — trading is planned.' },
     });
     expect(res.statusCode).toBe(200);
-    const [datasetId, documentId, content] = (dify.addSegment as ReturnType<typeof vi.fn>).mock.calls[0]!;
-    expect([datasetId, documentId]).toEqual(['ds-public', 'doc-faq']);
-    expect(content).toMatch(/^\[section:faq-[a-z0-9-]+\] \[chapter:faq-admin\] \[images:\]\n### Team answers › Is there a trading system\?\n\nNot yet — trading is planned\.$/);
+    const [datasetId, documentId, name, text] = lastDoc(dify);
+    expect([datasetId, documentId, name]).toEqual(['ds-public', 'doc-faq', 'admin-faq']);
+    expect(text).toMatch(/\n\n=====\n\n\[section:faq-[a-z0-9-]+\] \[chapter:faq-admin\] \[images:\]\n### Team answers › Is there a trading system\?\n\nNot yet — trading is planned\.$/);
+
+    const id = res.json().entry.id;
+    await app.inject({ method: 'PATCH', url: `/admin/faq/${id}`, headers: as('agent1'), payload: { question: 'Can I trade pets?', answer: 'Not yet.' } });
+    expect(lastDoc(dify)[3]).toContain('### Team answers › Can I trade pets?');
+    expect((await app.inject({ method: 'DELETE', url: `/admin/faq/${id}`, headers: as('agent1') })).statusCode).toBe(204);
+    expect(lastDoc(dify)[3]).not.toContain('Team answers › Can I trade');
+  });
+
+  it('keeps the answer and says so when Dify rejects the rebuild', async () => {
+    const { app, dify, store } = setup();
+    (dify.updateDocumentByText as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error('Dify down'));
+    const res = await app.inject({ method: 'POST', url: '/admin/faq', headers: as('agent1'), payload: { question: 'Hello there?', answer: 'Hi!' } });
+    expect(res.statusCode).toBe(502);
+    expect(res.json().error).toBe(FAQ_SYNC_ERROR);
+    expect((await store.listFaq()).map((f) => f.question)).toEqual(['Hello there?']);
   });
 });
 

@@ -22,7 +22,7 @@ export function Settings() {
   const starters = [0, 1, 2].map((i) => s.starterQuestions[i] ?? '');
 
   return (
-    <form className="page stack card" onSubmit={save}>
+    <form className="page stack card settings-form" onSubmit={save}>
       <h1>Settings</h1>
       <label className="check"><input type="checkbox" checked={s.botEnabled} onChange={(e) => setS({ ...s, botEnabled: e.target.checked })} /> Pip answers players (off = every message offers a person)</label>
       <label>Greeting<input value={s.greeting} onChange={(e) => setS({ ...s, greeting: e.target.value })} maxLength={300} required /></label>

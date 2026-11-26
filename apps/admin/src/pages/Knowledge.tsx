@@ -48,7 +48,7 @@ export function Knowledge() {
   const current = guide.chapters.find((c) => c.slug === chapter)!;
 
   return (
-    <div className="page stack">
+    <div className="page stack knowledge">
       <h1>Knowledge</h1>
       {error && <p className="alert" role="alert">{error}</p>}
       <section className="card stack">

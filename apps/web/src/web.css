@@ -76,7 +76,7 @@ a { color: inherit; }
 @keyframes snooze { 0%, 100% { transform: translateY(0) scale(0.95); opacity: 0.7; } 50% { transform: translateY(-14px) scale(1.05); opacity: 1; } }
 @keyframes leaf-fall { 0% { transform: translate(0, 0) rotate(0); opacity: 0; } 10% { opacity: 1; } 100% { transform: translate(-18vw, 90vh) rotate(540deg); opacity: 0; } }
 /* Pinned, scroll-scrubbed hero: the track's extra height is the timeline length */
-.ht-track { position: relative; height: 200vh; }
+.ht-track { position: relative; height: 280vh; } /* longer track = slower, more visible parallax */
 .ht-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom)); }
 .ht-plate { position: absolute; inset: 0; pointer-events: none; transform-origin: 50% 62%; will-change: transform; }
 .ht-copy { position: absolute; inset: 0; display: flex; align-items: center; padding-bottom: 22vh; will-change: transform, opacity; }

@@ -19,7 +19,7 @@ export interface Deps {
   env: Env;
   guideImages: Record<string, GuideImage>;
   /** Chinese image text and section titles, for replies in 中文. */
-  guideZh: { images: Record<string, GuideImage>; titles: Record<string, string> };
+  guideZh: { images: Record<string, GuideImage>; titles: Record<string, string>; glossary: Record<string, string> };
 }
 
 const LOCALHOST = /^http:\/\/localhost:\d+$/;

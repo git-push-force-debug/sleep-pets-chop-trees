@@ -16,4 +16,10 @@ describe('checkTranslation', () => {
   it('rejects a changed image token', () => {
     expect(checkTranslation('A\n\n[image:ranch-v7-night]', 'A\n\n[图片:ranch-v7-night]')).toBe('image tokens differ');
   });
+  it('rejects text left in English', () => {
+    expect(checkTranslation('Claim both gifts in the rewards menu before you leave.', 'Claim both gifts in the rewards menu before you leave.')).toMatch(/not translated/);
+  });
+  it('accepts a section that is only pictures', () => {
+    expect(checkTranslation('[image:overhaul-overview]\n\n[image:p2-savanna-play-client]', '[image:overhaul-overview]\n\n[image:p2-savanna-play-client]')).toBeNull();
+  });
 });

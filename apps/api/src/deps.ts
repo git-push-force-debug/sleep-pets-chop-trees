@@ -1,4 +1,5 @@
 import guide from '../../../content/guide.public.json' with { type: 'json' };
+import glossary from '../../../content/glossary.zh.json' with { type: 'json' };
 import guideZh from '../../../content/guide.public.zh.json' with { type: 'json' };
 import type { Guide } from '../../../packages/shared/src/guide.ts';
 import type { Deps } from './app.ts';
@@ -22,6 +23,7 @@ export function createDeps(env: Env = loadEnv()): Deps {
     guideZh: {
       images: (guideZh as Guide).images,
       titles: Object.fromEntries((guideZh as Guide).chapters.flatMap((c) => c.sections.map((s) => [s.id, s.title]))),
+      glossary,
     },
   };
 }

@@ -158,7 +158,7 @@ export function createFakeDeps(over: Partial<Deps> = {}) {
       CHATWOOT_ACCOUNT_ID: '1',
     } as Deps['env'],
     guideImages: {},
-    guideZh: { images: {}, titles: {} },
+    guideZh: { images: {}, titles: {}, glossary: {} },
     ...over,
   };
   return { deps, ...fake };

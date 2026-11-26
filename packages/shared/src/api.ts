@@ -33,7 +33,7 @@ export interface PublicSettings {
 
 export const ZH_DEFAULTS = {
   greeting: '你好，我是 Pip！关于 Sleep Pets & Chop Trees 的问题都可以问我。',
-  starterQuestions: ['怎么转生（Rebirth）？', '怎么抓到第一只宠物？', '怎么快速获得 Wood？'],
+  starterQuestions: ['怎么转生？', '怎么抓到第一只宠物？', '怎么快速获得木材？'],
   offlineMessage: '团队会尽快回复，通常在一天之内。请保持此页面打开，或稍后在这台设备上回来查看。',
 };
 

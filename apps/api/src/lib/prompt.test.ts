@@ -19,4 +19,11 @@ describe('buildContents', () => {
     expect(lastText('怎么转生？', 'zh')).toContain(ZH_INSTRUCTION);
     expect(lastText('how do I rebirth?', 'en')).not.toContain('REPLY LANGUAGE');
   });
+
+  it('gives Chinese names only for names in the evidence', () => {
+    const ev = [{ sectionId: 'guns', chapter: 'economy', title: 'Guns', imageIds: [], content: 'The Glacier Sniper is best in Snowland.', score: 0.8 }];
+    const text = buildContents('best gun?', [], ev, 'zh', { 'Glacier Sniper': '冰川狙击枪', Fox: '狐狸' }).at(-1)!.parts[0]!.text;
+    expect(text).toContain('Glacier Sniper → 冰川狙击枪');
+    expect(text).not.toContain('狐狸');
+  });
 });

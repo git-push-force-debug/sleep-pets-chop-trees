@@ -167,7 +167,7 @@ export async function answerQuestion(
   const evidence = await retrieveEvidence(deps, input.question, input.datasetIds ?? [deps.env.DIFY_PUBLIC_DATASET_ID]);
   const topScore = evidence[0]?.score ?? 0;
   const lang = replyLang(input.question, input.lang);
-  const answer = await deps.gemini.generate(SYSTEM_PROMPT, buildContents(input.question, input.history, evidence, lang), coerceAnswer);
+  const answer = await deps.gemini.generate(SYSTEM_PROMPT, buildContents(input.question, input.history, evidence, lang, deps.guideZh.glossary), coerceAnswer);
   const offerHuman = decideHandoff(answer, topScore, settings.evidenceThreshold);
   return {
     reply: lang === 'zh'

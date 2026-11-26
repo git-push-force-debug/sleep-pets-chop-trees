@@ -257,7 +257,16 @@ main { position: relative; }
   .biome-strip { left: -70%; right: -70%; }
   /* Phone: scene across the top, fading into cream under the text */
   .plx-content { transform: none !important; }
-  .side-left-cliff { width: 30vw; top: 40%; } .side-left-front { width: 22vw; } .side-right-cliff { width: 40vw; top: 26%; } .side-right-front { width: 26vw; } /* text stays in flow under the scene on phones */
+  /* Phones (tall screens): side terrain is sized by height and slides partly off screen, so its rock always runs
+     below the grass (no cut edges); about half of each piece shows. min() keeps it on the edge on short, wide screens. */
+  .side { max-width: none; }
+  .side-left-cliff { top: 38%; height: 70svh; width: auto; left: min(0px, calc(42vw - 35svh)); }
+  .side-left-front { top: 47%; height: 70svh; width: auto; left: min(0px, calc(34vw - 30.6svh)); }
+  .side-right-cliff { top: 30%; height: 70svh; width: auto; right: min(0px, calc(48vw - 44.2svh)); }
+  .side-right-front { top: 45%; height: 70svh; width: auto; right: min(0px, calc(36vw - 37svh)); }
+  /* Mountains and meadow fill the band above the grass instead of a thin strip hidden behind it */
+  .hero-mtn { height: 52%; object-fit: cover; object-position: 50% 100%; }
+  .hero-meadow { height: 40%; object-fit: cover; object-position: 50% 100%; }
   .biomes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } /* 2 per row: less scrolling */
   .hero-actions .spct-pill { flex: 1 1 100%; }
   .watch { grid-template-columns: 1fr; gap: 20px; }

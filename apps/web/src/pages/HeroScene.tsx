@@ -130,9 +130,9 @@ export function HeroTransition({ hero, next, video }: { hero: ReactNode; next: R
       <div ref={pin} className={`ht-pin ${visible ? '' : 'offscreen'}`}>
         <Plate z={1} style={{ scale: skyS }}>{img('sky')}</Plate>
         <Plate z={2}><Clouds list={FAR_CLOUDS} /></Plate>
-        <Plate z={3} style={{ scale: mtnS, y: mtnY }}>{img('mountains', 'plx-img plx-bottom')}</Plate>
+        <Plate z={3} style={{ scale: mtnS, y: mtnY }}>{img('mountains', 'plx-img plx-bottom hero-mtn')}</Plate>
         <Plate z={4}><Clouds list={NEAR_CLOUDS} /></Plate>
-        <Plate z={5} style={{ scale: meadowS, y: meadowY }}>{img('meadow', 'plx-img plx-bottom')}</Plate>
+        <Plate z={5} style={{ scale: meadowS, y: meadowY }}>{img('meadow', 'plx-img plx-bottom hero-meadow')}</Plate>
         <Plate z={6} style={{ y: sideY }}>{img('left-cliff', 'side side-left-cliff')}{img('right-cliff', 'side side-right-cliff')}</Plate>
         <Plate z={7} className="ht-copy" style={{ y: heroY, opacity: heroO, pointerEvents: heroPE }}>{hero}</Plate>
         <Plate z={8}><Leaves /></Plate>

@@ -6,6 +6,7 @@ import { ticketLabel } from '../../../../packages/shared/src/api.ts';
 import { chatwootUrl } from '../links.ts';
 import { supabase, type Agent } from '../auth.ts';
 import { adminApi, useSessions, type SessionRow } from '../data.ts';
+import { useToast } from '../motion.tsx';
 
 const TABS: { key: string; label: string; statuses: SessionRow['status'][] }[] = [
   { key: 'waiting', label: 'Needs a person', statuses: ['waiting_human'] },
@@ -29,6 +30,7 @@ function Conversation({ session, agent, onChanged }: { session: SessionRow; agen
   const [busy, setBusy] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const transcript = useRef<HTMLDivElement>(null);
+  const toast = useToast();
   const resolved = session.status === 'resolved';
 
   const load = useCallback(async () => {
@@ -57,6 +59,7 @@ function Conversation({ session, agent, onChanged }: { session: SessionRow; agen
     transcript.current?.scrollTo?.({ top: transcript.current.scrollHeight });
   }, [messages.length]);
 
+  const DONE: Record<string, string> = { reply: 'Reply sent', ask: 'Asked the player if it’s solved', resolve: 'Chat resolved', back: 'Handed back to Pip', suggest: 'Suggestion added to the reply box' };
   const run = async (label: string, fn: () => Promise<unknown>) => {
     setBusy(label);
     setNote(null);
@@ -64,8 +67,10 @@ function Conversation({ session, agent, onChanged }: { session: SessionRow; agen
       await fn();
       await load();
       onChanged();
+      if (DONE[label]) toast(DONE[label]);
     } catch (e) {
       setNote((e as Error).message);
+      toast((e as Error).message, 'error');
     } finally {
       setBusy(null);
     }

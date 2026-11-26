@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from 'react';
-import { NavLink, Navigate, Route, Routes } from 'react-router';
+import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router';
 import { RaisedPill } from '../../../packages/shared/src/ui/RaisedPill.tsx';
 import type { AdminAuth } from './auth.ts';
 import { Analytics } from './pages/Analytics.tsx';
+import { PageIn, ToastProvider } from './motion.tsx';
 import { Inbox } from './pages/Inbox.tsx';
 import { Knowledge } from './pages/Knowledge.tsx';
 import { Leads } from './pages/Leads.tsx';
@@ -35,10 +36,12 @@ function SignIn({ auth, refused }: { auth: AdminAuth; refused?: boolean }) {
 }
 
 export function AdminRoutes({ auth }: { auth: AdminAuth }) {
+  const { pathname } = useLocation();
   if (auth.status === 'loading') return <p className="loading">Loading…</p>;
   if (auth.status !== 'ready' || !auth.agent) return <SignIn auth={auth} refused={auth.status === 'notAgent'} />;
   const admin = auth.agent.role === 'admin';
   return (
+    <ToastProvider>
     <div className="shell">
       <nav className="rail" aria-label="Admin">
         <b className="rail-brand">Pip Support</b>
@@ -54,6 +57,7 @@ export function AdminRoutes({ auth }: { auth: AdminAuth }) {
         </div>
       </nav>
       <main className="workspace">
+        <PageIn id={pathname}>
         <Routes>
           <Route index element={<Inbox agent={auth.agent} />} />
           <Route path="leads" element={<Leads />} />
@@ -63,7 +67,9 @@ export function AdminRoutes({ auth }: { auth: AdminAuth }) {
           {admin && <Route path="settings" element={<Settings />} />}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </PageIn>
       </main>
     </div>
+    </ToastProvider>
   );
 }

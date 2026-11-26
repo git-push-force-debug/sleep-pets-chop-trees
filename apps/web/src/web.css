@@ -41,7 +41,14 @@ a { color: inherit; }
 .nav-menu ul { position: absolute; right: 0; top: 56px; min-width: 200px; margin: 0; padding: 8px; list-style: none; background: var(--panel); border-radius: var(--r-md); box-shadow: var(--elev-floating); }
 .nav-menu a { display: block; padding: 12px 14px; border-radius: var(--r-sm); font: 750 16px var(--font); text-decoration: none; }
 .nav-menu a.active { background: var(--meadow-tint); color: var(--meadow); }
-.play-pill { justify-self: end; transition: opacity 200ms ease, visibility 200ms; }
+.play-pill { justify-self: end; white-space: nowrap; transition: opacity 200ms ease, visibility 200ms; }
+/* Laptops and tablets: seven links don't fit beside the logo and Play, so they move into the Menu */
+@media (max-width: 1100px) {
+  .nav-links { display: none; }
+  .nav-menu { display: block; }
+  .header-row { grid-template-columns: 1fr auto auto; }
+  .main-nav { justify-self: end; }
+}
 .site-header.hide-play .play-pill { visibility: hidden; opacity: 0; }
 
 /* Hero: one layered scene (sky → front grass); the headline sits inside the stack, no panel behind it */

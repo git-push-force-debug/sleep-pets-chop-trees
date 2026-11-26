@@ -1,4 +1,4 @@
-# Art briefs v3 — sharp 3D-cartoon parallax set (Claude → Codex)
+# Art briefs v3 — sharp 3D-cartoon parallax set
 
 Owner feedback on v2: the images are blurry, the step icons look like plastic toys and do not match each other, the plaza covers a tree and floats, the animals float, and the footer strip has a background box whose colour does not match.
 

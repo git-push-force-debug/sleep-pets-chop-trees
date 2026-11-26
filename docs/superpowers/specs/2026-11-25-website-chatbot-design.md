@@ -22,7 +22,7 @@ Auth is the `X-Auth-Token` header. Throttles are about 30 conversations and 60 m
 - Dify is **retrieval only** (Knowledge API). Our Fastify server calls Gemini directly with structured JSON output, then validates it and adds sources and images. This matches Lance's flow and gives full control of the generative UI. A Dify chat app would hide that control.
 - The admin panel is a **separate Vite app and a separate Vercel project**, so no admin code ships to players.
 - Players get **Supabase anonymous auth**: the server verifies their JWT, and Realtime with row-level security delivers agent replies.
-- Claude builds all the code. Codex only generates images from Claude's briefs, as Lance asked for this task.
+- All code is built in this repo. Codex only generates images from the art briefs, as Lance asked for this task.
 
 ## Architecture
 ```
@@ -87,9 +87,9 @@ Under OS reduced motion everything appears instantly with the same information. 
 
 I create a `.env.local` template with only these blanks. Then `npm run check:connections` pings each service and prints ✓/✗ without showing any secrets. After all show ✓, no more manual steps are needed.
 
-## Phase 1 — Design (Claude Design + Codex art)
+## Phase 1 — Design (design + Codex art)
 - Artifact Design type: design system tokens (one ranch palette plus 6 biome tints, a rounded heavy type face, Lance's radius and elevation tokens). Mockups: Home, Guide page, chat states (answer with blocks, hand-off, agent connected, resolved), admin Inbox and Conversation. **Lance approves before implementation.**
-- Codex image briefs: wordmark logo, hero (ranch hub, sleeping pets, trees), 6 biome banners, an original bot mascot avatar, empty states, OG image. Claude reviews each output. Real game screenshots from the guide are used as-is.
+- Codex image briefs: wordmark logo, hero (ranch hub, sleeping pets, trees), 6 biome banners, an original bot mascot avatar, empty states, OG image. Each output is reviewed before use. Real game screenshots from the guide are used as-is.
 
 ## Phase 2 — Knowledge ingest (`scripts/ingest-guide.ts`, tested)
 - Parse the HTML into `content/guide.json` (chapter → section → markdown, tables, image refs). Extract images to `apps/web/public/guide/img/<source-file>`.

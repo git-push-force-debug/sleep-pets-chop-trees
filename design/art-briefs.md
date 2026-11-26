@@ -1,6 +1,6 @@
 # Art briefs — Sleep Pets & Chop Trees website
 
-Owner: Claude (visual direction). Generation: Codex (image_gen). Claude reviews every output.
+Visual direction and review: the design lead. Generation: Codex (image_gen). Every output is reviewed before use.
 
 ## Shared style (applies to every asset)
 
@@ -40,7 +40,7 @@ Save each file to `apps/web/public/art/` with exactly this name.
 10. **`empty-chat.png`** — Pip asleep on a small log with a lantern beside it and "Z z" shapes floating up. Transparent background, 900×700.
 11. **`og.png`** — 1200×630 social share card: a crop of the hero scene with the logo placed large on the left, readable as a small thumbnail. No other text.
 
-## Review checklist (Claude)
+## Review checklist
 
 - [ ] Matches the shared style and palette, and nothing from Roblox or third parties appears.
 - [ ] The logo is spelled exactly "Sleep Pets & Chop Trees".

@@ -1,4 +1,4 @@
-# Art briefs v2 — layered parallax (Claude → Codex)
+# Art briefs v2 — layered parallax
 
 Same shared style as `design/art-briefs.md`:
 - a soft stylized 3D "toy diorama" look with chunky low-poly rounded shapes and matte materials;
@@ -65,7 +65,7 @@ The same character as `apps/web/public/art/mascot.png`: Pip the fawn ranger with
 ## Footer strip
 `footer-scene.webp`, 2400×320, transparent above: a grass hill edge, a fence, a sleeping pet silhouette and a lantern. 80 KB max.
 
-## Review checklist (Claude)
+## Review checklist
 - Layers line up when stacked, the horizon is consistent, and the hero's left side is calm.
 - Transparent files really are transparent.
 - There is no text, and nothing from Roblox or other third parties.

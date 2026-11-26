@@ -4,6 +4,7 @@ import { useLocation, useParams } from 'react-router';
 import remarkGfm from 'remark-gfm';
 import type { GuideImage } from '../../../../packages/shared/src/guide.ts';
 import { useUiLabels } from '../../../../packages/shared/src/ui/labels.tsx';
+import { cjkEmphasis } from '../../../../packages/shared/src/ui/Markdown.tsx';
 import { Lightbox } from '../../../../packages/shared/src/ui/Lightbox.tsx';
 import { chapterBySlug, piecesOf, useGuide } from '../guide.ts';
 import { useLang } from '../i18n.tsx';
@@ -48,7 +49,7 @@ export function Chapter() {
               piece.kind === 'md' ? (
                 <div key={i} className="prose">
                   <ReactMarkdown remarkPlugins={[remarkGfm]} skipHtml>
-                    {piece.text}
+                    {cjkEmphasis(piece.text)}
                   </ReactMarkdown>
                 </div>
               ) : (

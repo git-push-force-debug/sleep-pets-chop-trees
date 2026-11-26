@@ -145,7 +145,11 @@ for (let i = 0; i < ids.length; i += 10) {
 
 for (const chapter of out.chapters) {
   Object.assign(chapter, CHAPTERS_ZH[chapter.slug] ?? {});
-  for (const section of chapter.sections) section.title = SECTIONS_ZH[section.id] ?? section.title;
+  for (const section of chapter.sections) {
+    section.title = SECTIONS_ZH[section.id] ?? section.title;
+    // The model sometimes repeats a name as 【名字（Name）】 right after it; the English guide has no 【】.
+    section.markdown = section.markdown.replace(/【[^】]*】/g, '');
+  }
 }
 writeFileSync(OUT, JSON.stringify(out, null, 2));
 console.log(`Wrote ${OUT}`);

@@ -10,6 +10,7 @@ import { checkTranslation } from './lib/translate-check.ts';
 
 const SRC = 'content/guide.public.json';
 const OUT = 'content/guide.public.zh.json';
+const CREATOR_OUT = 'content/guide.creator.zh.json'; // admin-only chapter: never in the public site's files
 const GLOSSARY = 'content/glossary.zh.json';
 const CACHE = '.tmp/guide-zh-cache.json';
 const MODEL = process.env.TRANSLATE_MODEL ?? process.env.GEMINI_MODEL; // checkTranslation guards the fast model's output
@@ -92,12 +93,15 @@ const names = (t: string) => {
 };
 
 const out: Guide = structuredClone(guide);
+const creatorEn = (JSON.parse(readFileSync('content/guide.json', 'utf8')) as Guide).chapters.find((c) => c.slug === 'creator')!;
+const creator = structuredClone(creatorEn);
+const EN = new Map([...guide.chapters, creatorEn].map((c) => [c.slug, c]));
 const CONCURRENCY = 3; // the fast model takes ~1-2 min per long section; one at a time took over an hour
 const jobs: (() => Promise<void>)[] = [];
 const failed: string[] = [];
-for (const chapter of out.chapters) {
+for (const chapter of [...out.chapters, creator]) {
   jobs.push(async () => {
-    const head = { title: guide.chapters.find((c) => c.slug === chapter.slug)!.title, summary: guide.chapters.find((c) => c.slug === chapter.slug)!.summary };
+    const head = { title: EN.get(chapter.slug)!.title, summary: EN.get(chapter.slug)!.summary };
     Object.assign(chapter, await cached(`chapter:${V}:${chapter.slug}:${hash(head)}`, () =>
       gemini<typeof head>(`Translate these JSON fields:\n${JSON.stringify(head)}${names(head.summary)}`, { type: 'object', properties: { title: str, summary: str }, required: ['title', 'summary'] }),
     ));
@@ -143,7 +147,7 @@ for (let i = 0; i < ids.length; i += 10) {
   for (const item of zh.items) if (out.images[item.id]) Object.assign(out.images[item.id]!, { alt: item.alt, caption: item.caption, label: item.label });
 }
 
-for (const chapter of out.chapters) {
+for (const chapter of [...out.chapters, creator]) {
   Object.assign(chapter, CHAPTERS_ZH[chapter.slug] ?? {});
   for (const section of chapter.sections) {
     section.title = SECTIONS_ZH[section.id] ?? section.title;
@@ -152,4 +156,5 @@ for (const chapter of out.chapters) {
   }
 }
 writeFileSync(OUT, JSON.stringify(out, null, 2));
+writeFileSync(CREATOR_OUT, JSON.stringify(creator, null, 2));
 console.log(`Wrote ${OUT}`);

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from './auth.ts';
+import { currentStrings, translateError } from './i18n.tsx';
 
 export interface SessionRow {
   id: string;
@@ -24,7 +25,8 @@ export async function adminApi<T>(path: string, init: { method?: string; body?: 
     body: init.body === undefined ? undefined : JSON.stringify(init.body),
   });
   const body = res.status === 204 ? null : await res.json().catch(() => null);
-  if (!res.ok) throw new Error((body as { error?: string } | null)?.error ?? `Request failed (${res.status})`);
+  const error = (body as { error?: string } | null)?.error;
+  if (!res.ok) throw new Error(error ? translateError(error) : currentStrings().requestFailed(res.status));
   return body as T;
 }
 
@@ -96,7 +98,8 @@ function notifyHandoff(s: SessionRow) {
       osc.stop(audio.currentTime + i * 0.16 + 0.14);
     });
     if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('A player needs a person', { body: `Ticket #${s.chatwoot_display_id ?? '…'} · ${s.roblox_username ?? 'player'}` });
+      const t = currentStrings();
+      new Notification(t.notifyTitle, { body: t.notifyBody(`#${s.chatwoot_display_id ?? '…'}`, s.roblox_username ?? t.playerWord) });
     }
   } catch {
     // notifications are best-effort

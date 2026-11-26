@@ -1,11 +1,6 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { UI_EN, UI_ZH, UiLabelsContext } from '../../../packages/shared/src/ui/labels.tsx';
+import { createLang, type Lang } from '../../../packages/shared/src/ui/lang.tsx';
 
-export type Lang = 'en' | 'zh';
-export const LANGS: { id: Lang; label: string; htmlLang: string }[] = [
-  { id: 'en', label: 'EN', htmlLang: 'en' },
-  { id: 'zh', label: '中文', htmlLang: 'zh-Hans' },
-];
+export type { Lang };
 
 const en = {
   skip: 'Skip to content',
@@ -230,65 +225,4 @@ const zh: Strings = {
 
 export const STRINGS: Record<Lang, Strings> = { en, zh };
 
-const KEY = 'spct-lang';
-
-function initialLang(): Lang {
-  try {
-    const saved = localStorage.getItem(KEY);
-    if (saved === 'en' || saved === 'zh') return saved;
-  } catch {
-    // storage blocked (private mode): fall through to the browser language
-  }
-  return typeof navigator !== 'undefined' && navigator.language?.toLowerCase().startsWith('zh') ? 'zh' : 'en';
-}
-
-// Read by code outside React (API error text); kept in sync by the provider.
-let current: Lang = 'en';
-export const currentLang = () => current;
-export const currentStrings = () => STRINGS[current];
-
-const LangContext = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: Strings }>({ lang: 'en', setLang: () => {}, t: en });
-
-export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(initialLang);
-  current = lang;
-  useEffect(() => {
-    document.documentElement.lang = LANGS.find((l) => l.id === lang)!.htmlLang;
-  }, [lang]);
-  const value = useMemo(
-    () => ({
-      lang,
-      t: STRINGS[lang],
-      setLang: (l: Lang) => {
-        setLangState(l);
-        try {
-          localStorage.setItem(KEY, l);
-        } catch {
-          // not saved; the choice still applies for this visit
-        }
-      },
-    }),
-    [lang],
-  );
-  return (
-    <LangContext.Provider value={value}>
-      <UiLabelsContext.Provider value={lang === 'zh' ? UI_ZH : UI_EN}>{children}</UiLabelsContext.Provider>
-    </LangContext.Provider>
-  );
-}
-
-export const useLang = () => useContext(LangContext);
-
-/** EN | 中文 segmented switch. */
-export function LangSwitch({ className = '' }: { className?: string }) {
-  const { lang, setLang, t } = useLang();
-  return (
-    <div className={`lang-switch ${className}`} role="group" aria-label={t.language}>
-      {LANGS.map((l) => (
-        <button key={l.id} type="button" lang={l.htmlLang} aria-pressed={lang === l.id} onClick={() => setLang(l.id)}>
-          {l.label}
-        </button>
-      ))}
-    </div>
-  );
-}
+export const { LangProvider, useLang, LangSwitch, currentLang, currentStrings } = createLang(STRINGS, 'spct-lang');

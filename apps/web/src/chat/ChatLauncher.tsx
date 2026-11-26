@@ -128,6 +128,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
               style={desktop ? { x: dragX, y: dragY, bottom: dock.bottom } : undefined}
               drag={desktop}
               dragMomentum={false}
+              whileDrag={{ scale: 1.06, cursor: 'grabbing' }}
               onDragStart={() => (dragged.current = true)}
               onDragEnd={onDragEnd}
               onClick={() => !dragged.current && setOpen(true)}
@@ -139,7 +140,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
                 <span>Ask me anything <span className="typing"><i /><i /><i /></span></span>
               </span>
               <span className="launcher-orb" aria-hidden="true">
-                <span className="pip-avatar pose launcher-avatar"><img src="/art/v3/pip-head.webp" alt="" onError={(e) => ((e.target as HTMLImageElement).src = '/art/mascot.png')} /></span>
+                <span className="pip-avatar pose launcher-avatar"><img src="/art/v3/pip-head.webp" alt="" draggable={false} onError={(e) => ((e.target as HTMLImageElement).src = '/art/mascot.png')} /></span>
                 <span className="launcher-badge"><ChatIcon size={14} /></span>
               </span>
             </motion.button>

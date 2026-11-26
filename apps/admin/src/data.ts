@@ -28,6 +28,38 @@ export async function adminApi<T>(path: string, init: { method?: string; body?: 
   return body as T;
 }
 
+/** Short, readable chat code from the chat's id, e.g. "#3F9A" — tells chats apart when a player gave no username. */
+export const chatCode = (id: string) => `#${id.slice(0, 4).toUpperCase()}`;
+
+/** Each chat's first player question (one query for the whole list), for one-line previews. */
+export function useFirstQuestions(sessions: SessionRow[]) {
+  const [first, setFirst] = useState<Record<string, string>>({});
+  const key = sessions.map((s) => `${s.id}:${s.updated_at}`).join(',');
+  useEffect(() => {
+    const ids = sessions.map((s) => s.id);
+    if (!ids.length) return;
+    let live = true;
+    void supabase
+      .from('messages')
+      .select('session_id, content')
+      .eq('role', 'user')
+      .in('session_id', ids)
+      .order('created_at', { ascending: true })
+      .limit(2000)
+      .then(({ data }) => {
+        if (!live) return;
+        const map: Record<string, string> = {};
+        for (const m of (data ?? []) as { session_id: string; content: string }[]) map[m.session_id] ??= m.content;
+        setFirst(map);
+      });
+    return () => {
+      live = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- refetch when the list or any chat changes
+  }, [key]);
+  return first;
+}
+
 /** Live list of chats (agents read all sessions under RLS); refreshes on any session change. */
 export function useSessions(limit = 200) {
   const [sessions, setSessions] = useState<SessionRow[]>([]);

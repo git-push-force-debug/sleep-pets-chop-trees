@@ -5,7 +5,7 @@ import { BotReply } from '../../../../packages/shared/src/ui/BotReply.tsx';
 import { ticketLabel } from '../../../../packages/shared/src/api.ts';
 import { chatwootUrl } from '../links.ts';
 import { supabase, type Agent } from '../auth.ts';
-import { adminApi, useSessions, type SessionRow } from '../data.ts';
+import { adminApi, chatCode, useFirstQuestions, useSessions, type SessionRow } from '../data.ts';
 import { useToast } from '../motion.tsx';
 
 const TABS: { key: string; label: string; statuses: SessionRow['status'][] }[] = [
@@ -92,7 +92,7 @@ function Conversation({ session, agent, onChanged }: { session: SessionRow; agen
     <section className="conversation" aria-label="Conversation">
       <header className="conv-head">
         <div>
-          <h2>{session.chatwoot_display_id ? `Ticket ${ticketLabel(session.chatwoot_display_id)}` : 'Bot chat'} · {session.roblox_username ?? 'Player'}</h2>
+          <h2>{[session.roblox_username, session.chatwoot_display_id && `Ticket ${ticketLabel(session.chatwoot_display_id)}`, `Chat ${chatCode(session.id)}`].filter(Boolean).join(' · ')}</h2>
           <p className={`status-line s-${session.status}`}>{session.status.replace('_', ' ')}{session.handoff_at && session.status === 'waiting_human' ? ` · waiting ${waited(session.handoff_at)}` : ''}</p>
         </div>
         <div className="conv-actions">
@@ -182,12 +182,14 @@ export function Inbox({ agent }: { agent: Agent }) {
   }, [refresh]);
 
   const current = TABS.find((t) => t.key === tab)!;
+  const first = useFirstQuestions(sessions);
   const list = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return sessions.filter(
-      (s) => current.statuses.includes(s.status) && (!q || `${s.chatwoot_display_id ?? ''} ${s.roblox_username ?? ''} ${s.email ?? ''}`.toLowerCase().includes(q)),
-    );
-  }, [sessions, current, query]);
+    // Search by chat code (with or without #), ticket, username, email or the player's first question.
+    const text = (s: SessionRow) =>
+      `${chatCode(s.id)} ${chatCode(s.id).slice(1)} ${ticketLabel(s.chatwoot_display_id)} ${s.chatwoot_display_id ?? ''} ${s.roblox_username ?? ''} ${s.email ?? ''} ${first[s.id] ?? ''}`.toLowerCase();
+    return sessions.filter((s) => current.statuses.includes(s.status) && (!q || text(s).includes(q)));
+  }, [sessions, current, query, first]);
   const count = (t: (typeof TABS)[number]) => sessions.filter((s) => t.statuses.includes(s.status)).length;
   const session = sessions.find((s) => s.id === selected) ?? null;
 
@@ -202,17 +204,20 @@ export function Inbox({ agent }: { agent: Agent }) {
           ))}
         </div>
         <label className="spct-sr-only" htmlFor="inbox-search">Search conversations</label>
-        <input id="inbox-search" className="input" placeholder="Search ticket, username or email" value={query} onChange={(e) => setQuery(e.target.value)} />
+        <input id="inbox-search" className="input" placeholder="Search chat code, ticket, username, email or question" value={query} onChange={(e) => setQuery(e.target.value)} />
         <ul className="rows">
           {list.length === 0 && <li className="empty">Nothing here right now.</li>}
           {list.map((s) => (
             <li key={s.id}>
               <button type="button" className={`row ${selected === s.id ? 'on' : ''}`} onClick={() => setSelected(s.id)}>
                 <span className="row-top">
-                  <b>{s.roblox_username ?? 'Player'}</b>
+                  <b>{s.roblox_username ?? `Chat ${chatCode(s.id)}`}</b>
                   {s.status === 'waiting_human' && <span className="wait">⏱ {waited(s.handoff_at)}</span>}
                 </span>
-                <span className="row-sub">{s.chatwoot_display_id ? `Ticket ${ticketLabel(s.chatwoot_display_id)}` : 'Bot only'} · {new Date(s.updated_at).toLocaleString()}</span>
+                <span className="row-sub">
+                  {[s.chatwoot_display_id ? `Ticket ${ticketLabel(s.chatwoot_display_id)}` : 'Pip only', s.roblox_username && `Chat ${chatCode(s.id)}`, new Date(s.updated_at).toLocaleString()].filter(Boolean).join(' · ')}
+                </span>
+                {first[s.id] && <span className="row-preview">“{first[s.id]}”</span>}
               </button>
             </li>
           ))}
@@ -224,11 +229,14 @@ export function Inbox({ agent }: { agent: Agent }) {
           <aside className="player" aria-label="Player">
             <h3>Player</h3>
             <dl>
-              <dt>Roblox username</dt><dd>{session.roblox_username ?? '—'}</dd>
+              <dt>Chat</dt><dd>{chatCode(session.id)}</dd>
+              {session.chatwoot_display_id && <><dt>Ticket</dt><dd>{ticketLabel(session.chatwoot_display_id)}</dd></>}
+              <dt>Roblox username</dt><dd>{session.roblox_username ?? 'Not given'}</dd>
               <dt>Email</dt><dd>{session.email ?? 'Not given'}</dd>
               <dt>Asked from</dt><dd>{session.page_url ?? '—'}</dd>
               <dt>Device</dt><dd>{session.user_agent?.slice(0, 80) ?? '—'}</dd>
               <dt>Started</dt><dd>{new Date(session.created_at).toLocaleString()}</dd>
+              {first[session.id] && <><dt>First question</dt><dd>{first[session.id]}</dd></>}
             </dl>
           </aside>
         </>

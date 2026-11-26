@@ -7,6 +7,8 @@ import type { AdminAuth } from './auth.ts';
 
 vi.mock('./data.ts', () => ({
   useSessions: () => ({ sessions: [], refresh: vi.fn() }),
+  useFirstQuestions: () => ({}),
+  chatCode: (id: string) => `#${id.slice(0, 4).toUpperCase()}`,
   adminApi: vi.fn(async () => ({})),
 }));
 afterEach(cleanup);

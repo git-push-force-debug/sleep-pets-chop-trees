@@ -54,19 +54,7 @@ a { color: inherit; }
 .site-header.hide-play .play-pill { visibility: hidden; opacity: 0; }
 .header-end { justify-self: end; display: flex; align-items: center; gap: 12px; }
 
-/* EN | 中文 switch: a pill track like the nav, the chosen language raised in meadow green */
-.lang-switch { display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--r-pill); background: var(--panel); box-shadow: 0 3px 0 var(--line); }
-.lang-switch button { min-width: 44px; min-height: 40px; padding: 0 12px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--ink-soft); font: 800 14px var(--font); cursor: pointer;
-  transition: background-color 160ms ease, color 160ms ease, transform 120ms ease; -webkit-tap-highlight-color: transparent; }
-.lang-switch button:hover { color: var(--ink); background: var(--meadow-tint); }
-.lang-switch button[aria-pressed='true'] { background: var(--meadow); color: #fff; box-shadow: 0 2px 0 var(--meadow-deep); }
-.lang-switch button:active { transform: translateY(1px); }
-.lang-switch button:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { .lang-switch button { transition: none; } }
 
-/* Chinese: CJK glyphs need no tracking and read better with a little more leading */
-:lang(zh-Hans) h1, :lang(zh-Hans) h2, :lang(zh-Hans) h3 { letter-spacing: 0; line-height: 1.3; text-wrap: balance; }
-:lang(zh-Hans) p, :lang(zh-Hans) li { line-height: 1.7; }
 
 /* Hero: one layered scene (sky → front grass); the headline sits inside the stack, no panel behind it */
 .hero { position: relative; margin-top: calc(-1 * var(--header-h)); isolation: isolate; } /* keeps layer z-indexes under the header menu */

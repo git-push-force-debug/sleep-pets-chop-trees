@@ -8,6 +8,7 @@ export const CHAPTERS_ZH: Record<string, { title: string; summary: string }> = {
   rewards: { title: '奖励与商店', summary: '日历、任务、兑换码、礼物和每个宝箱的准确掉落。' },
   faq: { title: '常见问题', summary: '关于捕捉问题、进度太慢、购物等问题的解答。' },
   gallery: { title: '原始视觉档案', summary: '存档的游戏画面，以及原始模型和美术素材。' },
+  creator: { title: '创作者参考', summary: '核对来源、游戏架构、计算公式和每件武器的升级价格。' },
 };
 
 export const SECTIONS_ZH: Record<string, string> = {
@@ -36,6 +37,15 @@ export const SECTIONS_ZH: Record<string, string> = {
   'faq-ranch': '牧场、骑乘和伐木常见问题',
   'support-faq': '购物和故障排除常见问题',
   troubleshooting: '转生、野生动物和奖励常见问题',
+  about: '可信来源和核对方法',
+  architecture: '游戏的运作方式',
+  persistence: '存档、收据和兼容性',
+  formulas: '参考公式和时间',
+  'index-reference': '图鉴里程碑和内部名称',
+  'price-index': '飞镖枪各等级升级价格，第 1–8 阶',
+  'gun-upgrade-prices-late': '飞镖枪各等级升级价格，第 9–15 阶',
+  'melee-upgrade-prices-early': '近战武器各等级升级价格，第 1–7 阶',
+  'melee-upgrade-prices-late': '近战武器各等级升级价格，第 8–13 阶',
   gallery: '游戏画面和制作工具截图',
   'gallery-map': '游历整个世界',
   'gallery-ranch': '中心区、商店和围栏',

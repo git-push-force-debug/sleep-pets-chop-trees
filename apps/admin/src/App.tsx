@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router';
 import { RaisedPill } from '../../../packages/shared/src/ui/RaisedPill.tsx';
 import type { AdminAuth } from './auth.ts';
@@ -9,6 +9,7 @@ import { Knowledge } from './pages/Knowledge.tsx';
 import { Leads } from './pages/Leads.tsx';
 import { Settings } from './pages/Settings.tsx';
 import { Team } from './pages/Team.tsx';
+import { LangSwitch, useLang } from './i18n.tsx';
 
 export { chatwootUrl } from './links.ts';
 
@@ -16,6 +17,7 @@ function SignIn({ auth, refused }: { auth: AdminAuth; refused?: boolean }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const { t } = useLang();
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setError(await auth.signIn(email, password));
@@ -24,12 +26,13 @@ function SignIn({ auth, refused }: { auth: AdminAuth; refused?: boolean }) {
     <main className="signin">
       <form onSubmit={submit} className="signin-card">
         <img src="/art/mascot.png" alt="" width="96" height="96" />
-        <h1>Sign in to Pip Support</h1>
-        {refused && <p className="alert" role="alert">This account isn't on the support team.</p>}
+        <LangSwitch className="signin-lang" />
+        <h1>{t.signInTitle}</h1>
+        {refused && <p className="alert" role="alert">{t.notOnTeam}</p>}
         {error && <p className="alert" role="alert">{error}</p>}
-        <label>Email<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" required /></label>
-        <label>Password<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required /></label>
-        <RaisedPill type="submit">Sign in</RaisedPill>
+        <label>{t.email}<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" required /></label>
+        <label>{t.password}<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required /></label>
+        <RaisedPill type="submit">{t.signIn}</RaisedPill>
       </form>
     </main>
   );
@@ -37,23 +40,28 @@ function SignIn({ auth, refused }: { auth: AdminAuth; refused?: boolean }) {
 
 export function AdminRoutes({ auth }: { auth: AdminAuth }) {
   const { pathname } = useLocation();
-  if (auth.status === 'loading') return <p className="loading">Loading…</p>;
+  const { t } = useLang();
+  useEffect(() => {
+    document.title = t.docTitle;
+  }, [t]);
+  if (auth.status === 'loading') return <p className="loading">{t.loading}</p>;
   if (auth.status !== 'ready' || !auth.agent) return <SignIn auth={auth} refused={auth.status === 'notAgent'} />;
   const admin = auth.agent.role === 'admin';
   return (
     <ToastProvider>
     <div className="shell">
-      <nav className="rail" aria-label="Admin">
-        <b className="rail-brand">Pip Support</b>
-        <NavLink to="/" end>Inbox</NavLink>
-        <NavLink to="/leads">Leads</NavLink>
-        <NavLink to="/knowledge">Knowledge</NavLink>
-        <NavLink to="/analytics">Analytics</NavLink>
-        {admin && <NavLink to="/team">Team</NavLink>}
-        {admin && <NavLink to="/settings">Settings</NavLink>}
+      <nav className="rail" aria-label={t.navLabel}>
+        <b className="rail-brand">{t.brand}</b>
+        <NavLink to="/" end>{t.nav.inbox}</NavLink>
+        <NavLink to="/leads">{t.nav.leads}</NavLink>
+        <NavLink to="/knowledge">{t.nav.knowledge}</NavLink>
+        <NavLink to="/analytics">{t.nav.analytics}</NavLink>
+        {admin && <NavLink to="/team">{t.nav.team}</NavLink>}
+        {admin && <NavLink to="/settings">{t.nav.settings}</NavLink>}
         <div className="rail-foot">
-          <span>{auth.agent.display_name} · {auth.agent.role}</span>
-          <button type="button" className="link-btn" onClick={() => void auth.signOut()}>Sign out</button>
+          <LangSwitch className="rail-lang" />
+          <span>{auth.agent.display_name} · {t.role[auth.agent.role]}</span>
+          <button type="button" className="link-btn" onClick={() => void auth.signOut()}>{t.signOut}</button>
         </div>
       </nav>
       <main className="workspace">

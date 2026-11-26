@@ -30,6 +30,8 @@ label { display: flex; flex-direction: column; gap: 4px; font: 750 13px var(--fo
 .rail a.active { background: #4a3a2c; }
 .rail-foot { margin-top: auto; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px 0; font: 650 13px var(--font); color: #d8c9ae; }
 .rail-foot .link-btn { align-self: flex-start; padding: 0; color: var(--accent); }
+.rail-lang { align-self: flex-start; margin-bottom: 8px; box-shadow: none; }
+.signin-lang { align-self: flex-end; }
 .workspace { flex: 999 1 600px; min-width: 0; }
 
 .inbox { display: flex; flex-wrap: wrap; min-height: 100vh; }

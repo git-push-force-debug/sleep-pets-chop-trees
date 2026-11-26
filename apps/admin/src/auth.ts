@@ -1,3 +1,4 @@
+import { currentStrings } from './i18n.tsx';
 import { createClient } from '@supabase/supabase-js';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -45,7 +46,7 @@ export function useAdminAuth(): AdminAuth {
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return 'That email and password don’t match.';
+    if (error) return currentStrings().badLogin;
     await resolve();
     return null;
   };

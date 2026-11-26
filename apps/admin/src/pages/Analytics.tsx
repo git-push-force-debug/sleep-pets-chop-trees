@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router';
 import { downloadCsv } from '../csv.ts';
 import { adminApi } from '../data.ts';
 import { CountUp, useToast } from '../motion.tsx';
+import { currentStrings, useLang } from '../i18n.tsx';
+import guideZh from '../../../../content/guide.public.zh.json' with { type: 'json' };
+import type { Guide } from '../../../../packages/shared/src/guide.ts';
 
 interface Stats {
   chatsPerDay: { date: string; count: number; handed: number }[];
@@ -16,18 +19,24 @@ interface Stats {
 }
 
 const RANGES = [7, 30, 90];
-const OUTCOMES = [['', 'All outcomes'], ['bot', 'Pip only'], ['handed', 'Handed to a person'], ['resolved', 'Resolved']] as const;
-const PAGES = [['', 'All pages'], ['home', 'Home'], ['guide', 'Guide'], ['support', 'Support']] as const;
+const OUTCOMES = ['', 'bot', 'handed', 'resolved'] as const;
+const PAGES = ['', 'home', 'guide', 'support'] as const;
+// Chinese section titles by anchor, for the most-used sections chart (stored replies keep the title they were sent with).
+const ZH_TITLES = new Map((guideZh as Guide).chapters.flatMap((c) => c.sections.map((s) => [s.id, s.title])));
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-const mins = (v: number | null) => (v === null ? '—' : v < 60 ? `${v} min` : `${(v / 60).toFixed(1)} h`);
+const mins = (v: number | null) => {
+  const t = currentStrings();
+  return v === null ? '—' : v < 60 ? t.minutes(v) : t.hours((v / 60).toFixed(1));
+};
 const pct = (part: number, total: number) => (total ? `${Math.round((part / total) * 100)}%` : '—');
 
 /** Horizontal bar chart: one labelled bar per item, scaled to the largest value. */
 type Bar = { label: string; value: number; color?: string; href?: string; onClick?: () => void; active?: boolean };
 function HBars({ items, label }: { items: Bar[]; label: string }) {
   const max = Math.max(1, ...items.map((i) => i.value));
-  if (!items.length) return <p className="hint">Nothing in this range.</p>;
+  const { t } = useLang();
+  if (!items.length) return <p className="hint">{t.nothingRange}</p>;
   return (
     <ul className="hbars" role="img" aria-label={`${label}: ${items.map((i) => `${i.label} ${i.value}`).join(', ')}`}>
       {items.map((i) => (
@@ -52,6 +61,7 @@ export function Analytics() {
   const [day, setDay] = useState<string | null>(null); // a clicked day bar narrows every chart to that day
   const navigate = useNavigate();
   const toast = useToast();
+  const { t, lang } = useLang();
   const [stats, setStats] = useState<Stats | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
@@ -77,8 +87,8 @@ export function Analytics() {
       const { rows } = await adminApi<{ rows: Record<string, unknown>[] }>(`/admin/export/conversations?${query}`);
       if (rows.length) {
         downloadCsv(`conversations-${new Date().toISOString().slice(0, 10)}.csv`, rows);
-        toast(`Exported ${rows.length} messages`);
-      } else toast('No conversations match these filters.', 'error');
+        toast(t.exportedMessages(rows.length));
+      } else toast(t.noExport, 'error');
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -93,54 +103,54 @@ export function Analytics() {
   return (
     <div className="page stack">
       <div className="row-between">
-        <h1>Analytics</h1>
+        <h1>{t.analytics}</h1>
         <button type="button" className="spct-pill spct-pill-secondary" disabled={exporting || !stats} onClick={() => void exportCsv()}>
-          {exporting ? 'Exporting…' : 'Export conversations (CSV)'}
+          {exporting ? t.exporting : t.exportConversations}
         </button>
       </div>
 
-      <div className="filters" role="group" aria-label="Filters">
-        <label>Date range
+      <div className="filters" role="group" aria-label={t.filters}>
+        <label>{t.dateRange}
           <select value={range} onChange={(e) => { setRange(Number(e.target.value)); setDay(null); }}>
-            {RANGES.map((d) => <option key={d} value={d}>Last {d} days</option>)}
+            {RANGES.map((d) => <option key={d} value={d}>{t.lastDays(d)}</option>)}
           </select>
         </label>
-        <label>Outcome
+        <label>{t.outcome}
           <select value={outcome} onChange={(e) => setOutcome(e.target.value)}>
-            {OUTCOMES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            {OUTCOMES.map((v) => <option key={v} value={v}>{t.outcomes[v]}</option>)}
           </select>
         </label>
-        <label>Asked from
+        <label>{t.askedFrom}
           <select value={page} onChange={(e) => setPage(e.target.value)}>
-            {PAGES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            {PAGES.map((v) => <option key={v} value={v}>{t.pages[v]}</option>)}
           </select>
         </label>
         {(day || outcome || page) && (
           <button type="button" className="chip-clear" onClick={() => { setDay(null); setOutcome(''); setPage(''); }}>
-            {day ? `Day ${day.slice(5)} · ` : ''}Clear filters ×
+            {day ? t.dayChip(day.slice(5)) : ''}{t.clearFilters}
           </button>
         )}
       </div>
 
       {error && <p className="alert" role="alert">{error}</p>}
       {!stats ? (
-        <p className="hint">Loading…</p>
+        <p className="hint">{t.loading}</p>
       ) : (
         <>
           <div className="tiles">
             {([
-              ['Chats', String(total), ''],
-              ['Answered by Pip only', pct(stats.botOnly, total), 'bot'],
-              ['Handed to a person', String(stats.handedOff), 'handed'],
-              ['Median first reply', mins(stats.medianFirstReplyMinutes), null],
-              ['Median time to resolve', mins(stats.medianResolutionMinutes), 'resolved'],
-              ['Helpful 👍 / 👎', `${stats.feedback.up} / ${stats.feedback.down}`, null],
+              [t.tiles.chats, String(total), ''],
+              [t.tiles.pipOnly, pct(stats.botOnly, total), 'bot'],
+              [t.tiles.handed, String(stats.handedOff), 'handed'],
+              [t.tiles.firstReply, mins(stats.medianFirstReplyMinutes), null],
+              [t.tiles.resolve, mins(stats.medianResolutionMinutes), 'resolved'],
+              [t.tiles.helpful, `${stats.feedback.up} / ${stats.feedback.down}`, null],
             ] as const).map(([label, value, filter]) =>
               filter === null ? (
                 <div key={label} className="tile"><span>{label}</span><b><CountUp value={value} /></b></div>
               ) : (
                 <button key={label} type="button" className={`tile tile-btn ${outcome === filter ? 'on' : ''}`} aria-pressed={outcome === filter}
-                  title={filter ? `Show only: ${label}` : 'Show all outcomes'} onClick={() => setOutcome(outcome === filter ? '' : filter)}>
+                  title={filter ? t.showOnly(label) : t.showAll} onClick={() => setOutcome(outcome === filter ? '' : filter)}>
                   <span>{label}</span><b><CountUp value={value} /></b>
                 </button>
               ),
@@ -149,13 +159,13 @@ export function Analytics() {
 
           <div className="charts">
             <section className="card stack chart-wide">
-              <h2>Chats per day</h2>
-              <p className="legend"><i className="dot pip" /> Pip only <i className="dot person" /> Handed to a person</p>
-              <div className="bars" role="img" aria-label={stats.chatsPerDay.map((d) => `${d.date}: ${d.count} chats, ${d.handed} handed off`).join(', ') || 'No chats'}>
+              <h2>{t.chatsPerDay}</h2>
+              <p className="legend"><i className="dot pip" /> {t.legendPip} <i className="dot person" /> {t.legendPerson}</p>
+              <div className="bars" role="img" aria-label={stats.chatsPerDay.map((d) => t.daysAria(d.date, d.count, d.handed)).join(', ') || t.noChats}>
                 {stats.chatsPerDay.map((d) => (
                   <button key={d.date} type="button" className={`bar-col ${day === d.date ? 'on' : ''}`} aria-pressed={day === d.date}
-                    aria-label={`${d.date}: ${d.count} chats, ${d.handed} handed to a person. Show only this day`}
-                    title={`${d.date}: ${d.count} chats, ${d.handed} to a person — click to show only this day`} onClick={() => setDay(day === d.date ? null : d.date)}>
+                    aria-label={t.dayAria(d.date, d.count, d.handed)}
+                    title={t.dayTitle(d.date, d.count, d.handed)} onClick={() => setDay(day === d.date ? null : d.date)}>
                     <span className="bar-stack" style={{ height: `${(d.count / maxDay) * 100}%` }}>
                       <span className="bar person" style={{ flexGrow: d.handed }} />
                       <span className="bar" style={{ flexGrow: d.count - d.handed }} />
@@ -163,31 +173,31 @@ export function Analytics() {
                     <small>{d.date.slice(5)}</small>
                   </button>
                 ))}
-                {stats.chatsPerDay.length === 0 && <p className="hint">No chats in this range.</p>}
+                {stats.chatsPerDay.length === 0 && <p className="hint">{t.noChatsRange}</p>}
               </div>
             </section>
 
             <section className="card stack">
-              <h2>Outcomes</h2>
-              <HBars label="Outcomes" items={[
-                { label: 'Pip only', value: stats.outcomes.bot, color: 'var(--meadow)', active: outcome === 'bot', onClick: () => setOutcome(outcome === 'bot' ? '' : 'bot') },
-                { label: 'Waiting for a person →', value: stats.outcomes.waiting, color: 'var(--danger)', onClick: () => navigate('/leads?status=waiting_human') },
-                { label: 'With the team →', value: stats.outcomes.team, color: 'var(--sky)', onClick: () => navigate('/leads?status=human') },
-                { label: 'Resolved', value: stats.outcomes.resolved, color: 'var(--accent-deep)', active: outcome === 'resolved', onClick: () => setOutcome(outcome === 'resolved' ? '' : 'resolved') },
+              <h2>{t.outcomesTitle}</h2>
+              <HBars label={t.outcomesTitle} items={[
+                { label: t.barPip, value: stats.outcomes.bot, color: 'var(--meadow)', active: outcome === 'bot', onClick: () => setOutcome(outcome === 'bot' ? '' : 'bot') },
+                { label: t.barWaiting, value: stats.outcomes.waiting, color: 'var(--danger)', onClick: () => navigate('/leads?status=waiting_human') },
+                { label: t.barTeam, value: stats.outcomes.team, color: 'var(--sky)', onClick: () => navigate('/leads?status=human') },
+                { label: t.barResolved, value: stats.outcomes.resolved, color: 'var(--accent-deep)', active: outcome === 'resolved', onClick: () => setOutcome(outcome === 'resolved' ? '' : 'resolved') },
               ]} />
             </section>
 
             <section className="card stack">
-              <h2>Helpful answers</h2>
-              <HBars label="Feedback" items={[
-                { label: `Helpful 👍 ${pct(stats.feedback.up, votes)}`, value: stats.feedback.up, color: 'var(--meadow)' },
-                { label: `Not helpful 👎 ${pct(stats.feedback.down, votes)}`, value: stats.feedback.down, color: 'var(--danger)' },
+              <h2>{t.helpfulTitle}</h2>
+              <HBars label={t.feedback} items={[
+                { label: t.helpful(pct(stats.feedback.up, votes)), value: stats.feedback.up, color: 'var(--meadow)' },
+                { label: t.notHelpful(pct(stats.feedback.down, votes)), value: stats.feedback.down, color: 'var(--danger)' },
               ]} />
             </section>
 
             <section className="card stack chart-wide">
-              <h2>Most-used guide sections</h2>
-              <HBars label="Guide sections" items={stats.topSections.map((s) => ({ label: s.title, value: s.count, href: s.url, color: 'var(--sky)' }))} />
+              <h2>{t.topSections}</h2>
+              <HBars label={t.guideSections} items={stats.topSections.map((s) => ({ label: (lang === 'zh' && ZH_TITLES.get(s.url.split('#')[1] ?? '')) || s.title, value: s.count, href: s.url, color: 'var(--sky)' }))} />
             </section>
           </div>
         </>

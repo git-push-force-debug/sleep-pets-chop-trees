@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { downloadCsv } from '../csv.ts';
 import { adminApi } from '../data.ts';
+import { CountUp, useToast } from '../motion.tsx';
 
 interface Stats {
   chatsPerDay: { date: string; count: number; handed: number }[];
@@ -22,16 +24,21 @@ const mins = (v: number | null) => (v === null ? '—' : v < 60 ? `${v} min` : `
 const pct = (part: number, total: number) => (total ? `${Math.round((part / total) * 100)}%` : '—');
 
 /** Horizontal bar chart: one labelled bar per item, scaled to the largest value. */
-function HBars({ items, label }: { items: { label: string; value: number; color?: string; href?: string }[]; label: string }) {
+type Bar = { label: string; value: number; color?: string; href?: string; onClick?: () => void; active?: boolean };
+function HBars({ items, label }: { items: Bar[]; label: string }) {
   const max = Math.max(1, ...items.map((i) => i.value));
   if (!items.length) return <p className="hint">Nothing in this range.</p>;
   return (
     <ul className="hbars" role="img" aria-label={`${label}: ${items.map((i) => `${i.label} ${i.value}`).join(', ')}`}>
       {items.map((i) => (
-        <li key={i.label}>
-          <span className="hbar-label">{i.href ? <a href={i.href} target="_blank" rel="noopener noreferrer">{i.label}</a> : i.label}</span>
+        <li key={i.label} className={i.active ? 'on' : ''}>
+          {i.onClick ? (
+            <button type="button" className="hbar-label hbar-btn" onClick={i.onClick} aria-pressed={!!i.active}>{i.label}</button>
+          ) : (
+            <span className="hbar-label">{i.href ? <a href={i.href} target="_blank" rel="noopener noreferrer">{i.label}</a> : i.label}</span>
+          )}
           <span className="hbar-track"><span className="hbar" style={{ width: `${(i.value / max) * 100}%`, background: i.color }} /></span>
-          <b>{i.value}</b>
+          <b><CountUp value={String(i.value)} /></b>
         </li>
       ))}
     </ul>
@@ -42,17 +49,22 @@ export function Analytics() {
   const [range, setRange] = useState(30);
   const [outcome, setOutcome] = useState('');
   const [page, setPage] = useState('');
+  const [day, setDay] = useState<string | null>(null); // a clicked day bar narrows every chart to that day
+  const navigate = useNavigate();
+  const toast = useToast();
   const [stats, setStats] = useState<Stats | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
 
   // The same three filters drive every tile, every chart and the export.
   const query = useMemo(() => {
-    const q = new URLSearchParams({ from: new Date(Date.now() - range * DAY_MS).toISOString() });
+    const q = day
+      ? new URLSearchParams({ from: new Date(`${day}T00:00:00Z`).toISOString(), to: new Date(new Date(`${day}T00:00:00Z`).getTime() + DAY_MS).toISOString() })
+      : new URLSearchParams({ from: new Date(Date.now() - range * DAY_MS).toISOString() });
     if (outcome) q.set('outcome', outcome);
     if (page) q.set('page', page);
     return q.toString();
-  }, [range, outcome, page]);
+  }, [range, outcome, page, day]);
 
   useEffect(() => {
     setError(null);
@@ -63,8 +75,10 @@ export function Analytics() {
     setExporting(true);
     try {
       const { rows } = await adminApi<{ rows: Record<string, unknown>[] }>(`/admin/export/conversations?${query}`);
-      if (rows.length) downloadCsv(`conversations-${new Date().toISOString().slice(0, 10)}.csv`, rows);
-      else setError('No conversations match these filters.');
+      if (rows.length) {
+        downloadCsv(`conversations-${new Date().toISOString().slice(0, 10)}.csv`, rows);
+        toast(`Exported ${rows.length} messages`);
+      } else toast('No conversations match these filters.', 'error');
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -87,7 +101,7 @@ export function Analytics() {
 
       <div className="filters" role="group" aria-label="Filters">
         <label>Date range
-          <select value={range} onChange={(e) => setRange(Number(e.target.value))}>
+          <select value={range} onChange={(e) => { setRange(Number(e.target.value)); setDay(null); }}>
             {RANGES.map((d) => <option key={d} value={d}>Last {d} days</option>)}
           </select>
         </label>
@@ -101,6 +115,11 @@ export function Analytics() {
             {PAGES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
         </label>
+        {(day || outcome || page) && (
+          <button type="button" className="chip-clear" onClick={() => { setDay(null); setOutcome(''); setPage(''); }}>
+            {day ? `Day ${day.slice(5)} · ` : ''}Clear filters ×
+          </button>
+        )}
       </div>
 
       {error && <p className="alert" role="alert">{error}</p>}
@@ -109,14 +128,23 @@ export function Analytics() {
       ) : (
         <>
           <div className="tiles">
-            {[
-              ['Chats', String(total)],
-              ['Answered by Pip only', pct(stats.botOnly, total)],
-              ['Handed to a person', String(stats.handedOff)],
-              ['Median first reply', mins(stats.medianFirstReplyMinutes)],
-              ['Median time to resolve', mins(stats.medianResolutionMinutes)],
-              ['Helpful 👍 / 👎', `${stats.feedback.up} / ${stats.feedback.down}`],
-            ].map(([label, value]) => <div key={label} className="tile"><span>{label}</span><b>{value}</b></div>)}
+            {([
+              ['Chats', String(total), ''],
+              ['Answered by Pip only', pct(stats.botOnly, total), 'bot'],
+              ['Handed to a person', String(stats.handedOff), 'handed'],
+              ['Median first reply', mins(stats.medianFirstReplyMinutes), null],
+              ['Median time to resolve', mins(stats.medianResolutionMinutes), 'resolved'],
+              ['Helpful 👍 / 👎', `${stats.feedback.up} / ${stats.feedback.down}`, null],
+            ] as const).map(([label, value, filter]) =>
+              filter === null ? (
+                <div key={label} className="tile"><span>{label}</span><b><CountUp value={value} /></b></div>
+              ) : (
+                <button key={label} type="button" className={`tile tile-btn ${outcome === filter ? 'on' : ''}`} aria-pressed={outcome === filter}
+                  title={filter ? `Show only: ${label}` : 'Show all outcomes'} onClick={() => setOutcome(outcome === filter ? '' : filter)}>
+                  <span>{label}</span><b><CountUp value={value} /></b>
+                </button>
+              ),
+            )}
           </div>
 
           <div className="charts">
@@ -125,13 +153,15 @@ export function Analytics() {
               <p className="legend"><i className="dot pip" /> Pip only <i className="dot person" /> Handed to a person</p>
               <div className="bars" role="img" aria-label={stats.chatsPerDay.map((d) => `${d.date}: ${d.count} chats, ${d.handed} handed off`).join(', ') || 'No chats'}>
                 {stats.chatsPerDay.map((d) => (
-                  <div key={d.date} className="bar-col" title={`${d.date}: ${d.count} chats, ${d.handed} to a person`}>
+                  <button key={d.date} type="button" className={`bar-col ${day === d.date ? 'on' : ''}`} aria-pressed={day === d.date}
+                    aria-label={`${d.date}: ${d.count} chats, ${d.handed} handed to a person. Show only this day`}
+                    title={`${d.date}: ${d.count} chats, ${d.handed} to a person — click to show only this day`} onClick={() => setDay(day === d.date ? null : d.date)}>
                     <span className="bar-stack" style={{ height: `${(d.count / maxDay) * 100}%` }}>
                       <span className="bar person" style={{ flexGrow: d.handed }} />
                       <span className="bar" style={{ flexGrow: d.count - d.handed }} />
                     </span>
                     <small>{d.date.slice(5)}</small>
-                  </div>
+                  </button>
                 ))}
                 {stats.chatsPerDay.length === 0 && <p className="hint">No chats in this range.</p>}
               </div>
@@ -140,10 +170,10 @@ export function Analytics() {
             <section className="card stack">
               <h2>Outcomes</h2>
               <HBars label="Outcomes" items={[
-                { label: 'Pip only', value: stats.outcomes.bot, color: 'var(--meadow)' },
-                { label: 'Waiting for a person', value: stats.outcomes.waiting, color: 'var(--danger)' },
-                { label: 'With the team', value: stats.outcomes.team, color: 'var(--sky)' },
-                { label: 'Resolved', value: stats.outcomes.resolved, color: 'var(--accent-deep)' },
+                { label: 'Pip only', value: stats.outcomes.bot, color: 'var(--meadow)', active: outcome === 'bot', onClick: () => setOutcome(outcome === 'bot' ? '' : 'bot') },
+                { label: 'Waiting for a person →', value: stats.outcomes.waiting, color: 'var(--danger)', onClick: () => navigate('/leads?status=waiting_human') },
+                { label: 'With the team →', value: stats.outcomes.team, color: 'var(--sky)', onClick: () => navigate('/leads?status=human') },
+                { label: 'Resolved', value: stats.outcomes.resolved, color: 'var(--accent-deep)', active: outcome === 'resolved', onClick: () => setOutcome(outcome === 'resolved' ? '' : 'resolved') },
               ]} />
             </section>
 

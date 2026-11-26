@@ -1,16 +1,20 @@
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import { ticketLabel } from '../../../../packages/shared/src/api.ts';
 import { downloadCsv } from '../csv.ts';
 import { useSessions, type SessionRow } from '../data.ts';
+import { useToast } from '../motion.tsx';
 
 const STATUS: Record<SessionRow['status'], string> = { waiting_human: 'Waiting', human: 'With the team', resolved: 'Resolved', bot: 'Back with Pip' };
 
 /** Leads = players who asked for a person; the hand-off form captures their Roblox username and email. */
 export function Leads() {
   const { sessions } = useSessions(1000);
+  const toast = useToast();
   const [query, setQuery] = useState('');
-  const [status, setStatus] = useState('');
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+  const [status, setStatus] = useState(params.get('status') ?? ''); // dashboard drill-in: /leads?status=waiting_human
 
   const leads = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -21,7 +25,8 @@ export function Leads() {
       .sort((a, b) => b.handoff_at!.localeCompare(a.handoff_at!));
   }, [sessions, query, status]);
 
-  const exportCsv = () =>
+  const exportCsv = () => {
+    toast(`Exported ${leads.length} leads`);
     downloadCsv(`leads-${new Date().toISOString().slice(0, 10)}.csv`, leads.map((s) => ({
       date: s.handoff_at,
       roblox_username: s.roblox_username ?? '',
@@ -31,6 +36,7 @@ export function Leads() {
       asked_from: s.page_url ?? '',
       resolved_at: s.resolved_at ?? '',
     })));
+  };
 
   return (
     <div className="page stack leads-page">
@@ -59,7 +65,7 @@ export function Leads() {
           </thead>
           <tbody>
             {leads.map((s) => (
-              <tr key={s.id}>
+              <tr key={s.id} className="click-row" onClick={() => navigate(`/?chat=${s.id}`)}>
                 <td>{new Date(s.handoff_at!).toLocaleString()}</td>
                 <td>{s.roblox_username ?? '—'}</td>
                 <td>{s.email ?? '—'}</td>

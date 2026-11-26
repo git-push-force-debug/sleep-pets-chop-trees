@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useMotionValue } from 'motion/react';
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ChatIcon } from '../../../../packages/shared/src/ui/icons.tsx';
 import { usePrefersReducedMotion } from '../../../../packages/shared/src/ui/motion.ts';
+import { useLang } from '../i18n.tsx';
 import { ChatPanel } from './ChatPanel.tsx';
 import { useChat, type Chat } from './useChat.ts';
 
@@ -30,6 +31,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const [pending, setPending] = useState<string | null>(null);
   const [handoffSignal, setHandoffSignal] = useState(0);
   const chat = useChat(open || pending !== null || handoffSignal > 0);
+  const { t } = useLang();
   const launcher = useRef<HTMLButtonElement>(null);
   const reduced = usePrefersReducedMotion();
   const [desktop, setDesktop] = useState(() => window.matchMedia?.(DESKTOP).matches ?? true);
@@ -114,7 +116,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
               <motion.div key="scrim" className="chat-scrim" onClick={close} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
             )}
             {open && (
-              <motion.div key="panel" className={`chat-dock ${desktop ? `side ${dock.side}` : 'sheet'}`} role="dialog" aria-modal={!desktop} aria-label="Chat with Pip" {...motionProps}>
+              <motion.div key="panel" className={`chat-dock ${desktop ? `side ${dock.side}` : 'sheet'}`} role="dialog" aria-modal={!desktop} aria-label={t.chatWith} {...motionProps}>
                 {!desktop && <span className="sheet-handle" aria-hidden="true" />}
                 <ChatPanel chat={chat} onClose={close} handoffSignal={handoffSignal} />
               </motion.div>
@@ -132,12 +134,12 @@ export function ChatProvider({ children }: { children: ReactNode }) {
               onDragStart={() => (dragged.current = true)}
               onDragEnd={onDragEnd}
               onClick={() => !dragged.current && setOpen(true)}
-              aria-label="Ask Pip — open chat"
-              title={desktop ? 'Drag to move Pip to either side' : undefined}
+              aria-label={t.launcherOpen}
+              title={desktop ? t.launcherDrag : undefined}
             >
               <span className="launcher-bubble" aria-hidden="true">
-                <b>Hi! I'm Pip</b>
-                <span>Ask me anything <span className="typing"><i /><i /><i /></span></span>
+                <b>{t.launcherHi}</b>
+                <span>{t.launcherAsk} <span className="typing"><i /><i /><i /></span></span>
               </span>
               <span className="launcher-orb" aria-hidden="true">
                 <span className="pip-avatar pose launcher-avatar"><img src="/art/v3/pip-head.webp" alt="" draggable={false} onError={(e) => ((e.target as HTMLImageElement).src = '/art/mascot.png')} /></span>

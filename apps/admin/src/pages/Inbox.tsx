@@ -7,12 +7,13 @@ import { chatwootUrl } from '../links.ts';
 import { supabase, type Agent } from '../auth.ts';
 import { adminApi, chatCode, useFirstQuestions, useSessions, type SessionRow } from '../data.ts';
 import { useToast } from '../motion.tsx';
+import { currentStrings, useLang } from '../i18n.tsx';
 
-const TABS: { key: string; label: string; statuses: SessionRow['status'][] }[] = [
-  { key: 'waiting', label: 'Needs a person', statuses: ['waiting_human'] },
-  { key: 'open', label: 'Open', statuses: ['human'] },
-  { key: 'bot', label: 'Bot chats', statuses: ['bot'] },
-  { key: 'resolved', label: 'Resolved', statuses: ['resolved'] },
+const TABS: { key: string; statuses: SessionRow['status'][] }[] = [
+  { key: 'waiting', statuses: ['waiting_human'] },
+  { key: 'open', statuses: ['human'] },
+  { key: 'bot', statuses: ['bot'] },
+  { key: 'resolved', statuses: ['resolved'] },
 ];
 const SYNC_MS = 20_000; // free Chatwoot plan: no webhooks, so the open panel batch-syncs
 
@@ -21,7 +22,8 @@ interface Msg { id: string; role: 'user' | 'bot' | 'agent' | 'system'; content: 
 const waited = (iso: string | null) => {
   if (!iso) return '';
   const min = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
-  return min < 60 ? `${min} min` : `${Math.round(min / 60)} h`;
+  const t = currentStrings();
+  return min < 60 ? t.minutes(min) : t.hours(Math.round(min / 60));
 };
 
 function Conversation({ session, agent, onChanged }: { session: SessionRow; agent: Agent; onChanged: () => void }) {
@@ -31,6 +33,7 @@ function Conversation({ session, agent, onChanged }: { session: SessionRow; agen
   const [note, setNote] = useState<string | null>(null);
   const transcript = useRef<HTMLDivElement>(null);
   const toast = useToast();
+  const { t } = useLang();
   const resolved = session.status === 'resolved';
 
   const load = useCallback(async () => {
@@ -59,7 +62,7 @@ function Conversation({ session, agent, onChanged }: { session: SessionRow; agen
     transcript.current?.scrollTo?.({ top: transcript.current.scrollHeight });
   }, [messages.length]);
 
-  const DONE: Record<string, string> = { reply: 'Reply sent', ask: 'Asked the player if it’s solved', resolve: 'Chat resolved', back: 'Handed back to Pip', suggest: 'Suggestion added to the reply box' };
+  const DONE = t.done;
   const run = async (label: string, fn: () => Promise<unknown>) => {
     setBusy(label);
     setNote(null);
@@ -89,47 +92,47 @@ function Conversation({ session, agent, onChanged }: { session: SessionRow; agen
   };
 
   return (
-    <section className="conversation" aria-label="Conversation">
+    <section className="conversation" aria-label={t.conversation}>
       <header className="conv-head">
         <div>
-          <h2>{[session.roblox_username, session.chatwoot_display_id && `Ticket ${ticketLabel(session.chatwoot_display_id)}`, `Chat ${chatCode(session.id)}`].filter(Boolean).join(' · ')}</h2>
-          <p className={`status-line s-${session.status}`}>{session.status.replace('_', ' ')}{session.handoff_at && session.status === 'waiting_human' ? ` · waiting ${waited(session.handoff_at)}` : ''}</p>
+          <h2>{[session.roblox_username, session.chatwoot_display_id && t.ticket(ticketLabel(session.chatwoot_display_id)), t.chat(chatCode(session.id))].filter(Boolean).join(' · ')}</h2>
+          <p className={`status-line s-${session.status}`}>{t.status[session.status]}{session.handoff_at && session.status === 'waiting_human' ? ` · ${t.waiting(waited(session.handoff_at))}` : ''}</p>
         </div>
         <div className="conv-actions">
           {!resolved && (
             <>
               <button type="button" className="spct-pill spct-pill-secondary" disabled={!!busy} onClick={() => run('ask', () => post('ask-resolved'))}>
-                Ask if solved
+                {t.askIfSolved}
               </button>
               <button type="button" className="spct-pill spct-pill-green" disabled={!!busy} onClick={() => run('resolve', () => post('resolve'))}>
-                Resolve
+                {t.resolve}
               </button>
             </>
           )}
           {session.bot_paused && !resolved && (
             <button type="button" className="spct-pill spct-pill-secondary" disabled={!!busy} onClick={() => run('back', () => post('hand-back'))}>
-              Hand back to Pip
+              {t.handBack}
             </button>
           )}
           {session.chatwoot_display_id && (
-            <a className="spct-pill spct-pill-secondary" href={chatwootUrl(session.chatwoot_display_id)} target="_blank" rel="noopener noreferrer">Open in Chatwoot ↗</a>
+            <a className="spct-pill spct-pill-secondary" href={chatwootUrl(session.chatwoot_display_id)} target="_blank" rel="noopener noreferrer">{t.openChatwoot}</a>
           )}
         </div>
       </header>
       <div className="transcript" ref={transcript}>
         {messages.map((m) =>
           m.role === 'bot' && m.reply ? (
-            <div key={m.id} className="t-bot"><span className="who">Pip · bot</span><BotReply reply={m.reply} onSuggestion={() => {}} onHandoff={() => {}} handoffDisabled showSuggestions={false} /></div>
+            <div key={m.id} className="t-bot"><span className="who">{t.pipBot}</span><BotReply reply={m.reply} onSuggestion={() => {}} onHandoff={() => {}} handoffDisabled showSuggestions={false} /></div>
           ) : (
             <div key={m.id} className={`t-${m.role}`}>
-              {m.role !== 'system' && <span className="who">{m.role === 'user' ? session.roblox_username ?? 'Player' : `${m.agent_name ?? 'Team'} · team`}</span>}
+              {m.role !== 'system' && <span className="who">{m.role === 'user' ? session.roblox_username ?? t.player : t.teamSuffix(m.agent_name ?? t.teamName)}</span>}
               <p>{m.content}</p>
             </div>
           ),
         )}
       </div>
       <form className="reply-box" onSubmit={send}>
-        <label className="spct-sr-only" htmlFor="admin-reply">Reply to the player</label>
+        <label className="spct-sr-only" htmlFor="admin-reply">{t.replyLabel}</label>
         <textarea
           id="admin-reply"
           className="input reply-input"
@@ -137,7 +140,7 @@ function Conversation({ session, agent, onChanged }: { session: SessionRow; agen
           maxLength={2000}
           value={draft}
           disabled={resolved}
-          placeholder={resolved ? 'This chat is resolved.' : 'Reply to the player… (Enter sends, Shift+Enter for a new line)'}
+          placeholder={resolved ? t.chatResolved : t.replyPlaceholder}
           onChange={(e) => setDraft(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) send(e);
@@ -146,11 +149,11 @@ function Conversation({ session, agent, onChanged }: { session: SessionRow; agen
         <div className="reply-row">
           <button type="button" className="spct-pill spct-pill-secondary" disabled={!!busy || resolved}
             onClick={() => run('suggest', async () => setDraft((await adminApi<{ text: string }>(`/admin/sessions/${session.id}/suggest`, { method: 'POST' })).text))}>
-            {busy === 'suggest' ? 'Thinking…' : 'Suggest reply'}
+            {busy === 'suggest' ? t.thinking : t.suggestReply}
           </button>
-          <span className="hint">Reply here or in Chatwoot — both reach the player. Signed in as {agent.display_name}.</span>
+          <span className="hint">{t.replyHint(agent.display_name)}</span>
           <button type="submit" className="spct-pill spct-pill-primary" disabled={!draft.trim() || !!busy || resolved}>
-            {busy === 'reply' ? 'Sending…' : 'Send'}
+            {busy === 'reply' ? t.sending : t.send}
           </button>
         </div>
         {note && <p className="alert" role="alert">{note}</p>}
@@ -165,6 +168,7 @@ export function Inbox({ agent }: { agent: Agent }) {
   const [query, setQuery] = useState('');
   const [params] = useSearchParams();
   const [selected, setSelected] = useState<string | null>(params.get('chat'));
+  const { t, locale } = useLang();
 
   // Opened from the Leads page (/?chat=<id>): switch to the tab that holds that chat.
   const linked = params.get('chat');
@@ -190,32 +194,32 @@ export function Inbox({ agent }: { agent: Agent }) {
       `${chatCode(s.id)} ${chatCode(s.id).slice(1)} ${ticketLabel(s.chatwoot_display_id)} ${s.chatwoot_display_id ?? ''} ${s.roblox_username ?? ''} ${s.email ?? ''} ${first[s.id] ?? ''}`.toLowerCase();
     return sessions.filter((s) => current.statuses.includes(s.status) && (!q || text(s).includes(q)));
   }, [sessions, current, query, first]);
-  const count = (t: (typeof TABS)[number]) => sessions.filter((s) => t.statuses.includes(s.status)).length;
+  const count = (tb: (typeof TABS)[number]) => sessions.filter((s) => tb.statuses.includes(s.status)).length;
   const session = sessions.find((s) => s.id === selected) ?? null;
 
   return (
     <div className="inbox">
-      <section className="list-pane" aria-label="Conversations">
+      <section className="list-pane" aria-label={t.conversations}>
         <div className="tabs" role="tablist">
-          {TABS.map((t) => (
-            <button key={t.key} type="button" role="tab" aria-selected={tab === t.key} className="tab" onClick={() => setTab(t.key)}>
-              {t.label} · {count(t)}
+          {TABS.map((tb) => (
+            <button key={tb.key} type="button" role="tab" aria-selected={tab === tb.key} className="tab" onClick={() => setTab(tb.key)}>
+              {t.tabs[tb.key]} · {count(tb)}
             </button>
           ))}
         </div>
-        <label className="spct-sr-only" htmlFor="inbox-search">Search conversations</label>
-        <input id="inbox-search" className="input" placeholder="Search chat code, ticket, username, email or question" value={query} onChange={(e) => setQuery(e.target.value)} />
+        <label className="spct-sr-only" htmlFor="inbox-search">{t.searchConversations}</label>
+        <input id="inbox-search" className="input" placeholder={t.searchPlaceholder} value={query} onChange={(e) => setQuery(e.target.value)} />
         <ul className="rows">
-          {list.length === 0 && <li className="empty">Nothing here right now.</li>}
+          {list.length === 0 && <li className="empty">{t.nothingHere}</li>}
           {list.map((s) => (
             <li key={s.id}>
               <button type="button" className={`row ${selected === s.id ? 'on' : ''}`} onClick={() => setSelected(s.id)}>
                 <span className="row-top">
-                  <b>{s.roblox_username ?? `Chat ${chatCode(s.id)}`}</b>
+                  <b>{s.roblox_username ?? t.chat(chatCode(s.id))}</b>
                   {s.status === 'waiting_human' && <span className="wait">⏱ {waited(s.handoff_at)}</span>}
                 </span>
                 <span className="row-sub">
-                  {[s.chatwoot_display_id ? `Ticket ${ticketLabel(s.chatwoot_display_id)}` : 'Pip only', s.roblox_username && `Chat ${chatCode(s.id)}`, new Date(s.updated_at).toLocaleString()].filter(Boolean).join(' · ')}
+                  {[s.chatwoot_display_id ? t.ticket(ticketLabel(s.chatwoot_display_id)) : t.pipOnly, s.roblox_username && t.chat(chatCode(s.id)), new Date(s.updated_at).toLocaleString(locale)].filter(Boolean).join(' · ')}
                 </span>
                 {first[s.id] && <span className="row-preview">“{first[s.id]}”</span>}
               </button>
@@ -226,22 +230,22 @@ export function Inbox({ agent }: { agent: Agent }) {
       {session ? (
         <>
           <Conversation session={session} agent={agent} onChanged={refresh} />
-          <aside className="player" aria-label="Player">
-            <h3>Player</h3>
+          <aside className="player" aria-label={t.player}>
+            <h3>{t.player}</h3>
             <dl>
-              <dt>Chat</dt><dd>{chatCode(session.id)}</dd>
-              {session.chatwoot_display_id && <><dt>Ticket</dt><dd>{ticketLabel(session.chatwoot_display_id)}</dd></>}
-              <dt>Roblox username</dt><dd>{session.roblox_username ?? 'Not given'}</dd>
-              <dt>Email</dt><dd>{session.email ?? 'Not given'}</dd>
-              <dt>Asked from</dt><dd>{session.page_url ?? '—'}</dd>
-              <dt>Device</dt><dd>{session.user_agent?.slice(0, 80) ?? '—'}</dd>
-              <dt>Started</dt><dd>{new Date(session.created_at).toLocaleString()}</dd>
-              {first[session.id] && <><dt>First question</dt><dd>{first[session.id]}</dd></>}
+              <dt>{t.playerPanel.chat}</dt><dd>{chatCode(session.id)}</dd>
+              {session.chatwoot_display_id && <><dt>{t.playerPanel.ticket}</dt><dd>{ticketLabel(session.chatwoot_display_id)}</dd></>}
+              <dt>{t.playerPanel.username}</dt><dd>{session.roblox_username ?? t.playerPanel.notGiven}</dd>
+              <dt>{t.playerPanel.email}</dt><dd>{session.email ?? t.playerPanel.notGiven}</dd>
+              <dt>{t.playerPanel.askedFrom}</dt><dd>{session.page_url ?? '—'}</dd>
+              <dt>{t.playerPanel.device}</dt><dd>{session.user_agent?.slice(0, 80) ?? '—'}</dd>
+              <dt>{t.playerPanel.started}</dt><dd>{new Date(session.created_at).toLocaleString(locale)}</dd>
+              {first[session.id] && <><dt>{t.playerPanel.firstQuestion}</dt><dd>{first[session.id]}</dd></>}
             </dl>
           </aside>
         </>
       ) : (
-        <p className="pick">Pick a conversation.</p>
+        <p className="pick">{t.pick}</p>
       )}
     </div>
   );

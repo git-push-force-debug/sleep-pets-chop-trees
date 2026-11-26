@@ -1,4 +1,5 @@
 import type { ChatMessage, ChatSession } from '../../../../packages/shared/src/api.ts';
+import { currentLang, currentStrings } from '../i18n.tsx';
 
 export interface ChatState {
   ready: boolean;
@@ -55,8 +56,10 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
 const FRIENDLY = new Set([400, 404, 409, 502]);
 
 export function errorMessage(status: number, body: { error?: string; retryAfterSeconds?: number } | null): string {
-  if (status === 429) return `You're sending messages fast — try again in ${body?.retryAfterSeconds ?? 60} s.`;
-  if (FRIENDLY.has(status) && body?.error) return body.error;
-  if (status === 0) return "You're offline. Check your connection and try again.";
-  return 'Something went wrong. Please try again.';
+  const t = currentStrings();
+  if (status === 429) return t.errFast(body?.retryAfterSeconds ?? 60);
+  // The server writes these in English; the Chinese site shows its own text for the same status.
+  if (FRIENDLY.has(status) && body?.error) return (currentLang() === 'zh' && t.errStatus[status]) || body.error;
+  if (status === 0) return t.errOffline;
+  return t.errGeneric;
 }

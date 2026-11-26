@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { currentStrings } from '../i18n.tsx';
 import { errorMessage } from './chatReducer.ts';
 
 export const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY, {
@@ -10,7 +11,7 @@ export async function accessToken(): Promise<string> {
   const { data } = await supabase.auth.getSession();
   if (data.session) return data.session.access_token;
   const { data: signedIn, error } = await supabase.auth.signInAnonymously();
-  if (error || !signedIn.session) throw new ApiError(0, "We couldn't start the chat. Please refresh the page.");
+  if (error || !signedIn.session) throw new ApiError(0, currentStrings().errStart);
   return signedIn.session.access_token;
 }
 

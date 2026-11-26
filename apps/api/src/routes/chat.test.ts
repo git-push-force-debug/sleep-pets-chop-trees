@@ -3,6 +3,7 @@ import { buildApp } from '../app.ts';
 import { DifyRateLimitError } from '../lib/dify.ts';
 import { GeminiUnavailableError } from '../lib/gemini.ts';
 import { createFakeDeps } from '../test/fakes.ts';
+import { ZH_DEFAULTS } from '../../../../packages/shared/src/api.ts';
 import { OUTAGE_COPY } from './chat.ts';
 
 const auth = (user = 'u1') => ({ authorization: `Bearer user:${user}` });
@@ -173,3 +174,28 @@ describe('chat routes', () => {
   });
 });
 
+
+describe('chat in Chinese', () => {
+  const sendLang = (app: Awaited<ReturnType<typeof setup>>['app'], sessionId: string, text: string, lang: unknown) =>
+    app.inject({ method: 'POST', url: `/chat/sessions/${sessionId}/messages`, headers: auth(), payload: { text, lang } });
+
+  it('asks Gemini for a Chinese reply when the site is in 中文', async () => {
+    const { app, sessionId, deps } = await setup();
+    expect((await sendLang(app, sessionId, 'how do I rebirth?', 'zh')).statusCode).toBe(200);
+    const contents = vi.mocked(deps.gemini.generate).mock.calls[0]![1];
+    expect(contents.at(-1)!.parts[0]!.text).toContain('REPLY LANGUAGE: Simplified Chinese');
+  });
+
+  it('rejects an unknown language', async () => {
+    const { app, sessionId } = await setup();
+    expect((await sendLang(app, sessionId, 'hi', 'fr')).statusCode).toBe(400);
+  });
+
+  it('uses the Chinese offline text when the bot is off', async () => {
+    const { app, sessionId, settings } = await setup();
+    settings.botEnabled = false;
+    const bot = (await sendLang(app, sessionId, 'hello', 'zh')).json().messages[1];
+    expect(bot.content).toBe(ZH_DEFAULTS.offlineMessage);
+    expect(bot.reply.blocks[1]).toEqual({ type: 'handoff', reason: '团队成员可以帮你。' });
+  });
+});

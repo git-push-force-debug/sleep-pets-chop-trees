@@ -5,7 +5,9 @@ import { BotReply } from '../../../../packages/shared/src/ui/BotReply.tsx';
 import { CheckIcon, CloseIcon, PersonIcon, SendIcon, ThumbIcon } from '../../../../packages/shared/src/ui/icons.tsx';
 import { usePrefersReducedMotion } from '../../../../packages/shared/src/ui/motion.ts';
 import { RaisedPill } from '../../../../packages/shared/src/ui/RaisedPill.tsx';
+import { LangSwitch, useLang } from '../i18n.tsx';
 import type { Chat, HandoffForm } from './useChat.ts';
+import { ZH_DEFAULTS } from '../../../../packages/shared/src/api.ts';
 
 const Pip = ({ size = 44, pose = 'mascot' }: { size?: number; pose?: 'mascot' | 'think' | 'headset' }) => (
   <span className="pip-avatar pose" style={{ width: size, height: size }} aria-hidden="true">
@@ -13,22 +15,21 @@ const Pip = ({ size = 44, pose = 'mascot' }: { size?: number; pose?: 'mascot' | 
   </span>
 );
 
-const STARTERS = ['How do I rebirth?', 'Best gun for Snowland?', 'Why did my pet wake up?'];
-
-const THINKING_STEPS = ['Reading your question', 'Searching the guide', 'Writing the answer'];
 
 /** Pip's thinking state: bobbing avatar, staged steps (M10) and shimmering placeholder cards (M8). */
 function Thinking({ toPerson }: { toPerson: boolean }) {
   const [step, setStep] = useState(0);
   const reduced = usePrefersReducedMotion();
+  const { t } = useLang();
+  const THINKING_STEPS = t.thinking;
   useEffect(() => {
     if (toPerson) return;
     const t = setInterval(() => setStep((s) => Math.min(s + 1, THINKING_STEPS.length - 1)), 1300);
     return () => clearInterval(t);
-  }, [toPerson]);
-  if (toPerson) return <div className="thinking" role="status"><Pip size={28} /> Sending…</div>;
+  }, [toPerson, THINKING_STEPS.length]);
+  if (toPerson) return <div className="thinking" role="status"><Pip size={28} /> {t.sending}</div>;
   return (
-    <div className="thinking-card" role="status" aria-label="Pip is looking in the guide">
+    <div className="thinking-card" role="status" aria-label={t.thinkingLabel}>
       <div className="thinking-head">
         <Pip size={40} pose="think" />
         <ol className="thinking-steps">
@@ -54,13 +55,14 @@ function Thinking({ toPerson }: { toPerson: boolean }) {
 /** In-chat ticket with a live "joining" pulse; it goes away once a person replies (the header keeps the ticket number). */
 function TicketCard({ chat }: { chat: Chat }) {
   const s = chat.state.session!;
+  const { t } = useLang();
   return (
     <motion.div className="ticket-card" initial={{ opacity: 0, y: 10, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }}>
       <Pip size={40} pose="headset" />
       <div>
-        <b>Ticket {ticketLabel(s.ticket)}</b>
-        <span>Connected to the team</span>
-        <span className="joining"><span className="pulse" aria-hidden="true" />A person is joining…</span>
+        <b>{t.ticket} {ticketLabel(s.ticket)}</b>
+        <span>{t.connected}</span>
+        <span className="joining"><span className="pulse" aria-hidden="true" />{t.joining}</span>
       </div>
     </motion.div>
   );
@@ -69,6 +71,7 @@ function TicketCard({ chat }: { chat: Chat }) {
 function Handoff({ chat, onDone }: { chat: Chat; onDone: () => void }) {
   const lastQuestion = [...chat.state.messages].reverse().find((m) => m.role === 'user')?.content ?? '';
   const [form, setForm] = useState<HandoffForm>({ robloxUsername: '', email: '', summary: lastQuestion });
+  const { t } = useLang();
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (await chat.handoff(form)) onDone();
@@ -76,24 +79,24 @@ function Handoff({ chat, onDone }: { chat: Chat; onDone: () => void }) {
   const set = (key: keyof HandoffForm) => (e: { target: { value: string } }) => setForm({ ...form, [key]: e.target.value });
   return (
     <motion.form className="handoff-form" onSubmit={submit} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-      <p className="handoff-title"><PersonIcon /> Talk to a person</p>
+      <p className="handoff-title"><PersonIcon /> {t.personTitle}</p>
       <label>
-        Roblox username
+        {t.robloxUsername}
         <input value={form.robloxUsername} onChange={set('robloxUsername')} maxLength={50} autoComplete="username" />
       </label>
       <label>
-        Email <span className="hint">(optional)</span>
+        {t.email} <span className="hint">{t.optional}</span>
         <input type="email" value={form.email} onChange={set('email')} maxLength={200} autoComplete="email" />
       </label>
       <label>
-        What do you need help with?
+        {t.helpWith}
         <textarea value={form.summary} onChange={set('summary')} rows={2} maxLength={1000} required />
       </label>
       <div className="handoff-actions">
-        <RaisedPill type="submit" disabled={chat.state.sending || !form.summary.trim()}>Send to the team</RaisedPill>
-        <button type="button" className="link-btn" onClick={onDone}>Cancel</button>
+        <RaisedPill type="submit" disabled={chat.state.sending || !form.summary.trim()}>{t.sendToTeam}</RaisedPill>
+        <button type="button" className="link-btn" onClick={onDone}>{t.cancel}</button>
       </div>
-      <p className="hint">The team sees this chat, so you won't need to repeat yourself. Never share your password.</p>
+      <p className="hint">{t.handoffHint}</p>
     </motion.form>
   );
 }
@@ -104,6 +107,7 @@ function Feedback({ chat, m }: { chat: Chat; m: ChatMessage }) {
   const [value, setValue] = useState(m.feedback);
   const [burst, setBurst] = useState(0);
   const reduced = usePrefersReducedMotion();
+  const { t } = useLang();
   const rate = (v: 1 | -1) => {
     setValue(v);
     setBurst((b) => b + 1);
@@ -133,20 +137,21 @@ function Feedback({ chat, m }: { chat: Chat; m: ChatMessage }) {
     </motion.button>
   );
   return (
-    <div className="feedback" role="group" aria-label="Was this helpful?">
-      {thumb(1, 'Helpful')}
-      {thumb(-1, 'Not helpful')}
+    <div className="feedback" role="group" aria-label={t.wasHelpful}>
+      {thumb(1, t.helpful)}
+      {thumb(-1, t.notHelpful)}
     </div>
   );
 }
 
 function Message({ m, chat, animate, latest, onHandoff }: { m: ChatMessage; chat: Chat; animate: boolean; latest: boolean; onHandoff: () => void }) {
+  const { t } = useLang();
   if (m.role === 'user') return <div className="bubble me">{m.content}</div>;
-  if (m.role === 'system') return <div className="system-note">{m.content}</div>;
+  if (m.role === 'system') return <div className="system-note">{t.systemNotes[m.content] ?? m.content}</div>;
   if (m.role === 'agent') {
     return (
       <motion.div className="agent-msg" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
-        <span className="name-tag">{m.agentName ?? 'Support'} · team</span>
+        <span className="name-tag">{m.agentName ?? t.supportName} · {t.team}</span>
         <div className="bubble agent">{m.content}</div>
       </motion.div>
     );
@@ -177,6 +182,10 @@ export function ChatPanel({ chat, onClose, variant = 'sheet', handoffSignal = 0 
   const [toast, setToast] = useState(false);
   const list = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
+  const { lang, t } = useLang();
+  const s = chat.settings;
+  const greeting = lang === 'zh' ? s?.greetingZh || ZH_DEFAULTS.greeting : s?.greeting ?? t.greeting;
+  const starters = lang === 'zh' ? (s?.starterQuestionsZh?.length ? s.starterQuestionsZh : ZH_DEFAULTS.starterQuestions) : s?.starterQuestions ?? t.starters;
   const resolved = session?.status === 'resolved';
   const withPerson = session?.status === 'waiting_human' || session?.status === 'human';
   const agentCount = messages.filter((m) => m.role === 'agent').length;
@@ -211,29 +220,30 @@ export function ChatPanel({ chat, onClose, variant = 'sheet', handoffSignal = 0 
   };
 
   return (
-    <section className={`chat-panel ${variant}`} aria-label="Chat with Pip">
+    <section className={`chat-panel ${variant}`} aria-label={t.chatWith}>
       <header className="chat-head">
         <span className={`head-avatar ${ready && !error ? 'online' : ''}`}><Pip pose={withPerson ? 'headset' : 'mascot'} /></span>
         <div className="chat-title">
           <h2 className="chat-name">{withPerson && agentName ? agentName : 'Pip'}</h2>
-          {!withPerson && !resolved && <span className="chat-sub">{error ? 'Offline right now' : ready ? 'Online · answers from the official guide' : 'Waking up…'}</span>}
-          {withPerson && <span className="chat-chip">Ticket {ticketLabel(session?.ticket)}</span>}
-          {resolved && <span className="chat-chip done">Resolved · {ticketLabel(session?.ticket)}</span>}
+          {!withPerson && !resolved && <span className="chat-sub">{error ? t.offline : ready ? t.online : t.waking}</span>}
+          {withPerson && <span className="chat-chip">{t.ticket} {ticketLabel(session?.ticket)}</span>}
+          {resolved && <span className="chat-chip done">{t.resolved} · {ticketLabel(session?.ticket)}</span>}
         </div>
         {withPerson && agentName && (
           <button type="button" className="mini-pill resolve-pill" disabled={sending} onClick={() => void chat.resolve(true)}>
-            <CheckIcon size={16} /> Resolved
+            <CheckIcon size={16} /> {t.resolved}
           </button>
         )}
+        <LangSwitch className="chat-lang" />
         {onClose && (
-          <button type="button" className="spct-icon-btn" aria-label="Close chat" onClick={onClose}><CloseIcon /></button>
+          <button type="button" className="spct-icon-btn" aria-label={t.closeChat} onClick={onClose}><CloseIcon /></button>
         )}
       </header>
 
       <AnimatePresence>
         {toast && (
           <motion.div className="chat-toast" role="status" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
-            <CheckIcon /> {agentName ?? 'A person'} joined the chat
+            <CheckIcon /> {t.joined(agentName ?? t.aPerson)}
           </motion.div>
         )}
       </AnimatePresence>
@@ -250,9 +260,9 @@ export function ChatPanel({ chat, onClose, variant = 'sheet', handoffSignal = 0 
               animate={reduced ? undefined : { y: [0, -6, 0] }}
               transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
             />
-            <p>{chat.settings?.greeting ?? "Hi, I'm Pip! Ask me anything about Sleep Pets & Chop Trees."}</p>
+            <p>{greeting}</p>
             <div className="spct-chips">
-              {(chat.settings?.starterQuestions ?? STARTERS).map((q, i) => (
+              {starters.map((q, i) => (
                 <motion.button key={q} type="button" className="spct-chip" disabled={!ready} onClick={() => void chat.send(q)}
                   initial={reduced ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.07, type: 'spring', stiffness: 320, damping: 26 }}>
                   {q}
@@ -269,9 +279,9 @@ export function ChatPanel({ chat, onClose, variant = 'sheet', handoffSignal = 0 
         {askingPerson && !withPerson && !resolved && <Handoff chat={chat} onDone={() => setAskingPerson(false)} />}
         {resolved && (
           <div className="resolved-card">
-            <p className="handoff-title"><CheckIcon /> Glad we sorted it!</p>
-            <p>{session?.ticket ? `Ticket ${ticketLabel(session.ticket)} is closed. ` : ''}Pip is here for anything else.</p>
-            <RaisedPill onClick={() => void chat.startNew()}>Ask Pip something else</RaisedPill>
+            <p className="handoff-title"><CheckIcon /> {t.glad}</p>
+            <p>{session?.ticket ? t.ticketClosed(ticketLabel(session.ticket)) : ''}{t.hereForElse}</p>
+            <RaisedPill onClick={() => void chat.startNew()}>{t.askElse}</RaisedPill>
           </div>
         )}
       </div>
@@ -279,17 +289,17 @@ export function ChatPanel({ chat, onClose, variant = 'sheet', handoffSignal = 0 
       {error && <p className="chat-error" role="alert">{error}</p>}
 
       <form className="composer" onSubmit={submit}>
-        <label htmlFor={`msg-${variant}`} className="spct-sr-only">Message Pip</label>
+        <label htmlFor={`msg-${variant}`} className="spct-sr-only">{t.messagePip}</label>
         <input
           id={`msg-${variant}`}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={resolved ? 'This chat is closed' : withPerson ? 'Message the team…' : 'Ask about the game…'}
+          placeholder={resolved ? t.chatClosed : withPerson ? t.messageTeam : t.askGame}
           maxLength={1000}
           disabled={resolved || !ready}
           autoComplete="off"
         />
-        <motion.button type="submit" className="send-btn" aria-label="Send" disabled={resolved || !text.trim() || sending} whileTap={reduced ? undefined : { scale: 0.9 }}>
+        <motion.button type="submit" className="send-btn" aria-label={t.send} disabled={resolved || !text.trim() || sending} whileTap={reduced ? undefined : { scale: 0.9 }}>
           <SendIcon />
         </motion.button>
       </form>

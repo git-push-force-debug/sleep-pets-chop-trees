@@ -2,11 +2,17 @@ import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import guideJson from '../../../../content/guide.json' with { type: 'json' };
+import creatorZh from '../../../../content/guide.creator.zh.json' with { type: 'json' };
+import guideZhJson from '../../../../content/guide.public.zh.json' with { type: 'json' };
 import type { Guide } from '../../../../packages/shared/src/guide.ts';
+import { cjkEmphasis } from '../../../../packages/shared/src/ui/Markdown.tsx';
 import { RaisedPill } from '../../../../packages/shared/src/ui/RaisedPill.tsx';
 import { adminApi } from '../data.ts';
+import { useLang } from '../i18n.tsx';
 
 const guide = guideJson as Guide; // full guide, including the admin-only creator chapter
+// Same chapters in Chinese: the public translation plus the admin-only creator chapter.
+const guideZh: Guide = { ...(guideZhJson as Guide), chapters: [...(guideZhJson as Guide).chapters, creatorZh as Guide['chapters'][number]] };
 interface Faq { id: string; question: string; answer: string; dify_segment_id: string | null }
 interface Gap { id: string; question: string; top_score: number | null; created_at: string }
 
@@ -16,6 +22,8 @@ export function Knowledge() {
   const [draft, setDraft] = useState<{ id?: string; question: string; answer: string }>({ question: '', answer: '' });
   const [error, setError] = useState<string | null>(null);
   const [chapter, setChapter] = useState(guide.chapters[0]!.slug);
+  const { t, lang, locale } = useLang();
+  const g = lang === 'zh' ? guideZh : guide;
 
   const load = useCallback(async () => {
     const [f, g] = await Promise.all([adminApi<{ entries: Faq[] }>('/admin/faq'), adminApi<{ gaps: Gap[] }>('/admin/gaps')]);
@@ -37,7 +45,7 @@ export function Knowledge() {
     }
   };
   const remove = async (id: string) => {
-    if (!confirm('Delete this answer? Pip will stop using it.')) return;
+    if (!confirm(t.confirmDeleteFaq)) return;
     await adminApi(`/admin/faq/${id}`, { method: 'DELETE' });
     await load();
   };
@@ -45,34 +53,35 @@ export function Knowledge() {
     await adminApi(`/admin/gaps/${id}/resolve`, { method: 'POST' });
     await load();
   };
-  const current = guide.chapters.find((c) => c.slug === chapter)!;
+  const current = g.chapters.find((c) => c.slug === chapter) ?? guide.chapters.find((c) => c.slug === chapter)!;
 
   return (
     <div className="page stack knowledge">
-      <h1>Knowledge</h1>
+      <h1>{t.knowledge}</h1>
       {error && <p className="alert" role="alert">{error}</p>}
       <section className="card stack">
-        <h2>Unanswered questions <span className="count">{gaps.length}</span></h2>
-        <p className="hint">Questions Pip couldn't answer from the guide. Turn one into a team answer and Pip will use it.</p>
+        <h2>{t.gapsTitle} <span className="count">{gaps.length}</span></h2>
+        <p className="hint">{t.gapsHint}</p>
         <ul className="plain">
-          {gaps.map((g) => (
-            <li key={g.id} className="gap">
-              <span>“{g.question}” <small>· {new Date(g.created_at).toLocaleDateString()}</small></span>
+          {gaps.map((gap) => (
+            <li key={gap.id} className="gap">
+              <span>“{gap.question}” <small>· {new Date(gap.created_at).toLocaleDateString(locale)}</small></span>
               <span className="gap-actions">
-                <button type="button" className="link-btn" onClick={() => setDraft({ question: g.question, answer: '' })}>Turn into FAQ</button>
-                <button type="button" className="link-btn" onClick={() => void resolveGap(g.id)}>Dismiss</button>
+                <button type="button" className="link-btn" onClick={() => setDraft({ question: gap.question, answer: '' })}>{t.toFaq}</button>
+                <button type="button" className="link-btn" onClick={() => void resolveGap(gap.id)}>{t.dismiss}</button>
               </span>
             </li>
           ))}
-          {gaps.length === 0 && <li className="hint">None — nice.</li>}
+          {gaps.length === 0 && <li className="hint">{t.noGaps}</li>}
         </ul>
       </section>
       <section className="card stack">
-        <h2>Team answers (FAQ)</h2>
+        <h2>{t.faqTitle}</h2>
+        <p className="hint">{t.faqLangHint}</p>
         <form onSubmit={save} className="stack">
-          <label>Question<input value={draft.question} onChange={(e) => setDraft({ ...draft, question: e.target.value })} required minLength={3} maxLength={300} /></label>
-          <label>Answer<textarea value={draft.answer} onChange={(e) => setDraft({ ...draft, answer: e.target.value })} rows={3} required minLength={3} maxLength={3000} /></label>
-          <div className="row"><RaisedPill type="submit">{draft.id ? 'Save changes' : 'Add answer'}</RaisedPill>{draft.id && <button type="button" className="link-btn" onClick={() => setDraft({ question: '', answer: '' })}>Cancel</button>}</div>
+          <label>{t.question}<input value={draft.question} onChange={(e) => setDraft({ ...draft, question: e.target.value })} required minLength={3} maxLength={300} /></label>
+          <label>{t.answer}<textarea value={draft.answer} onChange={(e) => setDraft({ ...draft, answer: e.target.value })} rows={3} required minLength={3} maxLength={3000} /></label>
+          <div className="row"><RaisedPill type="submit">{draft.id ? t.saveChanges : t.addAnswer}</RaisedPill>{draft.id && <button type="button" className="link-btn" onClick={() => setDraft({ question: '', answer: '' })}>{t.cancel}</button>}</div>
         </form>
         <ul className="plain">
           {faq.map((f) => (
@@ -80,24 +89,24 @@ export function Knowledge() {
               <b>{f.question}</b>
               <p>{f.answer}</p>
               <span className="gap-actions">
-                <button type="button" className="link-btn" onClick={() => setDraft(f)}>Edit</button>
-                <button type="button" className="link-btn" onClick={() => void remove(f.id)}>Delete</button>
+                <button type="button" className="link-btn" onClick={() => setDraft(f)}>{t.edit}</button>
+                <button type="button" className="link-btn" onClick={() => void remove(f.id)}>{t.delete}</button>
               </span>
             </li>
           ))}
         </ul>
       </section>
       <section className="card stack">
-        <h2>Game guide</h2>
-        <label>Chapter
+        <h2>{t.guideTitle}</h2>
+        <label>{t.chapter}
           <select value={chapter} onChange={(e) => setChapter(e.target.value as typeof chapter)}>
-            {guide.chapters.map((c) => <option key={c.slug} value={c.slug}>{c.number} · {c.title}{c.internal ? ' (admin only)' : ''}</option>)}
+            {g.chapters.map((c) => <option key={c.slug} value={c.slug}>{c.number} · {c.title}{c.internal ? t.adminOnly : ''}</option>)}
           </select>
         </label>
         {current.sections.map((s) => (
           <details key={s.id} className="guide-sec">
             <summary>{s.title}</summary>
-            <div className="prose"><ReactMarkdown remarkPlugins={[remarkGfm]} skipHtml>{s.markdown.replace(/\[image:[a-z0-9-]+\]/g, '')}</ReactMarkdown></div>
+            <div className="prose"><ReactMarkdown remarkPlugins={[remarkGfm]} skipHtml>{cjkEmphasis(s.markdown.replace(/\[image:[a-z0-9-]+\]/g, ''))}</ReactMarkdown></div>
           </details>
         ))}
       </section>

@@ -1,4 +1,5 @@
 import { animate, motion } from 'motion/react';
+import { useUiLabels } from './labels.tsx';
 import { useEffect, useRef, useState } from 'react';
 import type { Block } from '../blocks.ts';
 import type { GuideImage } from '../guide.ts';
@@ -96,42 +97,42 @@ export const StatsBlock = ({ block, live = false }: { block: Of<'stats'>; live?:
   </div>
 );
 
-export const ImagesBlock = ({ block, images, onOpen }: { block: Of<'images'>; images: Map<string, GuideImage>; onOpen: (img: GuideImage) => void }) => (
-  <div className={`spct-images spct-images-${Math.min(block.imageIds.length, 3)}`}>
-    {block.imageIds.map((id) => {
-      const img = images.get(id);
-      return img ? (
-        <figure key={id} className="spct-card">
-          <button type="button" aria-label={`Open picture: ${img.alt}`} onClick={() => onOpen(img)}>
-            <img src={img.url} alt={img.alt} loading="lazy" width={img.width} height={img.height} />
-          </button>
-        </figure>
-      ) : null;
-    })}
-  </div>
-);
+export const ImagesBlock = ({ block, images, onOpen }: { block: Of<'images'>; images: Map<string, GuideImage>; onOpen: (img: GuideImage) => void }) => {
+  const ui = useUiLabels();
+  return (
+    <div className={`spct-images spct-images-${Math.min(block.imageIds.length, 3)}`}>
+      {block.imageIds.map((id) => {
+        const img = images.get(id);
+        return img ? (
+          <figure key={id} className="spct-card">
+            <button type="button" aria-label={`${ui.openPicture}${img.alt}`} onClick={() => onOpen(img)}>
+              <img src={img.url} alt={img.alt} loading="lazy" width={img.width} height={img.height} />
+            </button>
+          </figure>
+        ) : null;
+      })}
+    </div>
+  );
+};
 
-const CALLOUT = {
-  tip: { icon: <BulbIcon />, label: 'Tip' },
-  info: { icon: <InfoIcon />, label: 'Good to know' },
-  warning: { icon: <WarnIcon />, label: 'Heads up' },
-} as const;
+const CALLOUT_ICON = { tip: <BulbIcon />, info: <InfoIcon />, warning: <WarnIcon /> } as const;
 
 export const CalloutBlock = ({ block }: { block: Of<'callout'> }) => (
   <div className={`spct-callout spct-callout-${block.tone}`}>
-    {CALLOUT[block.tone].icon}
+    {CALLOUT_ICON[block.tone]}
     <p>
-      <b>{CALLOUT[block.tone].label}</b> · <span>{block.text}</span>
+      <b>{useUiLabels()[block.tone]}</b> · <span>{block.text}</span>
     </p>
   </div>
 );
 
 export const CardBlock = ({ block, images, onOpen }: { block: Of<'card'>; images: Map<string, GuideImage>; onOpen: (img: GuideImage) => void }) => {
+  const ui = useUiLabels();
   const img = block.imageId ? images.get(block.imageId) : undefined;
   return (
     <div className="spct-card spct-entity">
       {img && (
-        <button type="button" aria-label={`Open picture: ${img.alt}`} onClick={() => onOpen(img)}>
+        <button type="button" aria-label={`${ui.openPicture}${img.alt}`} onClick={() => onOpen(img)}>
           <img src={img.url} alt={img.alt} loading="lazy" />
         </button>
       )}
@@ -156,19 +157,20 @@ export const CardBlock = ({ block, images, onOpen }: { block: Of<'card'>; images
 /** Offered only when Pip can't answer: a plain Yes / No question instead of an always-on button. */
 export function HandoffBlock({ block, onHandoff, disabled }: { block: Of<'handoff'>; onHandoff: () => void; disabled?: boolean }) {
   const [declined, setDeclined] = useState(false);
+  const ui = useUiLabels();
   return (
     <div className="spct-card spct-handoff">
       <p className="spct-handoff-title">
-        <PersonIcon /> Want me to bring in a person from the team?
+        <PersonIcon /> {ui.handoffAsk}
       </p>
       <p>{block.reason}</p>
       {declined ? (
-        <p className="spct-handoff-note">No problem — ask me something else anytime.</p>
+        <p className="spct-handoff-note">{ui.handoffDeclined}</p>
       ) : (
         !disabled && (
           <div className="spct-yesno">
-            <RaisedPill variant="green" onClick={onHandoff}>Yes, talk to a person</RaisedPill>
-            <RaisedPill variant="secondary" onClick={() => setDeclined(true)}>No thanks</RaisedPill>
+            <RaisedPill variant="green" onClick={onHandoff}>{ui.handoffYes}</RaisedPill>
+            <RaisedPill variant="secondary" onClick={() => setDeclined(true)}>{ui.handoffNo}</RaisedPill>
           </div>
         )
       )}
@@ -178,11 +180,12 @@ export function HandoffBlock({ block, onHandoff, disabled }: { block: Of<'handof
 
 /** "Did this solve your problem?" — sent by the team from the admin panel. */
 export function ResolveAsk({ onAnswer, active }: { onAnswer: (solved: boolean) => void; active: boolean }) {
+  const ui = useUiLabels();
   if (!active) return null;
   return (
     <div className="spct-yesno">
-      <RaisedPill variant="green" onClick={() => onAnswer(true)}>Yes, it's solved</RaisedPill>
-      <RaisedPill variant="secondary" onClick={() => onAnswer(false)}>No, I still need help</RaisedPill>
+      <RaisedPill variant="green" onClick={() => onAnswer(true)}>{ui.solvedYes}</RaisedPill>
+      <RaisedPill variant="secondary" onClick={() => onAnswer(false)}>{ui.solvedNo}</RaisedPill>
     </div>
   );
 }

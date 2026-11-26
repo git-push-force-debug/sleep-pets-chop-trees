@@ -39,6 +39,7 @@ Check every key with `npm run check:connections`. It prints ✓/✗ only and nev
 4. `npm run dify:sync`: creates the Dify datasets, uploads the guide and writes the dataset ids into `.env.local`.
 5. `npx tsx --env-file=.env.local scripts/create-admins.ts`: creates admin accounts. Passwords go to `.admin-credentials`, which is gitignored and never printed.
 6. `npx tsx --env-file=.env.local scripts/seed-demo.ts`: loads 40 synthetic chats for the dashboard. Add `--clear` to remove them.
+   Then `npx tsx --env-file=.env.local scripts/seed-faq.ts`: adds 3 synthetic team FAQs (the second knowledge source). Safe to re-run.
 7. Start the three apps in separate terminals:
    - `npm run dev -w apps/web` → http://localhost:5173
    - `npm run dev -w apps/admin` → http://localhost:5174

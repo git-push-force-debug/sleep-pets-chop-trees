@@ -2,12 +2,12 @@
 // Public dataset: chapters 01–06, the site FAQ and the admin FAQ. Internal dataset: chapter 07 only.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createDifyClient } from '../apps/api/src/lib/dify.ts';
+import { FAQ_DOC_NAME, faqDocument } from '../apps/api/src/lib/faq.ts';
 
 const PUBLIC_DOCS = ['player-guide', 'biomes', 'economy', 'rewards', 'faq', 'gallery', 'site-faq'];
 const INTERNAL_DOCS = ['creator'];
-const ADMIN_FAQ = 'admin-faq';
-const ADMIN_FAQ_SEED =
-  '[section:admin-faq-intro] [chapter:faq-admin] [images:]\n### Team answers › About this list\n\nAnswers added by the support team.';
+const ADMIN_FAQ = FAQ_DOC_NAME;
+const ADMIN_FAQ_SEED = faqDocument([]);
 const EMBEDDING = { model: 'gemini-embedding-001', provider: 'langgenius/gemini/google' };
 const SPACING_MS = 7000; // Dify Sandbox allows 10 knowledge requests per minute
 

@@ -1,12 +1,12 @@
 import { randomBytes } from 'node:crypto';
-import type { FastifyInstance } from 'fastify';
+import type { FastifyBaseLogger, FastifyInstance, FastifyReply } from 'fastify';
 import { z } from 'zod';
 import type { BotReply } from '../../../../packages/shared/src/blocks.ts';
-import { formatSegmentHeader } from '../../../../packages/shared/src/guide.ts';
 import { ticketLabel } from '../../../../packages/shared/src/api.ts';
 import type { Deps } from '../app.ts';
 import { answerQuestion, replyToText } from '../lib/answer.ts';
 import { requireAgent } from '../lib/auth.ts';
+import { FAQ_DOC_NAME, faqDocument } from '../lib/faq.ts';
 import { computeStats, filterSessions, OUTCOMES, PAGES } from '../lib/stats.ts';
 import { syncSession } from '../lib/sync.ts';
 
@@ -28,6 +28,9 @@ const SettingsBody = z.object({
   greeting: z.string().trim().min(1).max(300),
   starterQuestions: z.array(z.string().trim().min(1).max(80)).max(3),
   offlineMessage: z.string().trim().min(1).max(500),
+  greetingZh: z.string().trim().max(300).optional(),
+  starterQuestionsZh: z.array(z.string().trim().min(1).max(80)).max(3).optional(),
+  offlineMessageZh: z.string().trim().max(500).optional(),
   evidenceThreshold: z.number().min(0).max(1),
   supportHours: z.string().trim().max(120),
 });
@@ -38,13 +41,25 @@ const StatsQuery = z.object({
   page: z.enum(PAGES).optional(),
 });
 
-const faqSegment = (id: string, question: string, answer: string) =>
-  `${formatSegmentHeader(`faq-${id.slice(0, 8)}`, 'faq-admin', [])}\n### Team answers › ${question}\n\n${answer}`;
+
+export const FAQ_SYNC_ERROR = "Saved, but Pip's knowledge didn't update. Save it again in a minute.";
 
 export function registerAdminRoutes(app: FastifyInstance, deps: Deps) {
   const agent = { preHandler: requireAgent(deps) };
   const admin = { preHandler: requireAgent(deps, 'admin') };
   const { DIFY_PUBLIC_DATASET_ID: dataset, DIFY_ADMIN_FAQ_DOCUMENT_ID: faqDoc } = deps.env;
+  // The database is the source of truth; Pip's copy in Dify is rebuilt from it after every change, so a failed
+  // rebuild is fixed by the next save.
+  const syncFaq = async (reply: FastifyReply, log: FastifyBaseLogger) => {
+    try {
+      await deps.dify.updateDocumentByText(dataset, faqDoc, FAQ_DOC_NAME, faqDocument(await deps.store.listFaq()));
+      return true;
+    } catch (error) {
+      log.error(error);
+      reply.code(502).send({ error: FAQ_SYNC_ERROR });
+      return false;
+    }
+  };
 
   app.post('/admin/sync', agent, async (req) => {
     const sessions = await deps.store.listSessions(['waiting_human', 'human'], BATCH_SYNC_LIMIT);
@@ -118,8 +133,8 @@ export function registerAdminRoutes(app: FastifyInstance, deps: Deps) {
     const body = FaqBody.safeParse(req.body);
     if (!body.success) return reply.code(400).send({ error: 'Question and answer are required.' });
     const row = await deps.store.createFaq({ ...body.data, created_by: req.userId });
-    const segmentId = await deps.dify.addSegment(dataset, faqDoc, faqSegment(row.id, row.question, row.answer));
-    return { entry: await deps.store.updateFaq(row.id, { dify_segment_id: segmentId }) };
+    if (!(await syncFaq(reply, req.log))) return;
+    return { entry: row };
   });
 
   app.patch<{ Params: { id: string } }>('/admin/faq/:id', agent, async (req, reply) => {
@@ -127,14 +142,14 @@ export function registerAdminRoutes(app: FastifyInstance, deps: Deps) {
     if (!body.success) return reply.code(400).send({ error: 'Question and answer are required.' });
     const row = await deps.store.updateFaq(req.params.id, body.data);
     if (!row) return reply.code(404).send({ error: 'FAQ entry not found' });
-    if (row.dify_segment_id) await deps.dify.updateSegment(dataset, faqDoc, row.dify_segment_id, faqSegment(row.id, row.question, row.answer));
+    if (!(await syncFaq(reply, req.log))) return;
     return { entry: row };
   });
 
   app.delete<{ Params: { id: string } }>('/admin/faq/:id', agent, async (req, reply) => {
     const row = await deps.store.deleteFaq(req.params.id);
     if (!row) return reply.code(404).send({ error: 'FAQ entry not found' });
-    if (row.dify_segment_id) await deps.dify.deleteSegment(dataset, faqDoc, row.dify_segment_id);
+    if (!(await syncFaq(reply, req.log))) return;
     return reply.code(204).send();
   });
 

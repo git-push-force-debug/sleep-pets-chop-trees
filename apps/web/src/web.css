@@ -52,6 +52,9 @@ a { color: inherit; }
   .main-nav { justify-self: end; }
 }
 .site-header.hide-play .play-pill { visibility: hidden; opacity: 0; }
+.header-end { justify-self: end; display: flex; align-items: center; gap: 12px; }
+
+
 
 /* Hero: one layered scene (sky → front grass); the headline sits inside the stack, no panel behind it */
 .hero { position: relative; margin-top: calc(-1 * var(--header-h)); isolation: isolate; } /* keeps layer z-indexes under the header menu */
@@ -249,6 +252,9 @@ main { position: relative; }
   .header-row { grid-template-columns: 1fr auto; }
   .main-nav { justify-self: end; }
   .play-pill { display: none; }
+  .header-row { grid-template-columns: 1fr auto auto; }
+  .header-end { order: 2; }
+  .main-nav { order: 3; }
   .brand img { height: 44px; }
   html { --header-h: calc(68px + env(safe-area-inset-top, 0px)); }
   .leaf, .cloud:nth-child(even) { display: none; } /* phones: fewer moving sprites */

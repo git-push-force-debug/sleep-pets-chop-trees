@@ -4,7 +4,7 @@ import { BlockSchema, GeminiAnswerSchema, type Block, type BotReply, type Gemini
 import { CHAPTER_SLUGS, type GuideImage } from '../../../../packages/shared/src/guide.ts';
 import type { Deps } from '../app.ts';
 import type { Evidence } from './dify.ts';
-import { buildContents, SYSTEM_PROMPT } from './prompt.ts';
+import { buildContents, replyLang, SYSTEM_PROMPT, type Lang } from './prompt.ts';
 
 const HUMAN_INTENTS = new Set(['wants_human', 'account_or_purchase', 'bug_report']);
 // Chapters with a public page; creator is admin-only and the gallery page was removed (its pictures are still used).
@@ -16,11 +16,24 @@ export function decideHandoff(a: GeminiAnswer, topScore: number, threshold: numb
   return !a.answer_found || topScore < threshold || HUMAN_INTENTS.has(a.intent);
 }
 
-export function handoffReason(a: Pick<GeminiAnswer, 'intent' | 'answer_found'>): string {
-  if (a.intent === 'account_or_purchase') return 'Purchases and account problems need a person from the team.';
-  if (a.intent === 'bug_report') return 'Bugs and lost items need a person from the team.';
-  if (a.intent === 'wants_human') return 'Sure — a person from the team can help.';
-  return "I couldn't find that in the game guide.";
+const REASONS = {
+  en: {
+    account_or_purchase: 'Purchases and account problems need a person from the team.',
+    bug_report: 'Bugs and lost items need a person from the team.',
+    wants_human: 'Sure — a person from the team can help.',
+    not_found: "I couldn't find that in the game guide.",
+  },
+  zh: {
+    account_or_purchase: '购买和账号问题需要团队成员来处理。',
+    bug_report: '游戏漏洞和丢失的物品需要团队成员来处理。',
+    wants_human: '好的，团队成员可以帮你。',
+    not_found: '游戏指南里没有找到这个内容。',
+  },
+};
+
+export function handoffReason(a: Pick<GeminiAnswer, 'intent' | 'answer_found'>, lang: Lang = 'en'): string {
+  const copy = REASONS[lang];
+  return a.intent === 'account_or_purchase' || a.intent === 'bug_report' || a.intent === 'wants_human' ? copy[a.intent] : copy.not_found;
 }
 
 // --- Repairing Gemini output: Gemini gets a limit-free schema, so over-long fields are truncated here.
@@ -66,6 +79,8 @@ export function sanitize(
   guideImages: Record<string, GuideImage>,
   siteUrl: string,
   offerHuman: boolean,
+  lang: Lang = 'en',
+  titles: Record<string, string> = {},
 ): BotReply {
   const allowedImages = new Set(evidence.flatMap((e) => e.imageIds).filter((id) => guideImages[id]));
   const usedImages = new Set<string>();
@@ -94,14 +109,14 @@ export function sanitize(
       blocks.push({ type: 'images', imageIds: [picture] });
     }
   }
-  if (offerHuman) blocks.push({ type: 'handoff', reason: handoffReason(a) });
+  if (offerHuman) blocks.push({ type: 'handoff', reason: handoffReason(a, lang) });
 
   const byId = new Map(evidence.map((e) => [e.sectionId, e]));
   const sources = [...new Set(a.used_section_ids)]
     .map((id) => byId.get(id))
     .filter((e): e is Evidence => !!e && GUIDE_CHAPTERS.has(e.chapter))
     .slice(0, MAX_SOURCES)
-    .map((e) => ({ title: e.title, url: `${siteUrl}/guide/${e.chapter}#${e.sectionId}` }));
+    .map((e) => ({ title: titles[e.sectionId] ?? e.title, url: `${siteUrl}/guide/${e.chapter}#${e.sectionId}` }));
 
   const images = [...usedImages].map((id) => ({ ...guideImages[id]!, url: `${siteUrl}${guideImages[id]!.url}` }));
   return { blocks, suggestions: a.suggestions, sources, images };
@@ -146,15 +161,18 @@ async function retrieveEvidence(deps: Deps, question: string, datasetIds: string
 
 export async function answerQuestion(
   deps: Deps,
-  input: { question: string; history: { role: 'user' | 'bot'; text: string }[]; datasetIds?: string[] },
+  input: { question: string; history: { role: 'user' | 'bot'; text: string }[]; datasetIds?: string[]; lang?: Lang },
 ): Promise<{ reply: BotReply; offerHuman: boolean; topScore: number; answerFound: boolean }> {
   const settings = await deps.store.getSettings();
   const evidence = await retrieveEvidence(deps, input.question, input.datasetIds ?? [deps.env.DIFY_PUBLIC_DATASET_ID]);
   const topScore = evidence[0]?.score ?? 0;
-  const answer = await deps.gemini.generate(SYSTEM_PROMPT, buildContents(input.question, input.history, evidence), coerceAnswer);
+  const lang = replyLang(input.question, input.lang);
+  const answer = await deps.gemini.generate(SYSTEM_PROMPT, buildContents(input.question, input.history, evidence, lang, deps.guideZh.glossary), coerceAnswer);
   const offerHuman = decideHandoff(answer, topScore, settings.evidenceThreshold);
   return {
-    reply: sanitize(answer, evidence, deps.guideImages, deps.env.SITE_URL, offerHuman),
+    reply: lang === 'zh'
+      ? sanitize(answer, evidence, deps.guideZh.images, deps.env.SITE_URL, offerHuman, 'zh', deps.guideZh.titles)
+      : sanitize(answer, evidence, deps.guideImages, deps.env.SITE_URL, offerHuman),
     offerHuman,
     topScore,
     answerFound: answer.answer_found && topScore >= settings.evidenceThreshold,

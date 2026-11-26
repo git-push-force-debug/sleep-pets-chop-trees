@@ -1,19 +1,38 @@
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { z } from 'zod';
 import type { BotReply } from '../../../../packages/shared/src/blocks.ts';
-import { ticketLabel, type ChatMessage, type ChatSession } from '../../../../packages/shared/src/api.ts';
+import { ticketLabel, ZH_DEFAULTS, type ChatMessage, type ChatSession } from '../../../../packages/shared/src/api.ts';
 import type { Deps } from '../app.ts';
 import { answerQuestion, replyToText } from '../lib/answer.ts';
 import { requireUser } from '../lib/auth.ts';
 import { ChatwootClosedError } from '../lib/chatwoot.ts';
 import { contactToken, startHandoff } from '../lib/handoff.ts';
+import { replyLang } from '../lib/prompt.ts';
 import { syncSession } from '../lib/sync.ts';
 import { DifyRateLimitError } from '../lib/dify.ts';
 import { GeminiUnavailableError } from '../lib/gemini.ts';
 import type { MessageRow, SessionRow } from '../lib/store.ts';
 
-export const BUSY_COPY = 'Lots of players are asking right now — try again in a minute, or talk to a person.';
-export const OUTAGE_COPY = "I'm having trouble answering right now. A person from the team can help.";
+// Server-written chat lines, in the player's site language.
+const COPY = {
+  en: {
+    busy: 'Lots of players are asking right now — try again in a minute, or talk to a person.',
+    outage: "I'm having trouble answering right now. A person from the team can help.",
+    person: 'A person from the team can help.',
+    resolvedBack: (ticket: string) => `Ticket ${ticket} is resolved. You're back with Pip — ask me anything!`,
+    stillNeedHelp: 'No, I still need help.',
+  },
+  zh: {
+    busy: '现在提问的玩家很多，请一分钟后再试，或者联系团队成员。',
+    outage: '我现在暂时无法回答。团队成员可以帮你。',
+    person: '团队成员可以帮你。',
+    resolvedBack: (ticket: string) => `工单 ${ticket} 已解决。你回到了 Pip 这里，有问题随时问我！`,
+    stillNeedHelp: '没有，我还需要帮助。',
+  },
+};
+export const BUSY_COPY = COPY.en.busy;
+export const OUTAGE_COPY = COPY.en.outage;
+const LangField = z.enum(['en', 'zh']).optional();
 
 export const toChatSession = (s: SessionRow): ChatSession => ({
   id: s.id,
@@ -33,9 +52,9 @@ export const toChatMessage = (m: MessageRow): ChatMessage => ({
   feedback: m.feedback,
 });
 
-const MessageBody = z.object({ text: z.string().trim().min(1).max(1000) });
-const SessionBody = z.object({ pageUrl: z.string().max(500).optional(), fresh: z.boolean().optional() }).optional();
-const ResolveBody = z.object({ solved: z.boolean() });
+const MessageBody = z.object({ text: z.string().trim().min(1).max(1000), lang: LangField });
+const SessionBody = z.object({ pageUrl: z.string().max(500).optional(), fresh: z.boolean().optional(), lang: LangField }).optional();
+const ResolveBody = z.object({ solved: z.boolean(), lang: LangField });
 const FeedbackBody =z.object({ value: z.union([z.literal(1), z.literal(-1)]) });
 const HandoffBody = z.object({
   robloxUsername: z.string().trim().max(50).optional(),
@@ -65,8 +84,8 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
   };
 
   app.get('/chat/settings', async () => {
-    const { greeting, starterQuestions, offlineMessage, botEnabled } = await deps.store.getSettings();
-    return { greeting, starterQuestions, offlineMessage, botEnabled };
+    const { greeting, starterQuestions, offlineMessage, botEnabled, greetingZh, starterQuestionsZh, offlineMessageZh } = await deps.store.getSettings();
+    return { greeting, starterQuestions, offlineMessage, botEnabled, greetingZh, starterQuestionsZh, offlineMessageZh };
   });
 
   app.post('/chat/sessions', auth, async (req, reply) => {
@@ -81,7 +100,7 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
       user_agent: req.headers['user-agent']?.slice(0, 300) ?? null,
     });
     if (existing?.status === 'resolved' && existing.chatwoot_display_id) {
-      const text = `Ticket ${ticketLabel(existing.chatwoot_display_id)} is resolved. You're back with Pip — ask me anything!`;
+      const text = COPY[body.data?.lang ?? 'en'].resolvedBack(ticketLabel(existing.chatwoot_display_id));
       await deps.store.insertMessages([{ session_id: created.id, role: 'bot', content: text, reply: { blocks: [{ type: 'text', markdown: text }], suggestions: [], sources: [], images: [] } }]);
     }
     return { session: toChatSession(created) };
@@ -128,24 +147,26 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
       .filter((m) => m.role === 'user' || m.role === 'bot')
       .map((m) => ({ role: m.role as 'user' | 'bot', text: m.content }));
     const settings = await deps.store.getSettings();
+    const lang = replyLang(question, body.data.lang);
+    const copy = COPY[lang];
 
     // Fallback replies store their one-line copy as content; normal answers store a text version of the blocks.
-    const fallback = (text: string) => ({ reply: handoffOnly(text, 'A person from the team can help.'), content: text });
+    const fallback = (text: string) => ({ reply: handoffOnly(text, copy.person), content: text });
     let bot: { reply: BotReply; content: string };
     if (!settings.botEnabled) {
-      bot = fallback(settings.offlineMessage);
+      bot = fallback(lang === 'zh' ? settings.offlineMessageZh || ZH_DEFAULTS.offlineMessage : settings.offlineMessage);
     } else {
       try {
-        const result = await answerQuestion(deps, { question, history });
+        const result = await answerQuestion(deps, { question, history, lang });
         bot = { reply: result.reply, content: replyToText(result.reply) };
         if (result.offerHuman && !result.answerFound) {
           await deps.store.addGap({ session_id: session.id, question, top_score: result.topScore });
         }
       } catch (error) {
-        if (error instanceof DifyRateLimitError) bot = fallback(BUSY_COPY);
+        if (error instanceof DifyRateLimitError) bot = fallback(copy.busy);
         else {
           if (!(error instanceof GeminiUnavailableError)) req.log.error(error);
-          bot = fallback(OUTAGE_COPY); // any other failure still gets a polite reply and a person
+          bot = fallback(copy.outage); // any other failure still gets a polite reply and a person
         }
       }
     }
@@ -184,7 +205,7 @@ export function registerChatRoutes(app: FastifyInstance, deps: Deps) {
       await deps.store.updateSession(session.id, { status: 'resolved', resolved_at: new Date().toISOString() });
       await deps.store.insertMessages([{ session_id: session.id, role: 'system', content: 'Player confirmed it’s solved' }]);
     } else {
-      const text = 'No, I still need help.';
+      const text = COPY[body.data.lang ?? 'en'].stillNeedHelp;
       let chatwootId: number | null = null;
       if (session.bot_paused) {
         try {

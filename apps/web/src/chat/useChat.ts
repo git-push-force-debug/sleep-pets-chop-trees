@@ -2,6 +2,7 @@ import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import type { ChatMessage, ChatSession, PublicSettings } from '../../../../packages/shared/src/api.ts';
 import type { BotReply } from '../../../../packages/shared/src/blocks.ts';
 import { api, ApiError, supabase } from './api.ts';
+import { currentLang, currentStrings } from '../i18n.tsx';
 import { chatReducer, initialChat, type ChatState } from './chatReducer.ts';
 
 // Realtime is the fast path; this poll is the fallback while a person is involved (team replies come from the
@@ -44,12 +45,12 @@ export function useChat(enabled: boolean): Chat {
   const sessionId = state.session?.id;
   const status = state.session?.status;
 
-  const fail = (error: unknown) => dispatch({ type: 'failed', error: error instanceof ApiError ? error.message : 'Something went wrong. Please try again.' });
+  const fail = (error: unknown) => dispatch({ type: 'failed', error: error instanceof ApiError ? error.message : currentStrings().errGeneric });
 
   // The API returns the newest open session, or creates one (so after a resolved chat this starts a new one).
   const load = useCallback(async (fresh = false) => {
     try {
-      const created = await api<{ session: ChatSession }>('/chat/sessions', { method: 'POST', body: { pageUrl: location.pathname, fresh } });
+      const created = await api<{ session: ChatSession }>('/chat/sessions', { method: 'POST', body: { pageUrl: location.pathname, fresh, lang: currentLang() } });
       const full = await api<{ session: ChatSession; messages: ChatMessage[] }>(`/chat/sessions/${created.session.id}`);
       dispatch({ type: 'loaded', session: full.session, messages: full.messages });
     } catch (error) {
@@ -101,7 +102,7 @@ export function useChat(enabled: boolean): Chat {
     if (!sessionId) return;
     dispatch({ type: 'sending' });
     try {
-      const res = await api<{ messages: ChatMessage[] }>(`/chat/sessions/${sessionId}/messages`, { method: 'POST', body: { text } });
+      const res = await api<{ messages: ChatMessage[] }>(`/chat/sessions/${sessionId}/messages`, { method: 'POST', body: { text, lang: currentLang() } });
       dispatch({ type: 'sent', messages: res.messages });
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {
@@ -133,7 +134,7 @@ export function useChat(enabled: boolean): Chat {
     if (!sessionId) return;
     dispatch({ type: 'sending' });
     try {
-      const res = await api<{ session: ChatSession; messages: ChatMessage[] }>(`/chat/sessions/${sessionId}/resolve`, { method: 'POST', body: { solved } });
+      const res = await api<{ session: ChatSession; messages: ChatMessage[] }>(`/chat/sessions/${sessionId}/resolve`, { method: 'POST', body: { solved, lang: currentLang() } });
       dispatch({ type: 'status', session: res.session });
       dispatch({ type: 'sent', messages: res.messages });
       if (solved) await load(true); // solved: straight back to Pip in a fresh chat

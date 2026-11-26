@@ -7,7 +7,9 @@
 - **Benefit:** most questions are answered instantly, 24/7. The team only handles the tricky ones, with full context. A dashboard shows leads, outcomes and which guide sections matter. All of it is built on free tools.
 
 ## Before you start
-- Seed demo data once: `npx tsx --env-file=.env.local scripts/seed-demo.ts`.
+- Seed demo data once:
+  - `npx tsx --env-file=.env.local scripts/seed-demo.ts` (40 synthetic chats)
+  - `npx tsx --env-file=.env.local scripts/seed-faq.ts` (3 synthetic team FAQs, the second knowledge source)
 - Open three tabs:
   - the live site, https://sleep-pets-chop-trees.vercel.app (also on a phone)
   - the admin panel, signed in
@@ -25,8 +27,10 @@
 | 7 | Admin → **Leads** → search → **Open chat** → **Export leads (CSV)** | Leads dashboard with conversation history and export. |
 | 8 | Admin → **Analytics** → change Date range, Outcome and Asked from | 4 charts and 6 tiles, all driven by 3 shared filters. |
 | 9 | **Export conversations (CSV)** → open it in a spreadsheet | Business data export. |
-| 10 | Admin → **Knowledge** → add an FAQ → ask Pip about it | Second knowledge source, live. |
-| 11 | Ask Pip in Mandarin or Bahasa Melayu (e.g. 我怎么让宠物睡着？) | Stretch goal: replies in the player's language. |
+| 10 | Admin → **Knowledge** → add an FAQ → wait about a minute → ask Pip about it | Second knowledge source, live. Dify re-indexes the team answers within a minute. Or ask a seeded one: "What should I include when I report a bug?" |
+| 11 | Site → tap **中文** (top right) → open Pip → ask in English, e.g. "Best gun for Snowland?" | Stretch goal: the whole site, the guide and Pip's answers switch to Mandarin (Simplified Chinese). Names show in Chinese with the English name in brackets, and sources are in Chinese too. |
+| 12 | Tap **EN**, then ask in Bahasa Melayu: "Bagaimana cara rebirth?" | Pip replies in Malay, because it answers in the player's own language. |
+| 13 | Admin → tap **中文** at the bottom of the left menu | The admin panel is fully in Mandarin too: Inbox, Leads, Analytics, Knowledge and Settings. |
 
 ## Requirement checklist
 | GECO requirement | Where it shows |
@@ -34,7 +38,7 @@
 | GPT-style large language model | Gemini behind every Pip answer |
 | Upload company knowledge, escalation rules to a human | Guide in Dify. Admin → Knowledge (FAQs). Admin → Settings (confidence threshold, bot on/off, offline message) |
 | Restrict answers to what the website covers | Off-topic question in step 3 |
-| Ingest at least two sources | Guide file (structured HTML → Markdown) and team FAQs from the database (step 10) |
+| Ingest at least two sources | Guide file (structured HTML → Markdown) and team FAQs from the database (step 10). If asked about crawling or PDFs: the guide is the business's own website content, exported as a structured file, and the team FAQs come from the database |
 | Deploy on one channel | The website, live on Vercel |
 | Front end: two of lead capture, sales assistant, post-sales support | Lead capture (step 4) and post-sales game support (steps 1–2) |
 | Dashboard of leads and conversation history | Admin → Leads and Inbox (step 7) |
@@ -43,4 +47,4 @@
 | Data export (CSV) | Leads and conversations exports (steps 7, 9) |
 | Synthetic data, 30–50 records | `scripts/seed-demo.ts`: 40 chats |
 | Free tools, repeatable setup | Free stack and steps in the README |
-| Stretch: citations and Mandarin/Malay | Sources under every answer (step 1). Step 11 |
+| Stretch: citations and Mandarin/Malay | Sources under every answer (step 1). Mandarin site, Pip and admin (steps 11 and 13). Malay replies (step 12) |

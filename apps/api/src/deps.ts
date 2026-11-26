@@ -1,4 +1,5 @@
 import guide from '../../../content/guide.public.json' with { type: 'json' };
+import guideZh from '../../../content/guide.public.zh.json' with { type: 'json' };
 import type { Guide } from '../../../packages/shared/src/guide.ts';
 import type { Deps } from './app.ts';
 import { supabaseVerifier } from './lib/auth.ts';
@@ -18,5 +19,9 @@ export function createDeps(env: Env = loadEnv()): Deps {
     chatwoot: createChatwootClient({ baseUrl: env.CHATWOOT_BASE_URL, websiteToken: env.CHATWOOT_WEBSITE_TOKEN }),
     env,
     guideImages: (guide as Guide).images,
+    guideZh: {
+      images: (guideZh as Guide).images,
+      titles: Object.fromEntries((guideZh as Guide).chapters.flatMap((c) => c.sections.map((s) => [s.id, s.title]))),
+    },
   };
 }

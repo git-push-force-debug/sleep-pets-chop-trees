@@ -1,0 +1,1680 @@
+{
+  "chapters": [
+    {
+      "slug": "player-guide",
+      "number": "01",
+      "title": "玩家指南",
+      "summary": "第一次游戏、操作、捕捉宠物、经营牧场和转生（Rebirth）。",
+      "internal": false,
+      "sections": [
+        {
+          "id": "start",
+          "title": "从这里开始",
+          "markdown": "Sleep Pets & Chop Trees 是一款农场和收集游戏。用麻醉枪（Dart Guns）让野生动物入睡，把它们扛过砖砌边缘带到中心区域（Hub），并将它们安顿在你的围栏（Enclosure）里。放置的宠物会自己赚取 Cash（现金）。用近战工具砍树获取 Wood（木材），然后使用这两种货币以及所需的宠物进行转生（Rebirth）并解锁地图的更多区域。\n\n> **你的第一场游戏。** 在 Rewards（奖励）中领取两个新手礼包。购买 **$5,000** 的 Dart Pistol（飞镖手枪），当教程让你返回时，购买 **20 Wood** 的 Baseball Bat（棒球棍）。在靠近砖路的 Grassland（草原）进行你的第一次捕获。把第一批宠物留在你的围栏里，以便在你探索时为你赚钱。\n\n| 你想做什么 | 去哪里 |\n| --- | --- |\n| 捕获你的第一只宠物 | [The tutorial](#tutorial) 和 [capture walkthrough](#capture) |\n| 购买或装备武器 | 中心区域（Hub）的 **Weapon Store**（武器商店）。**Upgrade**（升级）里有针对每把武器的升级。 |\n| 寻找你拥有的宠物 | **Ranch**（牧场）放置宠物，**Bag**（背包）存放物品，**Upgrade → Animals**（升级 → 动物）查看所有拥有的宠物。 |\n| 赚取更多 Cash | 填满围栏，放置你赚钱最多的宠物，领取 [Rewards](#rewards)，以及 [rebirth](#rebirth)。 |\n| 赚取更多 Wood | 装备近战工具并 [chop trees](#chop)（砍树），包括金树。 |\n| 寻找动物或比较宠物 | [Biome atlas](#world) 和 [species tables](#grassland)。 |\n| 寻找快速解答 | [Player FAQ](#faq) 和 [troubleshooting](#troubleshooting)。 |\n\n[image:ranch-v7-overview]\n\n**本指南使用的版本。** 公开的 Studio 地点报告版本为 **260**，地点 **109510233820622**，宇宙 **10774990312**。加载屏幕显示 **Wild Ranch Simulator**。本指南使用 Studio 中的体验名称 **Sleep Pets & Chop Trees**。标有 _Archived play_ 或 _Archived Studio view_ 的屏幕是来自早期构建的真实本地项目图像。请使用本指南的表格和说明来对应 260 版本。",
+          "imageIds": [
+            "ranch-v7-overview"
+          ]
+        },
+        {
+          "id": "tutorial",
+          "title": "第一个牧场，分步指南",
+          "markdown": "本教程使用地面上的白色箭头、菜单上的指向手指以及引导对话框。如果引导提示你切换，请点击红色的 **X** 关闭菜单。在首次访问时，请按顺序跟随提示。\n\n| 步骤 | 做什么 |\n| --- | --- |\n| 1\\. 领取你的欢迎礼物 | 在欢迎界面按 **Next**（下一步）。打开 **Rewards → Missions**（奖励 → 任务）。点击 **Claim**（领取）获取 **$10,000**（现金），然后点击单独的 **Claim**（领取）获取 **100 Wood**（木材）。 |\n| 2\\. 购买 Dart Pistol | 跟随箭头前往 **Weapon Store**（武器商店）。按下 **E** 键、使用手柄提示或点击屏幕。打开 **Guns**（枪械）并花费 **$5,000** 购买 **Dart Pistol**（飞镖手枪）。 |\n| 3\\. 前往 Grassland | 穿过砖砌台阶的尽头。Grassland（草原）就在它外面的前方。 |\n| 4\\. 拿出枪 | 按 **2** 键或点击枪械栏。准星将会出现。 |\n| 5\\. 让动物入睡 | 将准星对准附近的一只 Common（普通）宠物并开枪，直到其睡眠进度达到 100%。在基础威力下，一只正常体型的 Deer（鹿）、Fox（狐狸）或 Boar（野猪）需要被 Dart Pistol 命中三次。 |\n| 6\\. 拾取它 | 靠近睡着的宠物并按下 **E** 键或点击 **Pick Up**（拾取）。 |\n| 7\\. 带它回家 | 直接穿过砖砌边缘走回来，然后走进**你自己的**围栏里。等待捕捉成功的提示。 |\n| 8\\. 升级枪械 | 打开 **Upgrade → Guns → Dart Pistol**（升级 → 枪械 → 飞镖手枪）并购买 **+1 Sleep DMG**（+1 睡眠伤害）。第一点花费 **$540**。 |\n| 9\\. 购买球棒 | 返回 **Weapon Store → Melee**（武器商店 → 近战）并花费 **20 Wood**（木材）购买 **Baseball Bat**（棒球棍）。 |\n| 10\\. 砍伐一棵 Grassland 树 | 按 **1** 键或点击近战栏。面对中心区外的一根树干并挥动武器，直到树倒下。 |\n| 11\\. 购买食物 | 回到 **Food Market**（食物市场）。打开菜单，选择 **Cabbage**（卷心菜），然后点击绿色的 **$1,000** 价格按钮。 |\n| 12\\. 喂养你的宠物 | 打开 **Upgrade → Animals → your animal → Feed**（升级 → 动物 → 你的动物 → 喂养）并喂食一份。 |\n| 13\\. 购买宠物属性 | 返回动物卡片并在某个属性上点击 **+1**。完成首次流程可获得一次性 **$1,000** 教程奖励。\n\n**跳过与重玩。** 跳过教程会发放所有符合条件的欢迎礼物，并将缺失的初始装备放入背包中。通关奖励来自完成教程。若要回顾说明，请在教程结束后使用 **Settings → Replay**（设置 → 重玩）。重玩从武器步骤开始，且不会支付额外的教程奖励。首次进行教程的玩家可以免受野生动物的直接攻击，并且会屏蔽风暴特效。在首次教程中，附近的野生动物会被减速。",
+          "imageIds": []
+        },
+        {
+          "id": "controls",
+          "title": "操作和菜单",
+          "markdown": "| Action | Keyboard and mouse | Touch | Controller binding found in code |\n| --- | --- | --- | --- |\n| Move and turn | WASD and the Roblox camera | Roblox stick and camera drag | Roblox movement and camera sticks |\n| Equip melee / gun | **1** / **2**, or click a slot | Tap either hotbar slot | **L1** toggles the dart gun. Use the visible slots for other equipment. |\n| Use other hotbar items | **3–7** or click a filled slot | Tap a slot. Follow the item's prompt. | Use the visible inventory controls where available. |\n| Bag | **B** or the bag icon by the hotbar | Bag icon | **Select** / **View** |\n| Shoot or swing | Left click. Hold to repeat while the tool is ready. | Tap the world with the tool equipped. | **R2** fires the gun. |\n| Scope and zoom | Hold right mouse. Scroll or use the zoom controls. | Tap **Scope**, then **\\+ / −**. Drag the view to aim. | Hold **L2** to scope. |\n| Reload | **R** or automatic reload when empty | Automatic reload when empty | **Y** |\n| Interact with shop / wild sleeper | **E** | Tap the proximity prompt | **X** |\n| Drop a carried wild pet | **G** or **Drop** | **Drop** | Use the on-screen action. |\n| Place a pet held from Bag | Click open ground inside your own fence | Tap open ground inside your fence | Use the visible ranch or inventory controls. |\n| Ride your placed pet | Its **E** prompt | Tap **Ride** on the pet | Use the game's proximity prompt. |\n| Ride a pet held in your hands | Click **Ride** | Tap **Ride** | Use the visible **Ride** button. |\n| Dismount as driver | Land, then click **Dismount** | Land, then tap **Dismount** | **B** after landing |\n| Feed a nearby pet | Hold food, then **F** or use Feed | Hold food, then tap animal or **Feed** | **Y** on the feed prompt |\n| Fly or climb | Hold **Space** on a flying-capable mount | **Fly**, then use Jump to climb | **L3** takes off |\n| Descend / land | Hold **Q** or left **Ctrl** to descend. Click **Land** for an automatic descent. | Hold the down arrow, or tap **Land**. | **R1** descends |\n| Mount attack animation | **R** with the dart gun away | No dedicated touch attack button identified | **Y** with the dart gun away |\n\nHold **Alt** or left **Ctrl** to free the mouse in gun mode. Use it to click the hotbar or a menu. While a text box has focus, number-key equipment switching waits. On desktop, **G** also attempts to place a Bag pet you hold if you are standing inside your plot on foot.\n\nThe left menu has **Rebirth** [转生], **Upgrade** [升级], **Index** [图鉴], **Rewards** [奖励], **Shop** [商店] and **Invite** [邀请]. **Auto Chop** [自动砍树] appears above it with melee equipped. On the right, **Settings** [设置] changes presentation and **Ranch** [牧场] opens enclosure management. Cash [现金], Wood [木材] and earnings are on the HUD. The day/night clock and rotating rare-animal status share the bottom corner. Weather appears while a storm is active. Centered menus temporarily hide the hotbar and corner timers.\n\nController and touch entries above come from the current client bindings and prompts. Button names follow Xbox-style labels where the code specifies a key.",
+          "imageIds": []
+        },
+        {
+          "id": "capture",
+          "title": "寻找、瞄准并让宠物睡着",
+          "markdown": "1. **Pick a target you can bring home [选择一个你能带回家的目标]。** Early on, work near the Grassland [草原] entrance. The biome badge [生物群系徽章] tells you where you are. A target has to be in its home biome, and you need to be inside that same biome when you fire.\n2. **Use an open line of sight [保持开阔的视线].** Equip the dart gun [麻醉枪] and move the center crosshair onto the animal. The reticle and hit feedback help confirm aim. Terrain, rocks, tree trunks and buildings can stop the dart. The high boundary cliffs are also blocked for capture. Scoped view moves to eye height and hides your character and mount locally.\n3. **Build up sleep progress [积累睡眠进度].** Each hit adds that gun's Sleep DMG [睡眠伤害] to your own progress on the target. Another player's hits build their own bar. The first player to reach 100% puts the pet to sleep. Melee flings a wild animal instead of adding sleep progress. A hit on a conscious animal often makes it flee or charge.\n4. **Reload when needed [在需要时装弹].** Ammo is a magazine count. Reload a partial magazine with the reload input, or let an empty one reload automatically. The gun's tag or upgrade card shows magazine size, reload, rate, range and Sleep DMG. The current gun uses manual aim.\n\n**When a pet lies down, move in [当宠物躺下时，靠近它].** Wild sleep usually lasts **45 seconds**. The player who put it to sleep has the first **5 seconds** of pickup protection. After that, the first eligible player to pick it up takes it. The reach starts from a 14-stud setting and is adjusted for animal size and mounting. Fly close enough to get the prompt. A flying pet falls or glides toward the ground when sedated.\n\n**Animals react differently [动物的反应各不相同].** Timid and alert wildlife tend to run. Aggressive animals can retaliate after a hit. Aggressive Epic [史诗] and higher animals can charge on approach. Mystic [神话] flyers can dive. At night, wildlife detection distance is 75% of its daytime distance. Ordinary player walking speed is 26 studs per second, so use a clear approach and consider a mount for longer chases.\n\n[image:r8-pose-aim]\n\n[image:new-animals-grassland]",
+          "imageIds": [
+            "r8-pose-aim",
+            "new-animals-grassland"
+          ]
+        },
+        {
+          "id": "carry",
+          "title": "把战利品带回家",
+          "markdown": "当你抱起一只正在睡觉的野生宠物时，它会悬浮在头顶上方，同时 **Bring it home** 条会开始计时。游戏会根据你到围栏的距离、生物群系、宠物的稀有度与外观以及它对你的减速程度，为这只被携带的宠物提供一个旅行计时器。相对于宠物物种而言，沉重的负重可能会让你慢上加慢。对于 Grassland（草原），这个时间余量是按步行来调整的。后期的生物群系则会使用基于前一个生物群系普通 Rare（稀有）坐骑的步伐。\n\n-   **首先跨越砖石边缘。** 一旦你的运送安全跨过了 Grassland 到中心区域的交界线，运送计时就会停止。**Safe! Put it in your enclosure** 消息会告诉你，你可以走完穿过广场的路了。\n-   **在围栏内完成交付。** 走进你自己的围栏，或者在上方使用 **Drop** 来交付。如果围栏有空位，就会安置该宠物。如果围栏已满，交付会将其储存，如果有空间，它可能会出现在快捷栏（hotbar）槽位中。如果两者都满了，请先腾出空间再尝试完成交付。\n-   **在野外保持移动。** 在你到达安全地带之前，竞争对手可能会把被携带的宠物从你手中打落。被抢夺掉落的物品没有拾取保护。成功交付别人被打落的宠物的玩家可以完成偷窃任务。Ranch（牧场）里的宠物受保护，免遭偷窃。\n-   **手动放置会启动地面计时器。** 你在围栏外丢下的宠物会落在地上，并保持睡眠状态至少 15 秒，如果剩余的携带时间更长，则按剩余时间计算。它可以被再次拾取。如果它醒来，它会朝着自己的栖息地跑去。空投则使用下方的地面。离开服务器会导致未完成的携带丢失。\n\n**黄昏时有什么变化？** 夜晚有助于交付后的恢复，并使野生动物更难注意到你。无论白天黑夜，携带计时器的倒计时速度都是一样的。\n\n| 你看到的内容 | 该怎么做 |\n| --- | --- |\n| **Protected** | 如果其他玩家将其镇静，请等待短暂的保护窗口结束。 |\n| **Get closer** | 缩短与宠物的距离，或者骑着坐骑靠近它。 |\n| **Hurry! It's waking up!** | 直奔砖石边缘。红条表示最后四分之一的进度。 |\n| **Safe!** | 走进你的围栏并寻找捕获通知。 |\n| **Ranch and bag are full!** | 释放一个存储槽或围栏槽。密切注意你仍在携带的任何宠物。 |\n| **It woke up and ran away!** | 失去的战利品必须重新被镇静并拾取。它在最初的几秒钟内会飞奔逃跑。 |",
+          "imageIds": []
+        },
+        {
+          "id": "ranch",
+          "title": "经营牧场并训练宠物",
+          "markdown": "You get an enclosure when your profile loads. The place has six authored plots around the hub. A new ranch has **6 placed slots** and room for **60 stored animals** under normal capture and storage rules. Each rebirth adds one pen slot, up to **12**. Some reward and crate grants can land in storage beyond the normal capture cap.\n\n| Action | How it works |\n| --- | --- |\n| See your pen | Open **Ranch**. Its counter shows placed animals against capacity. |\n| Inspect a pet | Open its card from **Upgrade → Animals**, the Ranch list or the Bag. Check its rarity, traits, recovery, earnings, size, weight, age, XP and upgrades. |\n| Place a stored pet | Use **Place** on its card where offered, or hold it and click/tap an open spot inside your fence. |\n| Move a placed pet | Use the placement action from its ranch card. Pick a floor spot with room inside your own fence. |\n| Store a pet | Use the pet card's **Unequip** action to return a placed pet to Bag. |\n| Fill with top earners | **Place Best** sorts pets by base income and fills the enclosure. The currently ridden pet is left alone. |\n| Feed | Use **Feed** on the pet card, or hold food and approach or tap the pet. A feeding adds the food's XP. |\n| Improve a stat | On the pet card, spend Cash with **+1** or **MAX** where shown. **MAX** stops at the cap or when Cash runs out. |\n| Decorate | Open **Ranch → Decorate**. Buy props with Wood and choose one of the six fixed spots. An owned prop can be reused or removed. |\n| Sell | Visit **Sell Stand**. Select individual pets or a batch, review the value, and confirm. The sale is permanent. |\n\n**Recovery.** A newly captured pet arrives recovering. It earns half its awake rate while placed and cannot be ridden until awake. Recovery work spans **2 minutes** for a Grassland Common to **90 minutes** for an Enchanted Mystic at daytime base speed. Night runs remaining recovery at **10×** and the permanent recovery perk adds **4×**, for **40×** together. The displayed remaining time changes when the rate changes. A reward or crate pet is granted ready to use. **Wake Now** is a paid shortcut for an owned pet still recovering.\n\n**Training.** Food gives XP. XP opens room for separately purchased Cash stat upgrades. At level 1 you can already buy three points per stat. Each level adds room for three more, subject to each stat's cap. Read [Pet levels and earnings](#pet-math) for the rarity ceilings and exact stat effects.\n\n[image:r8-feed-prompt]\n\n[image:gate3-play-client]",
+          "imageIds": [
+            "r8-feed-prompt",
+            "gate3-play-client"
+          ]
+        },
+        {
+          "id": "riding",
+          "title": "骑乘、飞行与搭载乘客",
+          "markdown": "**骑乘你拥有的清醒宠物（awake pet）。** 在牧场中走到它旁边并使用 **Ride**（骑乘），或者从 Bag（背包）中按住它并点击或轻触 **Ride** 按钮。将已放置的宠物骑上会将其从收益槽移至存入/骑乘状态。当你下马时，它会回到你的手中。再次将其放入围栏中以恢复该宠物的被动收入。\n\n**在地面上。** 使用常规控制移动。轻触 Jump（跳跃）进行小跳。地面速度取决于生物群落（biome）、稀有度、外观、变异、大小、重量和 Speed（速度）升级。Jump（跳跃）升级会影响跳跃高度。使用可见的按钮或手柄的 **B** 键在地面下马。**E** 是牧场宠物的上马提示。\n\n**在空中。** Griffin（狮鹫）、Sand Dragon（沙龙）、Dragon（巨龙）和 Violet Wyvern（紫罗兰双足飞龙）可以飞行。按住 Jump（跳跃）大约半秒钟即可起飞，或者使用触屏上的 **Fly**（飞行）按钮。保持按住 Jump（跳跃）以爬升，按住 **Q** 或下降控制键以下降，或者选择 **Land**（降落）。飞行高度上限约为 **250 个世界高度 Stud**。生物群落大门和世界边缘仍然适用。当通过正常的捕获检查时，你可以在飞行中瞄准并发射麻醉枪。在司机下马之前先着陆。如果你骑乘的动物在未开镜的枪械模式下挡住了准星，它会在本地淡化。开镜可以隐藏屏幕上的坐骑和骑手。\n\n**搭便车（Ride along）。** 接近其他玩家的地面坐骑并使用其 **Ride along**（搭便车）提示。司机后面有一个乘客座位。你需要空着手才能携带捕获物，且座位必须是空闲的。由司机驾驶。乘客可以使用乘客动作离开，或者甚至在飞行中通过 Jump（跳跃）离开，并会被放置在地面附近。对坐骑的攻击可能会同时移动两名骑手。携带的宠物和飞行坐骑在地面、大门和树木附近需要额外的空间。\n\n**坐骑动作。** 在收起枪械的情况下按下 **R** 或 **Y** 会播放坐骑的攻击动画。骑行路径会触发动画。野蛮冲撞击退和装备的近战攻击有其自身的战斗规则。\n\n[image:r8-ride-pose]\n\n[image:r8-fly-above-dismount]",
+          "imageIds": [
+            "r8-ride-pose",
+            "r8-fly-above-dismount"
+          ]
+        },
+        {
+          "id": "chop",
+          "title": "砍树和应对击退",
+          "markdown": "Equip the **Baseball Bat** [棒球棍] or another melee weapon. Walk up to a trunk, face it and click or tap to swing. Watch the chips and progress. When it falls, Wood [木材] is credited to your wallet and the trunks fly toward your HUD. The starter bat has 1 base Tree DMG, a 0.5-second swing and one-tree cleave. A reference Grassland tree needs six ordinary starter hits. Critical hits and tree size change that count.\n\n| Logging rule | Current build |\n| --- | --- |\n| Auto Chop | Equip melee and click the **Auto Chop** icon over Rebirth and Upgrade. The green arrow means on. It swings at the weapon's pace when a tree is in reach in front of you. It does not walk you to the next tree. |\n| Golden tree | 3% roll on setup and regrowth. Look for the golden sparkle. It pays 5× the tree's usual Wood before your modifiers. |\n| Critical hit | 15% chance per tree hit. A critical hit does 2× tree damage. |\n| Regrowth / healing | A fallen tree regrows after about 7 seconds. Unfinished chop damage heals after 20 seconds unattended. A regrowing trunk can remain walk-through until the space clears. |\n| Shared tree | Players who dealt damage share its Wood by contribution, with a minimum one Wood for eligible contributors. |\n| Later weapons | More Tree DMG and more cleave at higher tiers. The first three tools have blade hits only. Starting at Cenarius, a growing crescent can reach trees and other valid targets. |\n| Wood boosters | Earn upgrades, rebirths and the 2× Wood perk stack on tree payout. Fractional bonus Wood is rounded by chance across hits. |\n\n**Player versus player.** Outside the ranch safe area, a melee blow can fling and briefly ragdoll a player or mount. It does not take health as conventional weapon damage. Ragdoll duration is roughly **1.6–3 seconds**. After a player's hit ends, there is a **3-second** guard against the next player hit. Body weight affects knockback. If you're delivering a catch, the fastest protection is to cross back into the ranch square. Swinging and tree chopping still work in the safe area.\n\n**Spend Wood on purpose.** Wood buys melee weapons, their four stat tracks, decorations and the Wood part of rebirth. The Shop also sells Wood packs. A larger or later-biome tree takes more work and grants more Wood, so match your tool to the habitat. [Compare the full melee catalog](#melee).",
+          "imageIds": []
+        },
+        {
+          "id": "rebirth",
+          "title": "解锁六个牧场等级",
+          "markdown": "打开 **Rebirth**（转生）来查看你的档案所需的具体物种。它是你正在通关的生物群系中的一只普通（Common）、罕见（Uncommon）或稀有（Rare）宠物。背包（Bag）里的宠物也算数。该要求会被保存在当前阶段中。请保留这只宠物直到你转生。进度条使用你的 Cash（现金）和 Wood（木头）进度中较低的那一个，就绪徽章也会检查这只动物。\n\n| Stage | Cash needed | Wood | Pet from | Enclosure | Opens | Slots | Cash / Wood |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| 1   | $280,000 | 250 | Grassland | Meadow | Savanna | 7   | ×2 / ×1.5 |\n| 2   | $4,000,000 | 800 | Savanna | Safari | Snowland | 8   | ×4 / ×2.25 |\n| 3   | $20,000,000 | 5,000 | Snowland | Glacier | Desert | 9   | ×8 / ×3.375 |\n| 4   | $80,000,000 | 20,000 | Desert | Oasis | Prehistoric | 10  | ×16 / ×5.0625 |\n| 5   | $800,000,000 | 100,000 | Prehistoric | Jurassic | Enchanted Grove | 11  | ×32 / ×7.5938 |\n| 6   | $16,000,000,000 | 500,000 | Enchanted Grove | Crystal | Final tier | 12  | ×64 / ×11.3906 |\n\n货币转生会将你的 Cash（现金）余额重置为 **0**，扣除列出的 Wood（木头），并保留你的宠物、工具、升级、Index（图鉴）和其他物品栏。所需的动物也会留在你的收藏中。花费 **199 Robux** 跳过可以推进一个阶段，并保留你的余额和收藏。每个阶段都会增加一个围栏槽位和一个新的围栏风格。与上一阶段相比，每个阶段都会使被动 Cash（现金）翻倍，并将树木 Wood（木头）乘以 **1.5×**。\n\n### A practical progression route\n\n1.  用 Grassland 入口附近的捕获物填满最初的六个槽位。领取每日日历以及任何就绪的任务或 Index（图鉴）奖励。\n2.  保留你所需的物种，购买可靠伐木所需的近战工具，并找回至少一只可供骑乘的宠物。如果在货币转生前购买升级符合你的下一个栖息地，且你之后已经有足够的资金达到转生门槛，则可以在转生前将其用于升级。\n3.  进入新开放的生物群系。逐渐替换掉低收益的宠物，并准备一只速度快的坐骑用于往返。一旦开放下一个阶段，立即检查 **Rebirth**（转生），以便知道需要保留哪个物种。\n4.  在第六阶段，**Crystal** 围栏、12 个槽位和完整的乘数是最终目标。Enchanted Grove 本身会提前一个转生开放。",
+          "imageIds": []
+        }
+      ]
+    },
+    {
+      "slug": "biomes",
+      "number": "02",
+      "title": "生物群系与野生动物",
+      "summary": "世界地图、刷新时间、特性和全部 72 种动物。",
+      "internal": false,
+      "sections": [
+        {
+          "id": "world",
+          "title": "查看地图",
+          "markdown": "The world runs in one direction from the Ranch Hub [牧场中心] through six habitats. The brick apron is the hub's edge. Follow the landscape through the next gate to advance. If a gate tells you to rebirth, use the [Rebirth panel](#rebirth) [重生面板] and check the required animal, Cash [现金] and Wood [木材]. Walking, riding and flight all obey the unlocks.\n\n| Region | Opens | X reference | Weather | Landmark cue |\n| --- | --- | --- | --- | --- |\n| [Grassland](#grassland) [草原] | Start | 556–2,200 | Thunderstorm | Meadows and soil banks |\n| [Savanna](#savanna) [萨凡纳] | Rebirth 1 | 2,200–3,800 | Lightning Storm | Golden grass and rock arches |\n| [Snowland](#snowland) [雪地] | Rebirth 2 | 3,800–5,400 | Blizzard | Snow shelves and pines |\n| [Desert](#desert) [沙漠] | Rebirth 3 | 5,400–7,000 | Sandstorm | Sandstone mesas and cacti |\n| [Prehistoric](#prehistoric) [史前] | Rebirth 4 | 7,000–8,600 | Ancient Storm | Ferns and dinosaur country |\n| [Enchanted Grove](#enchanted) [魔法树林] | Rebirth 5 | 8,600–10,200 | Magic Storm | Mushrooms and crystals |\n\nThe X values above are the server's configured biome checkpoints in studs. Grassland starts at the paved line, **X = 556**. The spacing formula for later gates uses **600 + 1,600 × (biome number − 1)**. Enchanted Grove is the last named region. The broad world boundary extends past its reference interval in places. The side mountains and world bounds constrain travel. Walkable slope is capped at **50°**, and riders ease to a stop near the edge.\n\n### What is in the Ranch Hub?\n\n-   **Weapon Store** [武器商店] sells dart guns and melee tools on separate tabs. The six premium weapon displays around the plaza correspond to the last three guns and last three melee tools.\n-   **Food Market** [食物市场] sells pet XP food. **Gear Shop** [装备店] sells Radars. **Sell Stand** [出售摊位] buys animals. Follow the station prompt at the counter.\n-   **Top Ranchers** [顶级牧场主] shows ten positions per column for lifetime Cash, lifetime Wood and played time. These are separate from the Cash and Wood balances you can spend.\n-   **Feedback** [反馈] lets you send a short filtered note to the owner. Draft text survives closing the panel during play. The server expects 4–400 bytes of text and at most one accepted note per minute. The hub has a fountain, shopkeepers, lanterns and six surrounding plots.\n-   Old archive pictures show named Mystic displays and prices. Use the current crate catalog for Mystic purchases. The hub's current weapon displays are managed separately.\n\n[image:hosted-world-edit-capture]\n\n[image:hosted-snowland-edit-capture]",
+          "imageIds": [
+            "hosted-world-edit-capture",
+            "hosted-snowland-edit-capture"
+          ]
+        },
+        {
+          "id": "wildlife",
+          "title": "刷新、稀有度和外观",
+          "markdown": "每个 Biome [生物群落] 拥有 **12种** 生物，布局相同：**3种 Common [普通]、2种 Uncommon [罕见]、2种 Rare [稀有]、2种 Epic [史诗]、2种 Legendary [传说]、1种 Mystic [神话]**。每个 Biome 的常规目标是 **60只野生生物**。常规刷新会为每个符合条件的物种赋予其稀有度权重。第二次筛选会偏向于该 Biome 中当前存活数量较少的物种。Epic [史诗] 的刷新上限为每个 Biome **3只**。大约每 20 秒，看不见的一部分种群会轮换一次，在黎明和黄昏时则有更大规模的更替。\n\n| Rarity [稀有度] | 每个符合条件的物种的常规刷新权重 | 野外出现方式 | 名义寿命 |\n| --- | ---: | --- | --- |\n| Common [普通] | 30  | 常规刷新 | 无固定到期时间，可轮换 |\n| Uncommon [罕见] | 12  | 常规刷新 | 无固定到期时间，可轮换 |\n| Rare [稀有] | 5   | 常规刷新 | 20 分钟 |\n| Epic [史诗] | 1.8 | 在 Epic [史诗] 上限下的常规刷新 | 15 分钟 |\n| Legendary [传说] | 0   | 服务器时间每 3 小时定时刷新一次，外加派对特别活动 | 60 分钟，有人参与时可延长 |\n| Mystic [神话] | 0   | 服务器时间每 6 小时定时刷新一次（偏移 +30 分钟），最多同时存在一个活跃的定时神话 | 60 分钟，有人参与时可延长 |\n\n标准 Legendary [传说] 刷新时间表从服务器运行时间 **3:00** 开始。标准 Mystic [神话] 刷新时间表首次到期时间为 **6:30**，然后是 **12:30**，以此类推。时钟属于该服务器。新加入的玩家不会重置它。标准抽奖会在生成时选择一个 Biome，常规通知不会告诉玩家具体的 Biome。当某个稀有度处于活动状态时，HUD [抬头显示] 会将倒计时轮换显示为 **roaming now!** [正在漫游！]。在名义时间过去之后，只要有玩家在大约 **200 studs** [studs：Roblox距离单位] 以内，或者在过去 **60 秒** 内被攻击过，Legendary [传说] 或 Mystic [神话] 就会继续留存。如果未能找到有效的地面，到期的生成可能会失败。奖励和宝箱使用它们自己的战利品表。\n\n### Appearance, mutations and individual size [外观、变异和个体大小]\n\n| Trait [特征] | Roll [概率] | Income [收入] | Base speed [基础速度] | Sleep HP [睡眠生命值] |\n| --- | --- | --- | --- | --- |\n| Normal [普通] | 96.05% | ×1  | +0% | ×1  |\n| Gold [黄金] | 3%  | ×3  | +5% | ×1.5 |\n| Diamond [钻石] | 0.8% | ×8  | +10% | ×2.2 |\n| Rainbow [彩虹] | 0.15% | ×25 | +15% | ×3.5 |\n| Volted [雷电] | 每次符合条件的风暴检查占 12% | ×2  | +5% | ×1.3 |\n\n**Normal [普通]** 没有额外的倍率，占常规外观抽奖的 **96.05%**。Gold [黄金]、Diamond [钻石] 和 Rainbow [彩虹] 是替代外观。Volted [雷电] 是一种独立的风暴变异，可以与外观叠加。外观和变异的速度加成会在身体和速度公式计算之前相加。Cash [现金] 和 Sleep HP [睡眠生命值] 倍率通过相乘叠加。稀有的 **2%** 大小抽奖会产生 **1.35–1.50×** 的 Huge [巨大] 体型。其他大小抽奖则聚集在 1.0× 附近，并被限制在 **0.75–1.35×** 之间。个体野生体重也会在 **0.90–1.10×** 左右随机抽取。捕捉大型或变异生物可能需要比其名册基准明显更多的飞镖。",
+          "imageIds": []
+        },
+        {
+          "id": "weather",
+          "title": "白天、夜晚、风暴与派对",
+          "markdown": "游戏时钟与服务器同步。在计划捕捉或等待恢复时，请查看白天或夜晚计数器。\n\n- 一个完整的昼夜循环中，每个动物年持续 **10分钟**。白天持续 7 分钟，夜晚持续 3 分钟。夜晚会将野生动物的侦察范围缩小至 75%，并将牧场 (Ranch) 恢复速度加快 10 倍。\n- 最多只有一个生物群落 (Biome) 会遭遇活跃的风暴。第一场风暴在大约 4-9 分钟后开始。之后的间隔为 8-18 分钟，风暴持续 3-5 分钟。天气方块会显示当前的栖息地。\n- 在风暴中，符合条件的全新野生生成动物有 12% 的几率变为 **Volted**，对于现有的符合条件的清醒野生动物，大约每分钟还会进行一次附加的 12% 判定。已经发生变异的动物会保留其变异。恢复时间和搬运时间是独立的机制。\n- 由房主发起的 **Admin Abuse Party** 会在该服务器中进行通告。其生效的修改效果包括：**2倍牧场 (Ranch) Cash**、**高出 50% 的人口目标**以及额外的 Legendary 几率。它的第一个额外生成点将在派对开始后不久出现，随后大约每 15 分钟出现一次。被审查的世界模块中的通用事件列表为空。\n\n**恢复示例。** 在稳定的夜间窗口中，剩余两分钟的恢复工作大约需要 12 秒。拥有永久恢复加成 (Perk) 时，大约只需 3 秒。切回白天会重新调整剩余时间。狩猎仍然使用独立的搬运时钟。\n\n[image:ranch-v7-tutorial-day]\n\n[image:ranch-v7-night]",
+          "imageIds": [
+            "ranch-v7-tutorial-day",
+            "ranch-v7-night"
+          ]
+        },
+        {
+          "id": "grassland",
+          "title": "Grassland（草原）",
+          "markdown": "**Open to everyone.** Meadows, broadleaf trees and grass-topped rock or soil terraces lead out from the hub. Start close to the brick edge. Use ordinary deer, foxes and boars to learn the shortest return route. The rare mounts Bison and Moose are a good step up for your first long trips. Griffin is a flying Mystic.\n\n[image:overhaul-overview]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Deer | Common | Timid | 60  | 26  | 3   | $6  | $600 | 2m  | 54.8 |\n| Fox | Common | Timid | 7   | 26  | 3   | $6  | $600 | 2m  | 54.8 |\n| Boar | Common | Alert | 90  | 26  | 3   | $6  | $600 | 2m  | 54.8 |\n| Addax | Uncommon | Timid | 100 | 42  | 5   | $10.5 | $1,050 | 3m 19s | 58.1 |\n| Horse | Uncommon | Timid | 450 | 42  | 5   | $10.5 | $1,050 | 3m 19s | 58.1 |\n| Bison | Rare | Alert | 800 | 66  | 7   | $18.38 | $1,837 | 5m 31s | 61.6 |\n| Moose | Rare | Alert | 550 | 66  | 7   | $18.38 | $1,837 | 5m 31s | 61.6 |\n| Bear | Epic | Aggressive | 300 | 102 | 11  | $32.16 | $3,215 | 9m 10s | 65.3 |\n| Tiger | Epic | Aggressive | 220 | 102 | 11  | $32.16 | $3,215 | 9m 10s | 65.3 |\n| Unicorn | Legendary | Alert | 500 | 162 | 17  | $95.3 | $9,529 | 15m 14s | 130.7 |\n| Kirin | Legendary | Aggressive | 520 | 162 | 17  | $95.3 | $9,529 | 15m 14s | 130.7 |\n| Griffin Fly | Mystic | Aggressive | 700 | 255 | 26  | $166.77 | $16,677 | 25m 18s | 137.3 |\n\nDart Pistol is the biome’s entry benchmark at 10 Sleep DMG. Hits use that base gun. Recovery is daytime base work. Cash/s is awake placed income before additional boosts. Sale assumes a 1.0 weight roll. Ride is nominal ground speed in studs/s before upgrades or perks.\n\n[See all 12 original model pictures](#rig-grassland).",
+          "imageIds": [
+            "overhaul-overview"
+          ]
+        },
+        {
+          "id": "savanna",
+          "title": "Savanna（稀树草原）",
+          "markdown": "**Opens at Rebirth 1.** Gold grass, flat-canopy trees, terracotta ledges and rock arches make it easy to recognize. Cheetah and Giraffe are its two Rare entries. Cerberus is a ground Mystic. Reference trees are tougher than the Grassland's, so bring a tool with more Tree DMG.\n\n[image:p2-savanna-play-client]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Zebra | Common | Timid | 350 | 44.2 | 3   | $15 | $1,500 | 2m 35s | 95.4 |\n| Ostrich | Common | Timid | 120 | 44.2 | 3   | $15 | $1,500 | 2m 35s | 95.4 |\n| Hedgehog | Common | Alert | 15  | 44.2 | 3   | $15 | $1,500 | 2m 35s | 95.4 |\n| Hyena | Uncommon | Alert | 60  | 71.4 | 5   | $26.25 | $2,625 | 4m 17s | 101 |\n| Wildebeest | Uncommon | Timid | 250 | 71.4 | 5   | $26.25 | $2,625 | 4m 17s | 101 |\n| Cheetah | Rare | Timid | 55  | 112.2 | 7   | $45.94 | $4,593 | 7m 7s | 106.7 |\n| Giraffe | Rare | Alert | 1,000 | 112.2 | 7   | $45.94 | $4,593 | 7m 7s | 106.7 |\n| Hippopotamus | Epic | Aggressive | 2,200 | 173.4 | 11  | $80.39 | $8,039 | 11m 49s | 112.6 |\n| Crocodile | Epic | Aggressive | 500 | 173.4 | 11  | $80.39 | $8,039 | 11m 49s | 112.6 |\n| Lion | Legendary | Aggressive | 190 | 275.4 | 17  | $214.42 | $21,442 | 19m 38s | 135.1 |\n| Elephant | Legendary | Aggressive | 5,500 | 275.4 | 17  | $214.42 | $21,442 | 19m 38s | 135.1 |\n| Cerberus | Mystic | Aggressive | 900 | 433.5 | 26  | $375.24 | $37,524 | 32m 37s | 141.7 |\n\nBrush Revolver is the biome’s entry benchmark at 17 Sleep DMG. Hits use that base gun. Recovery is daytime base work. Cash/s is awake placed income before additional boosts. Sale assumes a 1.0 weight roll. Ride is nominal ground speed in studs/s before upgrades or perks.\n\n[See all 12 original model pictures](#rig-savanna).",
+          "imageIds": [
+            "p2-savanna-play-client"
+          ]
+        },
+        {
+          "id": "snowland",
+          "title": "Snowland（雪地）",
+          "markdown": "**Opens at Rebirth 2 (转生 2 开启)。** 寻找雪顶岩石、冰川梯田和针叶树。这里有小型 Common (普通) 动物、两只具有攻击性的 Epic (史诗) 动物，以及两只截然不同的 Legendary (传说) 动物：Woolly Mammoth (长毛象) 和 Ice Tortoise (冰龟)。Yeti (雪人) 是这里的地面 Mystic (神话) 动物。\n\n[image:p2-snowland-play-client]\n\n| Species (物种) | Rarity (稀有度) | Temper (性格) | kg (重量) | Sleep HP (睡眠生命值) | Hits (攻击次数) | Cash/s (每秒现金) | Sale (售价) | Recovery (恢复时间) | Ride (骑乘速度) |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Red Panda | Common | Timid | 8   | 72.8 | 3   | $37.5 | $3,750 | 3m 19s | 102.8 |\n| Snow Monkey | Common | Timid | 12  | 72.8 | 3   | $37.5 | $3,750 | 3m 19s | 102.8 |\n| Mountain Goat | Common | Alert | 100 | 72.8 | 3   | $37.5 | $3,750 | 3m 19s | 102.8 |\n| Arctic Wolf | Uncommon | Aggressive | 50  | 117.6 | 5   | $65.62 | $6,562 | 5m 31s | 108.5 |\n| Yak | Uncommon | Alert | 550 | 117.6 | 5   | $65.62 | $6,562 | 5m 31s | 108.5 |\n| Wolverine | Rare | Aggressive | 20  | 184.8 | 7   | $114.84 | $11,484 | 9m 10s | 114.5 |\n| Snow Leopard | Rare | Alert | 55  | 184.8 | 7   | $114.84 | $11,484 | 9m 10s | 114.5 |\n| Polar Bear | Epic | Aggressive | 450 | 285.6 | 11  | $200.98 | $20,097 | 15m 14s | 120.6 |\n| Woolly Rhino | Epic | Aggressive | 2,500 | 285.6 | 11  | $200.98 | $20,097 | 15m 14s | 120.6 |\n| Woolly Mammoth | Legendary | Aggressive | 6,000 | 453.6 | 17  | $482.45 | $48,245 | 25m 18s | 139.6 |\n| Ice Tortoise | Legendary | Alert | 900 | 453.6 | 17  | $482.45 | $48,245 | 25m 18s | 139.6 |\n| Yeti | Mystic | Aggressive | 400 | 714 | 26  | $844.29 | $84,429 | 42m 2s | 146.3 |\n\nPrairie Carbine 是该生物群落的入门基准，睡眠伤害为 28。攻击次数使用该基础枪械。恢复时间为白天基础工作时间。每秒现金是指在没有额外加成情况下的清醒放置收入。售价假设重量随机Roll值为 1.0。骑乘速度是升级或特权加成前的标称地面速度（studs/s）。\n\n[See all 12 original model pictures](#rig-snowland).",
+          "imageIds": [
+            "p2-snowland-play-client"
+          ]
+        },
+        {
+          "id": "desert",
+          "title": "Desert（沙漠）",
+          "markdown": "**Opens at Rebirth 3.** Sand, layered mesas, spires, cactus and dead trees distinguish this habitat. Desert cactus and dead trees in the logging system count as chop targets. Ammit and Chimera are Legendary. Sand Dragon is its flying Mystic.\n\n[image:p2-desert-play-client]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Mouse | Common | Timid | 3   | 122.2 | 3   | $93.75 | $9,375 | 4m 17s | 110.4 |\n| Rabbit | Common | Timid | 4   | 122.2 | 3   | $93.75 | $9,375 | 4m 17s | 110.4 |\n| Fennec Fox | Common | Timid | 2   | 122.2 | 3   | $93.75 | $9,375 | 4m 17s | 110.4 |\n| Sand Cat | Uncommon | Alert | 3   | 197.4 | 5   | $164.06 | $16,406 | 7m 7s | 116.4 |\n| Tarantula | Uncommon | Alert | 1   | 197.4 | 5   | $164.06 | $16,406 | 7m 7s | 116.4 |\n| Caracal | Rare | Alert | 18  | 310.2 | 7   | $287.11 | $28,710 | 11m 49s | 122.6 |\n| Bighorn Ram | Rare | Alert | 130 | 310.2 | 7   | $287.11 | $28,710 | 11m 49s | 122.6 |\n| Camel | Epic | Alert | 600 | 479.4 | 11  | $502.44 | $50,244 | 19m 38s | 128.9 |\n| Kangaroo | Epic | Alert | 85  | 479.4 | 11  | $502.44 | $50,244 | 19m 38s | 128.9 |\n| Ammit | Legendary | Aggressive | 700 | 761.4 | 17  | $1,085.52 | $108,552 | 32m 37s | 144.1 |\n| Chimera | Legendary | Aggressive | 800 | 761.4 | 17  | $1,085.52 | $108,552 | 32m 37s | 144.1 |\n| Sand Dragon Fly | Mystic | Aggressive | 3,000 | 1,198.5 | 26  | $1,899.66 | $189,966 | 54m 11s | 150.9 |\n\nSavanna Marksman is the biome’s entry benchmark at 47 Sleep DMG. Hits use that base gun. Recovery is daytime base work. Cash/s is awake placed income before additional boosts. Sale assumes a 1.0 weight roll. Ride is nominal ground speed in studs/s before upgrades or perks.\n\n[See all 12 original model pictures](#rig-desert).",
+          "imageIds": [
+            "p2-desert-play-client"
+          ]
+        },
+        {
+          "id": "prehistoric",
+          "title": "Prehistoric（史前）",
+          "markdown": "**Opens at Rebirth 4 (在 Rebirth 4 解锁)。** 蕨类植物、宽阔的岩石架和高大的植被环绕着恐龙名册。即使是 Common [普通] 和 Uncommon [罕见] 物种也非常重。请记住基于重量的携带减速机制。Spinosaurus [棘龙] 和 Tyrannosaurus Rex [霸王龙] 是 Legendary [传说] 品质。Dragon [龙] 是会飞的 Mystic [神话] 品质。\n\n[image:p2-prehistoric-play-client]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Velociraptor | Common | Alert | 15  | 202.8 | 3   | $234.38 | $23,437 | 5m 31s | 118.4 |\n| Pachycephalosaurus | Common | Alert | 450 | 202.8 | 3   | $234.38 | $23,437 | 5m 31s | 118.4 |\n| Iguanodon | Common | Timid | 3,000 | 202.8 | 3   | $234.38 | $23,437 | 5m 31s | 118.4 |\n| Parasaurolophus | Uncommon | Timid | 2,500 | 327.6 | 5   | $410.16 | $41,015 | 9m 10s | 124.6 |\n| Stegosaurus | Uncommon | Alert | 5,000 | 327.6 | 5   | $410.16 | $41,015 | 9m 10s | 124.6 |\n| Ankylosaurus | Rare | Alert | 6,000 | 514.8 | 7   | $717.77 | $71,777 | 15m 14s | 131 |\n| Triceratops | Rare | Aggressive | 9,000 | 514.8 | 7   | $717.77 | $71,777 | 15m 14s | 131 |\n| Therizinosaurus | Epic | Aggressive | 5,000 | 795.6 | 11  | $1,256.1 | $125,610 | 25m 18s | 137.6 |\n| Brachiosaurus | Epic | Alert | 40,000 | 795.6 | 11  | $1,256.1 | $125,610 | 25m 18s | 137.6 |\n| Spinosaurus | Legendary | Aggressive | 7,000 | 1,263.6 | 17  | $2,442.42 | $244,242 | 42m 2s | 148.7 |\n| Tyrannosaurus Rex | Legendary | Aggressive | 8,000 | 1,263.6 | 17  | $2,442.42 | $244,242 | 42m 2s | 148.7 |\n| Dragon Fly | Mystic | Aggressive | 4,000 | 1,989 | 26  | $4,274.24 | $427,424 | 1h 9m 50s | 155.6 |\n\nGlacier Sniper 是该生物群系的入门基准，拥有 78 Sleep DMG。击中次数使用该基础枪支。Recovery 是白天的基础工作时间。Cash/s 是清醒放置状态下的收入，不包含额外加成。Sale 假设重量随机 roll 值为 1.0。Ride 是升级或天赋加成前的标称地面速度（单位：studs/s）。\n\n[See all 12 original model pictures](#rig-prehistoric).",
+          "imageIds": [
+            "p2-prehistoric-play-client"
+          ]
+        },
+        {
+          "id": "enchanted",
+          "title": "Enchanted Grove（魔法森林）",
+          "markdown": "**Opens at Rebirth 5.** 紫色和蓝色的植被、蘑菇和水晶构成了这个最终栖息地的特色。Violet Wyvern 是会飞的 Mystic。本章中的名称使用的是当前显示的名称。某些项目文件和旧截图使用的是早期的内部模型名称。\n\n[image:p2-enchanted-play-client]\n\n| Species | Rarity | Temper | kg  | Sleep HP | Hits | Cash/s | Sale | Recovery | Ride |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Glimmer Deer | Common | Timid | 200 | 340.6 | 3   | $585.94 | $58,593 | 7m 7s | 126.7 |\n| Duskwolf | Common | Alert | 60  | 340.6 | 3   | $585.94 | $58,593 | 7m 7s | 126.7 |\n| Spinecat | Common | Alert | 120 | 340.6 | 3   | $585.94 | $58,593 | 7m 7s | 126.7 |\n| Mossback | Uncommon | Timid | 800 | 550.2 | 5   | $1,025.39 | $102,539 | 11m 49s | 133.1 |\n| Tuskhorn | Uncommon | Alert | 1,500 | 550.2 | 5   | $1,025.39 | $102,539 | 11m 49s | 133.1 |\n| Glowmane | Rare | Timid | 700 | 864.6 | 7   | $1,794.43 | $179,443 | 19m 38s | 139.7 |\n| Featherscale | Rare | Alert | 600 | 864.6 | 7   | $1,794.43 | $179,443 | 19m 38s | 139.7 |\n| Thunder Bison | Epic | Alert | 2,000 | 1,336.2 | 11  | $3,140.26 | $314,025 | 32m 37s | 146.4 |\n| Hammerhorn | Epic | Aggressive | 3,000 | 1,336.2 | 11  | $3,140.26 | $314,025 | 32m 37s | 146.4 |\n| Shadowfang | Legendary | Aggressive | 900 | 2,122.2 | 17  | $5,495.45 | $549,545 | 54m 11s | 153.3 |\n| Astraeus | Legendary | Alert | 600 | 2,122.2 | 17  | $5,495.45 | $549,545 | 54m 11s | 153.3 |\n| Violet Wyvern Fly | Mystic | Aggressive | 1,200 | 3,340.5 | 26  | $9,617.04 | $961,704 | 1h 30m | 160.3 |\n\nFossil Hunter 是该生物群系的进入基准，睡眠伤害（Sleep DMG）为 131。击中次数（Hits）使用的是该基础枪械。恢复时间（Recovery）是白天的基础工作时间。每秒现金（Cash/s）是放置后清醒状态下的收入，不含额外加成。售价（Sale）假设重量随机 roll 值为 1.0。骑乘速度（Ride）是未升级或未获得额外加成前的标准地面速度（单位为 studs/s）。\n\n[See all 12 original model pictures](#rig-enchanted).",
+          "imageIds": [
+            "p2-enchanted-play-client"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "economy",
+      "number": "03",
+      "title": "经济与装备",
+      "summary": "宠物训练、完整的工具和补给目录，以及装饰。",
+      "internal": false,
+      "sections": [
+        {
+          "id": "pet-math",
+          "title": "宠物等级、体重和收益",
+          "markdown": "A pet card shows several traits. **Rarity** sets its baseline and level ceiling, **appearance** is Normal/Gold/Diamond/Rainbow, and **Volted** can appear beside any appearance. Pets also have individual size and weight, age, feeding XP and paid stat points. The atlas lists standard size-1, weight-roll-1 specimens with zero age, XP and upgrades.\n\n| Rarity | Max level | Total XP | XP per level | Speed cap | Size cap | Jump / Earn cap |\n| --- | --- | --- | --- | --- | --- | --- |\n| Common | 10  | 4,500 | 500 | 30  | 30  | 30  |\n| Uncommon | 20  | 9,500 | 500 | 60  | 60  | 60  |\n| Rare | 40  | 20,000 | 512.82 | 60  | 100 | 120 |\n| Epic | 60  | 40,000 | 677.97 | 60  | 100 | 180 |\n| Legendary | 80  | 70,000 | 886.08 | 60  | 100 | 240 |\n| Mystic | 100 | 100,000 | 1,010.1 | 60  | 100 | 300 |\n\n| Purchased stat | Per point | Limits and use |\n| --- | --- | --- |\n| Speed | +0.5% to the speed multiplier | Up to 60 points, subject to level. A full Common can buy 30 points. Very high final speeds taper toward the 300 stud/s cap. |\n| Jump | +0.1% to mount JumpPower | Base JumpPower 85. Level cap applies. |\n| Size | +1 percentage point of growth | Up to 100 points. Visual growth adds size in five 10% steps, capped at 1.5× the species scale in the shared growth formula. |\n| Earn | +0.3% to the base income multiplier | Level cap applies. Earn and Speed are the most expensive tracks for a given pet. |\n\nXP needed per level is the rarity's total XP divided by **max level − 1**. Cash points cost more as you add points to a track. For the next point the code starts from the greater of 100 Cash or 25.5 seconds of that pet's base income, then applies track price weight, prior points and the habitat price scale. Track weights are Speed 5, Jump 1, Size 2 and Earn 5. The shop rounds the result. Food and upgrades have independent jobs.\n\n**Age and size.** Placed and ridden pets age during active play. Placed pets also age offline. Every 600 seconds of age shows as one animal year, up to 2,000. Natural growth updates in 10-year steps. Growth combines age, the Size track and any legacy growth already recorded in the save. Effective weight scales with the cube of size. Higher relative weight can help an owned mount’s speed. A heavier-than-normal sleeping catch can slow the person carrying it.\n\n**Passive Cash.** An awake placed pet earns its base rate × 1.2 balance boost × rebirth multiplier × (1 + Friend Boost) × permanent multipliers, including the Index boost. An active party can double total ranch payout. A recovering placed pet earns half. A stored pet and a pet you are riding earn no passive Cash from that slot. On a fresh profile, a just-awake size-1 Grassland Common with no other boosts illustrates the baseline at **$6/s**. Catching it also builds Index completion, so your actual HUD may be slightly higher.\n\n**Selling.** A standard size-1, weight-roll-1 Grassland Common has a **$600** sale baseline. The price follows the species income ladder, 120 seconds of baseline, individual capture size, initial weight roll and appearance/mutation income factors. Age, upgrades, personal wealth, rebirth, friend and perk multipliers do not raise it. A Rare-or-higher pet, a pet with special looks or mutation, or an individual priced at $100,000 or more asks for confirmation.",
+          "imageIds": []
+        },
+        {
+          "id": "guns",
+          "title": "全部 15 把飞镖枪",
+          "markdown": "Use the **Guns** tab in the Weapon Store to buy or equip. The starting hotbar uses slot **2** for the selected gun. Each pair in the first twelve tiers is a useful benchmark for a biome, from Grassland to Enchanted Grove. You can buy a tier you can afford. The biome gates themselves check rebirth, independent of the gun in your hands.\n\n| Tier | Weapon | Cash | Robux | Sleep DMG | Ammo | Reload sec | Sec/shot | Range | Cap/track |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1   | Dart Pistol | $5,000 | —   | 10  | 4   | 2.4 | 0.55 | 360 | 5   |\n| 2   | Ranger Pistol | $10,000 | —   | 13  | 7   | 2.1 | 0.45 | 385 | 8   |\n| 3   | Brush Revolver | $50,000 | —   | 17  | 9   | 1.95 | 0.42 | 412 | 10  |\n| 4   | Tracker Carbine | $200,000 | —   | 22  | 11  | 1.8 | 0.38 | 442 | 12  |\n| 5   | Prairie Carbine | $800,000 | —   | 28  | 13  | 1.65 | 0.35 | 472 | 14  |\n| 6   | Safari Rifle | $2,000,000 | —   | 36  | 15  | 1.5 | 0.32 | 502 | 16  |\n| 7   | Savanna Marksman | $8,000,000 | —   | 47  | 18  | 1.35 | 0.3 | 536 | 18  |\n| 8   | Storm Repeater | $20,000,000 | —   | 60  | 20  | 1.2 | 0.27 | 571 | 20  |\n| 9   | Glacier Sniper | $60,000,000 | —   | 78  | 22  | 1.1 | 0.25 | 606 | 22  |\n| 10  | Dune Longshot | $150,000,000 | —   | 101 | 24  | 1   | 0.24 | 642 | 24  |\n| 11  | Fossil Hunter | $500,000,000 | —   | 131 | 26  | 0.95 | 0.23 | 678 | 26  |\n| 12  | Celestial Launcher | $2,000,000,000 | —   | 170 | 28  | 0.9 | 0.22 | 714 | 28  |\n| 13  | Golden Sovereign | $500,000,000,000 | 149 | 207 | 32  | 0.8 | 0.2 | 751 | 32  |\n| 14  | Crystal Warden | $1,000,000,000,000 | 299 | 224 | 35  | 0.7 | 0.18 | 790 | 36  |\n| 15  | Starfall Mythic | $10,000,000,000,000 | 499 | 242 | 40  | 0.6 | 0.15 | 833 | 40  |\n\nRange is in studs. Stats are for a new weapon with no upgrades. “Cap/track” is the level cap on each of its four tracks.\n\n**Next.** See [gun upgrades and max stats](#gun-upgrades) before buying points.",
+          "imageIds": []
+        },
+        {
+          "id": "gun-upgrades",
+          "title": "枪械升级和最高属性",
+          "markdown": "在 **Upgrade → Guns**（升级 → 枪械）中，你拥有的每把武器都有四个独立的 Cash（现金）升级轨道。**Sleep DMG**（睡眠伤害）最高可获得达到下一把枪基础威力差距的 70%。**Ammo**（弹药）每点增加一发子弹。**Reload**（换弹）可缩短高达 80% 的换弹时间差距。**Scope**（瞄准镜）可缩短高达 86% 的射程差距。每把枪显示的每秒射击速率保持固定。最强的枪在进行这些比较时使用了一个内部上限。缩放从 1.0× 开始，会记住上一次的设置，最大缩放倍率从基础 Dart Pistol 的 1.5× 左右扩展到顶级武器的约 6×。\n\n| Gun | First point | Last point | Single track total | Max Sleep DMG | Max Ammo | Min Reload | Max Range |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Dart Pistol | $540 | $3,000 | $7,390 | 12.102 | 9   | 2.16 | 381.5 |\n| Ranger Pistol | $920 | $6,000 | $18,890 | 15.801 | 15  | 1.98 | 408.22 |\n| Brush Revolver | $3,000 | $21,000 | $98,000 | 20.5 | 19  | 1.83 | 437.8 |\n| Tracker Carbine | $13,000 | $77,000 | $440,000 | 26.199 | 23  | 1.68 | 467.8 |\n| Prairie Carbine | $48,000 | $290,000 | $1,918,000 | 33.602 | 27  | 1.53 | 497.8 |\n| Safari Rifle | $180,000 | $1,000,000 | $8,090,000 | 43.699 | 31  | 1.38 | 531.24 |\n| Savanna Marksman | $670,000 | $4,000,000 | $22,590,000 | 56.102 | 36  | 1.23 | 566.1 |\n| Storm Repeater | $940,000 | $15,000,000 | $112,790,000 | 72.602 | 40  | 1.12 | 601.1 |\n| Glacier Sniper | $9,000,000 | $56,000,000 | $583,000,000 | 94.102 | 44  | 1.02 | 636.96 |\n| Dune Longshot | $35,000,000 | $210,000,000 | $2,369,000,000 | 122 | 48  | 0.96 | 672.96 |\n| Fossil Hunter | $130,000,000 | $790,000,000 | $9,620,000,000 | 158.301 | 52  | 0.91 | 708.96 |\n| Celestial Launcher | $490,000,000 | $3,000,000,000 | $26,490,000,000 | 195.898 | 56  | 0.82 | 745.82 |\n| Golden Sovereign | $610,000,000 | $4,000,000,000 | $33,650,000,000 | 218.898 | 64  | 0.72 | 784.54 |\n| Crystal Warden | $690,000,000 | $5,000,000,000 | $41,040,000,000 | 236.602 | 71  | 0.62 | 826.98 |\n| Starfall Mythic | $660,000,000 | $6,000,000,000 | $49,050,000,000 | 253.199 | 80  | 0.552 | 888.9 |\n\n上述价格显示了**单个轨道**的第一点和最后一点，以及将单个轨道从 0 一路升满所需的总费用。[完整每级价格索引](#price-index)展示了每一个步骤。旧的全局麻醉针强度轨道已被废弃。\n\n[image:r8-pose-aim]\n\n[image:r8-pose-reload]",
+          "imageIds": [
+            "r8-pose-aim",
+            "r8-pose-reload"
+          ]
+        },
+        {
+          "id": "melee",
+          "title": "全部 13 种近战工具",
+          "markdown": "Buy with **Wood** at **Weapon Store → Melee**, or use the Robux option on the last three tiers if available. The current selection is slot **1**. **Tree DMG** is logging work per normal hit. **Knock** is nominal launch strength before the target's body modifier. **Cleave** is the maximum number of trees hit per swing. **Reach** is the base blade figure. **Range** is the base sweep figure.\n\n| Tier | Tool | Wood | Robux | Tree DMG | Knock | Reach | Range | Swing s | Cleave |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1   | Baseball Bat | 20  | —   | 1   | 47  | 7   | 7   | 0.5 | 1   |\n| 2   | Hunters Axe | 50  | —   | 1.5 | 57  | 7.5 | 7.5 | 0.55 | 1   |\n| 3   | Bonecrusher | 150 | —   | 2.8 | 70  | 7.5 | 7.5 | 0.62 | 1   |\n| 4   | Cenarius | 500 | —   | 4.4 | 83  | 8   | 8   | 0.55 | 1   |\n| 5   | Excalibur | 1,000 | —   | 7.2 | 97  | 9   | 12  | 0.5 | 2   |\n| 6   | Bloodfang | 5,000 | —   | 8.2 | 110 | 9   | 13  | 0.42 | 2   |\n| 7   | Dragons Fang | 10,000 | —   | 13  | 123 | 8.5 | 14  | 0.4 | 2   |\n| 8   | Titan | 50,000 | —   | 29  | 143 | 9.5 | 18  | 0.78 | 3   |\n| 9   | Celestial Halberd | 100,000 | —   | 44  | 157 | 11  | 21  | 0.62 | 3   |\n| 10  | Reaper | 1,000,000 | —   | 126 | 170 | 11.5 | 24  | 0.66 | 4   |\n| 11  | Red Crimson | 20,000,000 | 149 | 180 | 180 | 12  | 28  | 0.72 | 6   |\n| 12  | Glacier Crusher | 150,000,000 | 299 | 315 | 190 | 13  | 32  | 0.66 | 8   |\n| 13  | Eclipse | 500,000,000 | 499 | 630 | 200 | 15  | 36  | 0.6 | 10  |\n\nReach and range are in studs. Mounted strikes can reach farther from the mount’s body. Only tools with a slash wave use the extra sweep distance.\n\n**Next.** Compare [melee upgrades and max stats](#melee-upgrades).",
+          "imageIds": []
+        },
+        {
+          "id": "melee-upgrades",
+          "title": "近战武器升级与最高属性",
+          "markdown": "Every melee tool has independent **Tree DMG (树木伤害)**, **Knock (击退)**, **Radius (范围)** and **Earn (收益)** tracks with up to **30 points each**. A point takes the track's coefficient times the weapon's grade. Radius affects blade reach and the sweep. Earn affects the Wood (木材) credited after a tree falls. Chop speed and cleave make a good logging tool even when you use it mostly in the hub. At the Eclipse's maximum Knock track, the base launch stat reaches **300** before target modifiers.\n\n| Tool | Logging home | First Wood | Last Wood | One track total | Max Tree DMG | Max Knock | Max Range | Max Earn |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Baseball Bat | Grassland | 6   | 83  | 898 | 1.6 | 51.27 | 7.93 | ×1.6 |\n| Hunters Axe | Grassland | 8   | 110 | 1,217 | 2.62 | 63.48 | 8.75 | ×1.75 |\n| Bonecrusher | Savanna | 18  | 250 | 2,712 | 5.32 | 79.55 | 9   | ×1.9 |\n| Cenarius | Savanna | 31  | 430 | 4,607 | 9.02 | 96.2 | 9.87 | ×2.05 |\n| Excalibur | Snowland | 160 | 2,000 | 23,760 | 15.84 | 114.64 | 15.2 | ×2.2 |\n| Bloodfang | Snowland | 230 | 3,000 | 34,940 | 19.27 | 132.5 | 16.9 | ×2.35 |\n| Dragons Fang | Desert | 530 | 7,000 | 79,970 | 32.5 | 150.95 | 18.67 | ×2.5 |\n| Titan | Desert | 820 | 11,000 | 123,700 | 79.02 | 180.38 | 24.9 | ×2.725 |\n| Celestial Halberd | Prehistoric | 2,000 | 33,000 | 351,000 | 129.8 | 203.39 | 30.1 | ×2.95 |\n| Reaper | Enchanted Grove | 12,000 | 170,000 | 1,854,000 | 409.5 | 227.95 | 36  | ×3.25 |\n| Red Crimson | Enchanted Grove | 21,000 | 300,000 | 3,205,000 | 639 | 249.55 | 43.87 | ×3.55 |\n| Glacier Crusher | Enchanted Grove | 62,000 | 860,000 | 9,303,000 | 1,212.75 | 272.05 | 52.27 | ×3.85 |\n| Eclipse | Enchanted Grove | 170,000 | 2,000,000 | 25,250,000 | 2,709 | 300 | 62.4 | ×4.3 |\n\n**Point effects (点数效果).** Tree DMG and Earn add 5% of the tool’s grade per point to their respective multiplier. Knock adds grade ÷ 132 and Radius adds grade ÷ 90 per point. The grade runs from 0.40 for the bat to 2.20 for Eclipse. A level-30 Radius track on Eclipse takes its base 36-stud sweep to 62.4 studs.",
+          "imageIds": []
+        },
+        {
+          "id": "supplies",
+          "title": "Food Market 和 Gear Shop",
+          "markdown": "Open the stall's prompt in the square. Both markets take **Cash** for the normal purchase. A stock roll is made every **5 minutes** for the server, and each player has a separate allowance from that roll. Buying with Cash uses your own stock and wallet. The individual Robux item path can grant one item even when ordinary stock is used up. **Restock** at **19 Robux** resets your allowance for that shop to the current server stock. This can still leave a rare item at zero if the roll was zero.\n\n| Food | XP  | Cash | Robux | Stock per restock |\n| --- | --- | --- | --- | --- |\n| Cabbage | 100 | $1,000 | 5   | 10–25 |\n| Apple | 250 | $12,000 | 9   | 6–15 |\n| Carrot | 400 | $95,000 | 14  | 4–12 |\n| Melon | 650 | $150,000 | 19  | 3–9 |\n| Pineapple | 1,000 | $1,000,000 | 24  | 2–7 |\n| Shrimp | 1,600 | $2,000,000 | 29  | 2–6 |\n| Salmon | 2,400 | $13,000,000 | 39  | 2–5 |\n| Drumstick | 3,900 | $21,000,000 | 49  | 1–4 |\n| Ham | 6,000 | $150,000,000 | 64  | 1–3 |\n| Steak | 10,000 | $260,000,000 | 79  | 1–3 |\n\n| Radar | Cash | Robux | Stock | Search |\n| --- | --- | --- | --- | --- |\n| Common | $990 | 5   | 3–8 | Chosen biome |\n| Uncommon | $5,000 | 9   | 2–6 | Chosen biome |\n| Rare | $31,000 | 19  | 1–4 | Chosen biome |\n| Epic | $180,000 | 39  | 1–3 | Chosen biome |\n| Legendary | $2,000,000 | 79  | 0–2 | Chosen biome |\n| Mystic | $8,000,000 | 129 | 0–1 | All biomes |\n\n**Auto-Buy.** The shop's pass enables Auto-Buy toggles for all its items. A player without the pass can instead unlock one specific item for **10 Robux**. At a restock, items switched on consume your Cash up to the stock you can afford. Turn off the toggles when saving for a rebirth. Buying an unlock and paying for restocked items are separate charges in different currencies.",
+          "imageIds": []
+        },
+        {
+          "id": "radar",
+          "title": "使用雷达（Radar）并管理 Wood",
+          "markdown": "Hold a radar (雷达) from Bag (背包) or the hotbar and click or tap the world. For Common (普通) through Legendary (传说), choose a biome with that rarity currently available. A **Mystic Radar** (神秘雷达) searches across biomes. Follow the arrow and distance indicator toward the target. A radar gives you a location, while your character still needs the correct gate unlocked to travel there.\n\n-   Only one radar can run. Turn the current one off before selecting a different rarity.\n-   A scan starts with **5 minutes**. If you pick up the marked pet, its tracking clock pauses during the carry.\n-   The matching radar is spent when an eligible catch is delivered. If another player catches the target, the radar shuts off and stays in your inventory. A timeout with no delivery also keeps it.\n-   A target can disappear or move. If there's no eligible target, check the biome selection and the rare-animal status later. The hidden Unlimited Radar entry is a legacy perk.\n\n### Tree toughness and base yield\n\n| Biome | Reference tree HP | Base Wood | Suggested entry tool |\n| --- | --- | --- | --- |\n| Grassland | 6   | 2   | Baseball Bat |\n| Savanna | 16  | 5   | Bonecrusher |\n| Snowland | 40  | 12  | Excalibur |\n| Desert | 96  | 28  | Dragons Fang |\n| Prehistoric | 246 | 64  | Celestial Halberd |\n| Enchanted Grove | 630 | 150 | Reaper |\n\nA reference tree is 34 studs tall. The size factor is height ÷ 34, clamped to **0.6–2.0**, with HP and Wood rounded. Golden tree rewards and your chopping multipliers apply on top. Reward cards described in _trees' worth_ use the reference yield of your best owned melee tool's home biome. That is a separate reward calculation from swinging at a physical tree.",
+          "imageIds": []
+        },
+        {
+          "id": "decor",
+          "title": "布置你的围栏",
+          "markdown": "打开 **Ranch (牧场) → Decorate (装饰)**，使用 **Wood (木材)** 购买一件物品，然后选择六个固定位置之一。从大门看过去，这些位置分别是：左前、右前、左侧、右侧、左后和右后。道具可以在不同的围栏之间通用。围栏风格的变化可以通过 Rebirth (转生) 来获得。\n\n| Decoration (装饰) | Wood cost (木材消耗) | Largest dimension (最大尺寸) |\n| --- | --- | --- |\n| Flower Bed (花坛) | 64  | 30 studs |\n| Lantern Post (路灯) | 140 | 34 studs |\n| Hay Cart (草料车) | 300 | 34 studs |\n| Windmill (风车) | 600 | 48 studs |\n| Snowman (雪人) | 1,000 | 36 studs |\n| Ice Lantern (冰灯) | 3,000 | 34 studs |\n| Potted Cactus (盆栽仙人掌) | 5,000 | 32 studs |\n| Sandstone Statue (砂岩雕像) | 10,000 | 34 studs |\n| Fossil Skeleton (化石骨架) | 21,000 | 44 studs |\n| Stone Fountain (石喷泉) | 42,000 | 38 studs |\n| Glow Mushroom (发光蘑菇) | 91,000 | 57 studs |\n| Treehouse (树屋) | 210,000 | 60 studs |\n\n放置时，模型会根据列出的最大尺寸进行缩放，并且朝向内部。装饰纯粹是视觉效果，而宠物放置和获得的 **Cash (现金)** 则遵循围栏自身的规则。\n\n[image:p2-enchanted-enc-play]",
+          "imageIds": [
+            "p2-enchanted-enc-play"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "rewards",
+      "number": "04",
+      "title": "奖励与商店",
+      "summary": "日历、任务、兑换码、礼物和每个宝箱的准确掉落。",
+      "internal": false,
+      "sections": [
+        {
+          "id": "rewards",
+          "title": "寻找免费奖励",
+          "markdown": "**Rewards**（奖励）包含 **Missions**（任务）、**Daily**（每日）和 **Codes**（兑换码）。任务显示在当天任务的下方。符合条件玩家的欢迎礼物也会显示在任务上方。准备就绪徽章会统计可领取的每日奖励、任务和主线任务。**Claim All**（全部领取）可一次性收集当前符合条件的每日奖励、任务和已解锁的任务阶段。在开始新手教程时，请使用单独的欢迎 Claim（领取）按钮。\n\n**Daily calendar**（每日日历）。每个 UTC 天数可领取一次。在马尼拉，重置时间为 **8:00 a.m.**。如果错过一天，你的日历将停留在同一格。第 30 天后，它会循环回到第 1 天。第 7 天和第 14 天会赠送随机 Legendary（传说）宠物。第 21 天和第 30 天会赠送随机 Mystic（神话）宠物。\n\n**Cash reward rule**（Cash 奖励规则）。列出的底线是最低值。服务器会取该金额或你全额放置的牧场收入的对应秒数中的较大者。该参考速率包括普通的档案加成，但不适用临时的 party（派对）加成或恢复中的折扣。_trees_（树木）中列出的 Wood（木材）奖励使用你拥有的最佳近战工具，如 [Manage Wood](#radar) 中所述。\n\n| Day | Reward | Day | Reward |\n| --- | --- | --- | --- |\n| 1   | $500 min. or 1 min of income | **16** | 3 × Shrimp |\n| 2   | 10 × Cabbage | **17** | Wood worth 48 trees |\n| 3   | Wood worth 24 trees | **18** | 1 × Drumstick |\n| 4   | 5 × Apple | **19** | $80,000 min. or 8 min of income |\n| 5   | $5,000 min. or 3 min of income | **20** | 10 × Melon |\n| 6   | 3 × Melon | **21** | Random **Mystic** pet |\n| 7   | Random **Legendary** pet | **22** | $100,000 min. or 9 min of income |\n| 8   | $10,000 min. or 5 min of income | **23** | 5 × Shrimp |\n| 9   | 10 × Apple | **24** | Wood worth 60 trees |\n| 10  | Wood worth 36 trees | **25** | 2 × Drumstick |\n| 11  | 2 × Shrimp | **26** | $160,000 min. or 10 min of income |\n| 12  | $25,000 min. or 6 min of income | **27** | 1 × Steak |\n| 13  | 6 × Melon | **28** | $240,000 min. or 12 min of income |\n| 14  | Random **Legendary** pet | **29** | 3 × Drumstick |\n| 15  | $40,000 min. or 7 min of income | **30** | Random **Mystic** pet |",
+          "imageIds": []
+        },
+        {
+          "id": "missions",
+          "title": "每日任务和长期任务",
+          "markdown": "You get **three missions per UTC day** from this pool. The draw is saved for the day. Use **Go** to see a tip and claim completed cards before reset. The capture missions count successful deliveries. A dart mission counts accepted animal hits. The steal mission counts bringing home a catch that another player dropped after being hit.\n\n| Mission | Reward |\n| --- | --- |\n| Capture 5 animals | $2,000 min. or 3 min of income |\n| Capture 2 Uncommon or rarer | $3,000 min. or 210s of income |\n| Capture a Rare or rarer | $5,000 min. or 5 min of income |\n| Capture 2 animals at night | $3,000 min. or 210s of income |\n| Capture an animal during a storm | $4,000 min. or 4 min of income |\n| Capture 3 Savanna animals | $4,000 min. or 4 min of income |\n| Capture 2 Snowland animals | $5,000 min. or 5 min of income |\n| Hit animals with 30 darts | $2,000 min. or 150s of income |\n| Feed your animals 5 times | $2,000 min. or 150s of income |\n| Sell 3 animals | $3,000 min. or 3 min of income |\n| Ride for 3 minutes | $2,000 min. or 150s of income |\n| Use a radar | $2,000 min. or 150s of income |\n| Buy 5 food | $1,000 min. or 2 min of income |\n| Chop 10 trees | Wood worth 6 trees |\n| Chop 25 trees | Wood worth 14 trees |\n| Chop a Golden tree | Wood worth 10 trees |\n| Steal an animal from another player | Wood worth 12 trees |\n\n### Quests\n\nQuest progress persists across days. Each quest has three thresholds. Claim each tier in sequence. The species quest uses total unique species in the Index when its progress is updated.\n\n| Quest | Tier 1 | Tier 2 | Tier 3 |\n| --- | --- | --- | --- |\n| Capture animals | 50  | 150 | 400 |\n| Capture Legendary animals | 1   | 3   | 10  |\n| Capture Mystic animals | 1   | 2   | 5   |\n| Capture mutated animals | 5   | 20  | 50  |\n| Capture Gold, Diamond or Rainbow animals | 3   | 10  | 25  |\n| Capture animals at night | 20  | 60  | 150 |\n| Feed your animals times | 50  | 200 | 600 |\n| Sell animals | 25  | 100 | 300 |\n| Discover species | 12  | 36  | 72  |\n| Hit animals with darts | 500 | 2,000 | 6,000 |\n| Chop trees | 50  | 250 | 1,000 |\n\n| Tier | Cash | Food | Pet |\n| --- | --- | --- | --- |\n| 1   | $8,000 min. or 6 min of income | 3 × Melon | —   |\n| 2   | $25,000 min. or 12 min of income | 3 × Shrimp | —   |\n| 3   | $80,000 min. or 20 min of income | 2 × Drumstick | Epic |",
+          "imageIds": []
+        },
+        {
+          "id": "collection",
+          "title": "索引、邀请与兑换码",
+          "markdown": "### Animal Index [动物图鉴]\n\nEncountered pets [遇到的宠物] 可以被标记为已见过。捕获或获得某个物种即可将其计为收藏记录中的已拥有。Index [图鉴] 会在售出后记住你的发现。它显示 Normal [普通]、Gold [金色]、Diamond [钻石] 和 Rainbow [彩虹]。Normal [普通] 计数随着在任何外观下首次捕获该物种而增加，而颜色类别则需要各自记录的变体。Volted [带电] 会单独追踪。\n\n| Index tab [图鉴标签页] | 每在该标签页记录一个物种获得的永久 Cash [现金] 加成 | 达到 72 个条目时 |\n| --- | ---: | ---: |\n| Normal [普通] | +0.5% | +36% |\n| Gold [金色] | +1% | +72% |\n| Diamond [钻石] | +2% | +144% |\n| Rainbow [彩虹] | +4% | +288% |\n\n这些加成总计最高可达理论上的 **+540%**，在其他乘数生效前相当于 **6.4×**。Index [图鉴] 中夸张的“1 分之 N”标签只是趣味文本。野外刷新使用权重和时间表，付费补给箱则显示其确切的概率。每四个独特物种即可开启一次 Cash [现金] 领取，最多可达 **18 个里程碑**。[参见所有里程碑层级](#index-reference)。\n\n### Friends and invitations [好友与邀请]\n\n当前在同一服务器中的每个经过验证的 Roblox 好友都会为被动 Cash [现金] 增加 **+25%**，最多计算十个好友。他们的加成会在离开时结束。六个精心设计的地块使得理论上限高于通常可以共享六人 Ranch [牧场] 服务器的好友数量。另外，一个将其 Roblox 加入归功于你邀请的特定好友会推进 Invite [邀请] 宝箱。四个领取门槛分别为 **1 → Epic [史诗], 2 → Epic [史诗], 3 → Legendary [传说], 4 → Legendary [传说]**。Invite [邀请] 领取与 Friend Boost [好友加成] 是独立计算的。\n\n### Redeem codes [兑换码]\n\n打开 **Rewards [奖励] → Codes [兑换码]**，输入兑换码，然后选择 **Redeem [兑换]**。此处显示的兑换码是在所检查的版本中配置的。服务器每个玩家接受一次兑换，不区分大小写并在查找前去除空格。\n\n| Code [兑换码] | Reward [奖励] |\n| --- | --- |\n| `RANCHER` | 2 × Shrimp [虾] |\n| `SAFARI` | 至少 $25,000 或 5 分钟的收入 + 5 × Apple [苹果] + 2 × Melon [甜瓜] |\n| `TIMBER` | 相当于 45 棵树的 Wood [木头] |\n| `WILDRANCH` | 至少 $10,000 或 2 分钟的收入 + 相当于 15 棵树的 Wood [木头] + 20 × Cabbage [卷心菜] |",
+          "imageIds": []
+        },
+        {
+          "id": "shop",
+          "title": "商店与付费特权",
+          "markdown": "The in-game Shop [商店] offers paid crates [宝箱], Cash [现金] and Wood [木材] packs [礼包], permanent perks [永久特权], and premium weapons [高级武器]. These are the **configured Robux prices** in the reviewed place. Roblox pricing and product availability are checked before game prompts are enabled. No paid transaction was needed to compile this guide.\n\n| Offer | Robux | Grant |\n| --- | --- | --- |\n| Pouch of Cash | 49  | $10,000,000 |\n| Sack of Cash | 149 | $100,000,000 |\n| Chest of Cash | 299 | $1,000,000,000 |\n| Vault of Cash | 499 | $10,000,000,000 |\n| Bundle of Wood | 49  | 100,000 Wood |\n| Pile of Wood | 149 | 500,000 Wood |\n| Cart of Wood | 299 | 1,000,000 Wood |\n| Lumber Yard | 499 | 10,000,000 Wood |\n| 2x Wood | 149 | Every tree you chop gives double Wood, forever. Multiplies with your weapon's Earn upgrades. |\n| 2x Animal Income | 149 | Every animal in your ranch earns double, forever. Multiplies with every other bonus. |\n| 4x Recovery Speed | 149 | Captured animals recover and wake up 4x faster, forever. Stacks with the x10 night speed-up. |\n\n| Other purchase | Configured price | Effect |\n| --- | ---: | --- |\n| Rebirth Skip | 199 Robux | One available stage, keeping balances and pets. |\n| Offline Claim 2× | 49 Robux | Doubles the calculated offline claim. |\n| Wake Now | 25 Robux | Wake one owned recovering pet. |\n| Personal restock | 19 Robux | Refresh your stock allowance in Food Market or Gear Shop. |\n| Per-item Auto-Buy unlock | 10 Robux | Enables Auto-Buy for that specific market item. Restocks still spend Cash. |\n| Premium weapons | 149 / 299 / 499 Robux by tier | See the [guns](#guns) and [melee](#melee) tables for their alternate Cash or Wood routes. |",
+          "imageIds": []
+        },
+        {
+          "id": "gifts",
+          "title": "礼物和游戏通行证（Game Pass）",
+          "markdown": "在 **Send a Gift**（发送礼物）中选择符合条件的 Cash（现金）礼包、Wood（木材）礼包或永久特权。选择当前在服务器中的玩家或已验证的 Roblox 好友。只要服务可用，身处其他服务器或离线的好友稍后可以接收符合条件的排队礼物。收件人将获得配置的礼包数量。Crates（宝箱）、passes（通行证）和个人离线领取不包含在赠送范围内。如果一次性特权在收件人已经拥有它之后才送达，该发放可能会转换为 Cash。来自 Roblox 商店页面的重复高级武器交付也使用 Cash 备用方案。\n\n**付款前进行礼物检查。** 在礼物选择器中检查收件人和物品。当收件人数据可用时，服务器会拒绝自我赠送、隐藏优惠和已拥有的一次性特权。向当前服务器之外的人交付取决于好友关系以及礼物队列是否可达。\n\n### 已配置的 Game Passes\n\n游戏仍会检查这些通行证的所有权。检查中的游戏内 Shop（商店）不呈现专用的通行证或传统捆绑包部分。这是已拥有通行证和平台端列表的配置参考。\n\n| Pass | Robux | Ownership effect |\n| --- | --- | --- |\n| VIP Rancher | 199 | Golden VIP nametag, VIP chat tag and a golden ranch sign. |\n| Golden Dart Gun | 149 | Gold skin + sparkle dart trail on every tranquilizer gun. |\n| Rainbow Ride Trail | 99  | Rainbow trail behind any animal you ride. |\n| Food Auto-Buy | 149 | Every restock, the Food Market buys the food you switched on with your Cash. |\n| Gear Auto-Buy | 149 | Every restock, the Gear Shop buys the radars you switched on with your Cash. |",
+          "imageIds": []
+        },
+        {
+          "id": "crates",
+          "title": "所有宝箱和准确概率",
+          "markdown": "Open **Shop** [商店] and choose the crate. Buy **1, 3 or 10 rolls** where the offer is available. Each roll grants one pet [宠物], with the probabilities below. The Wild Crate [荒野补给箱] mixes the habitats. Each regional crate takes all six listed outcomes from that biome. The ordinary Mystic [神秘] chance is **1% per roll**. On the **100th roll since the last Mystic for the same crate**, the roll is guaranteed to be that crate's Mystic. Any Mystic from that crate resets that crate's counter. The tracker is saved across sessions and packs.\n\n| Crate | 50% | 21% | 21% | 3.5% | 3.5% | 1%  | R$ 1 / 3 / 10 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Wild Crate | Bison | Crocodile | Polar Bear | Chimera | Tyrannosaurus Rex | Violet Wyvern | 49 / 139 / 449 |\n| Grassland Crate | Moose | Bear | Tiger | Kirin | Unicorn | Griffin | 25 / 69 / 199 |\n| Savanna Crate | Giraffe | Crocodile | Hippopotamus | Elephant | Lion | Cerberus | 29 / 79 / 249 |\n| Snowland Crate | Snow Leopard | Polar Bear | Woolly Rhino | Ice Tortoise | Woolly Mammoth | Yeti | 35 / 99 / 299 |\n| Desert Crate | Caracal | Camel | Kangaroo | Ammit | Chimera | Sand Dragon | 39 / 109 / 349 |\n| Prehistoric Crate | Triceratops | Brachiosaurus | Therizinosaurus | Spinosaurus | Tyrannosaurus Rex | Dragon | 45 / 129 / 399 |\n| Enchanted Crate | Glowmane | Hammerhorn | Thunder Bison | Astraeus | Shadowfang | Violet Wyvern | 49 / 149 / 499 |\n\nOne outcome per roll. Pity [保底] can replace the ordinary roll with the Mystic in the 1% column. Prices above are in Robux.\n\n**Delivery.** Crate pets are granted in their normal appearance with the built-in size roll. They go into a free pen slot or storage, and are ready to use without recovery. Paid random items are unavailable if the per-player policy check disallows them or cannot confirm eligibility. The pity counter applies only to that crate. A wild Legendary or Mystic spawn follows its own schedule.\n\n### Offline earnings\n\nWhen you return after at least 30 seconds away with placed animals, the game calculates the absence using up to **24 hours** at **50%** of the eligible ranch rate. The calculation ages those placed pets, uses their fully recovered payout rate and the profile's normal permanent multipliers, and omits Friend Boost. Only positive earnings create a claim. In **Welcome back!**, choose **Claim 1×** for free or the paid **Claim 2×**. The paid double path waits for the Roblox receipt. Keep earners placed before you leave.",
+          "imageIds": []
+        }
+      ]
+    },
+    {
+      "slug": "faq",
+      "number": "05",
+      "title": "常见问题",
+      "summary": "关于捕捉问题、进度太慢、购物等问题的解答。",
+      "internal": false,
+      "sections": [
+        {
+          "id": "faq",
+          "title": "新手入门与捕获常见问题解答",
+          "markdown": "### Where do I get my starter money?\n\nOpen **Rewards → Missions** and claim both welcome cards. The gifts are $10,000 and 100 Wood. The Dart Pistol costs $5,000 and the Baseball Bat costs 20 Wood during the guided route. Skipping supplies the eligible welcome gifts and missing starter tools.\n\n### What do I do first after the tutorial?\n\nFill your pen with pets you can bring back reliably. Claim available free rewards, check which pet Rebirth needs, and build up a Wood reserve with a starter melee tool.\n\n### Why are my darts missing?\n\nKeep the animal in the crosshair, close the gap if it is out of range, and move clear of rocks, tree trunks and terrain. You and the target must be in the target's home biome. Lower ground can also help if the cliff-guard message appears.\n\n### Is there an Auto Aim button?\n\nThe current HUD removed Auto Aim and its T shortcut. Aim through the center crosshair and scope manually.\n\n### How do I make the gun stronger?\n\nOpen **Upgrade → Guns**, choose a gun you own, and buy its Sleep DMG points. Upgrades belong to that gun. Buy Ammo, Reload or Scope when those are the limits you keep running into.\n\n### Why does my gun put one Fox to sleep faster than another?\n\nThe atlas shows a size-1 Normal baseline. A bigger body, special appearance or a Volted mutation can increase Sleep HP. Upgrades on the gun change how much each landed hit contributes.\n\n### Why can't I pick up a sleeping animal?\n\nGet closer and wait for the pickup prompt. Another player's claim starts with a five-second window. An animal can wake, be picked up by someone else, or be out of reach from where you stand.\n\n### Can I pick up from a mount?\n\nYes, if you are close enough for the pickup prompt. The mounting case uses the mount's size to adjust the reach, and the normal capture checks still apply.\n\n### Where does the carry timer stop?\n\nAt the paved hub boundary. Walk further into your own enclosure to finish claiming the pet. Watch for the **Safe!** and then the capture notifications.\n\n### Can I drop it to help a friend?\n\nDropping a wild sleeper puts it on a pickup timer. Claim protection and ownership rules still apply. A knocked-loose carry has no normal protection. The game has no regular direct pet-trading menu in the reviewed player flow.\n\n### Can someone steal a pet from my pen?\n\nThe theft mechanic concerns a sleeping wild catch being carried in the wild. An already-owned enclosure pet is protected.\n\n### What if I leave while holding a catch?\n\nAn undelivered wild pet is lost when you leave. Carry it into the enclosure before quitting if you want to keep it.\n\n### Why is my pet doing nothing in the Bag?\n\nStored pets are safe inventory. Earnings require a placed pet. **Ranch → Place Best** can bring your best earners into the pen.",
+          "imageIds": []
+        },
+        {
+          "id": "faq-ranch",
+          "title": "牧场、骑乘和伐木常见问题",
+          "markdown": "### Why is a new pet earning half?\n\nIt is recovering from the wild capture. Keep it placed and let it wake. Night speeds recovery, and the permanent perk stacks with night.\n\n### Can feeding wake a pet?\n\nFood adds XP. The recovery timer, night bonus, recovery perk and Wake Now use a separate system.\n\n### Can a Common pet keep leveling forever?\n\nCommon pets top out at level 10 and 4,500 XP. Mystic pets top out at level 100 and 100,000 XP. See all six ceilings in [Pet levels](#pet-math).\n\n### Why can I see an upgrade but can't buy it?\n\nCheck the wallet, level and track cap. Animal and gun tracks use Cash. Melee tracks use Wood. Feeding increases pet XP and opens additional room for stat points.\n\n### Where did my pet go after riding?\n\nIt becomes a held animal when you dismount. Click or tap inside your own enclosure to place it, or use its card where the place action is shown.\n\n### Can every pet fly?\n\nFour can fly in this roster. They are Griffin, Sand Dragon, Dragon and Violet Wyvern. The other two Mystics, Cerberus and Yeti, stay on the ground.\n\n### Why can't I dismount right now?\n\nThe driver needs to be grounded. Descend or use **Land**, then select **Dismount**. A passenger can leave using their passenger action or Jump.\n\n### Why does my mount turn transparent when I aim?\n\nThe current HUD automatically fades a mount if its body blocks your crosshair in gun mode. Other players still see the mount. Scoping can hide the rider and mount on your own screen.\n\n### Can two people ride one pet?\n\nYes. One drives and one uses **Ride along**. Board while the mount is grounded and the rear seat is free.\n\n### Do trees use up my bat?\n\nMelee tools are owned equipment. Use the same one repeatedly. Higher tiers and Tree DMG upgrades make later trees easier to fell.\n\n### Why isn't Auto Chop doing anything?\n\nTake out your melee tool, switch Auto Chop on, face an eligible tree and get close enough. Wait if the target is still a stump. Menus, being down and carrying a wild pet can prevent a swing.\n\n### Does Auto Chop collect every tree in the biome?\n\nIt checks for a reachable trunk ahead. Your tool's sweep and cleave determine what the actual swing can hit. Move manually to new spots.\n\n### Which trees are worth the most Wood?\n\nGolden trees give five times their normal base amount. Reference base yield rises from 2 Wood in the Grassland to 150 in Enchanted Grove before boosters. Taller individuals can pay more.\n\n### Do melee hits take a player's health?\n\nThe system is built around knockback and ragdolls. A player can lose a carried sleeper outside the safe zone if they get hit.",
+          "imageIds": []
+        },
+        {
+          "id": "troubleshooting",
+          "title": "转生、野生动物和奖励常见问题",
+          "markdown": "### 重生时我会失去我的动物吗？\n\n货币路线会重置 Cash（现金）并扣除 Wood（木头）费用。所需的宠物以及你收藏的其余部分都会保留。Robux 跳过方式也会保留你的余额。\n\n### 如果我重新加入游戏，下一个需要的动物会改变吗？\n\n该阶段的要求会被保存。查看 **Rebirth（重生）**。任何属于所需物种的拥有样本（无论是放置还是存放）都符合条件。\n\n### 为什么这个大门打不开？\n\n检查它的重生编号。顺序是 Grassland（草原）、Savanna（热带草原）、Snowland（雪地）、Desert（沙漠）、Prehistoric（史前）、Enchanted Grove（魔法林地）。最后的地块需要在 Enchanted 开启后再经历一个阶段。\n\n### 更强的坐骑能让我跳过大门吗？\n\n地面移动和飞行都受到相同的大门限制。通过重生来获得进入权限。\n\n### 刚刚刷新的 Legendary（传说）或 Mystic（神秘）在哪里？\n\n普通公告中没有说明它的生物群系。请检查相关的雷达和 HUD。从 Common（普通）到 Legendary（传说）的扫描都需要指定生物群系。Mystic（神秘）则会搜索所有生物群系。\n\n### 为什么我的雷达关闭并留在了 Bag（背包）里？\n\n超时或被其他玩家抓获可能会结束扫描而不消耗雷达。成功交付符合条件的追踪捕获物才会消耗雷达。\n\n### 为什么计时器一到零我没有看到稀有怪刷新？\n\n刷新时间是按服务器计算的。寻找有效的刷新地面可能会失败，并且如果已经有一只活着的 Mystic（神秘），就会阻止下一次预定的 Mystic。计时器也会在稀有度标签之间轮换。\n\n### Volted（带电）和 Rainbow（彩虹）会同时出现吗？\n\n会。Rainbow（彩虹）是一种外观，而 Volted（带电）是一种变异。野生宠物可以同时拥有这两种状态。有关独立的概率掷骰，请参阅[刷新与天气](#wildlife)。\n\n### Index（图鉴）标签显示的是确切的野生概率吗？\n\n图鉴中的“1 分之 N”数值仅供参考。基础野生动物使用物种选择权重和上限，预定稀有度使用计时器，而付费宝箱则列出了每种结果的概率。\n\n### 如果我错过了昨天，还能领取明天的每日奖励吗？\n\n可以。下一次领取会在 UTC 午夜后推进一个格子。跳过一天不会重置日历。\n\n### 为什么其他玩家有不同的每日任务？\n\n游戏会在每个玩家和 UTC 日期的同一个任务池中随机挑选三个。任务是持续的，并且具有相同的门槛。",
+          "imageIds": []
+        },
+        {
+          "id": "support-faq",
+          "title": "购物和故障排除常见问题",
+          "markdown": "### Where are the older gift bundles, pet displays and global Dart Levels?\n\nThe current Shop [商店] hides legacy Starter [新手], Rider [骑手], Pro [专家], Unlimited Radar [无限雷达] and the old dart pack. Current premium pets [宠物] come through crates [宝箱] and ordinary reward/capture paths. Dart stats now belong to the individual gun [枪]. Older snapshots can show different menus.\n\n### Why does a Robux button say Coming soon?\n\nThe server only enables a configured prompt when Roblox returns an expected product or pass price. A missing, unavailable or mismatched product can leave the button disabled.\n\n### Why are crates unavailable for me?\n\nThe game checks Roblox's eligibility result for paid random items. If eligibility cannot be established, the purchase flow remains unavailable.\n\n### Can I get pets without Robux?\n\nYes. Capture wild animals and claim eligible daily, invite and quest rewards. Some later prizes and premium options are simply additional routes.\n\n### When does a gift arrive?\n\nA player in your server may receive it after the purchase clears. Gifts to friends elsewhere can be queued. Keep the purchase details if delivery fails so the owner can trace the grant.\n\n### What if I already own a perk somebody sends?\n\nThe purchase flow tries to detect it before charging. A duplicate that arrives afterward can be credited as Cash [现金] according to the store's fallback logic.\n\n### Why wasn't I paid offline?\n\nCheck that animals were placed and you were away for at least 30 seconds. The **Welcome back!** [欢迎回来！] card appears with a positive claim. A pet left stored after a ride is outside the placed roster.\n\n### How do I quiet the experience?\n\nUse **Settings** [设置] for Music, Sound effects, Full effects, Camera shake, Animal name tags and Tree hit flash. Roblox's Reduce Motion option also reduces decorative animation. The settings described here are wired in the current source.\n\n### Why is the loading bar near 99%?\n\nThe client may still be waiting for the world, profile, original assets, terrain near spawn, or the character. The loading-screen **Skip** [跳过] dismisses the visual overlay while the underlying readiness checks continue. If the loader reports a failure, use its retry action if shown or rejoin. Loading-screen Skip and tutorial Skip are separate buttons.\n\n### Where do I report a bug?\n\nUse the hub's **Feedback** [反馈] stand. Include the biome, what you pressed, what happened and the exact message if there was one. Use a short note and leave out payment credentials or personal contact details.",
+          "imageIds": []
+        }
+      ]
+    },
+    {
+      "slug": "gallery",
+      "number": "06",
+      "title": "原始视觉档案",
+      "summary": "存档的游戏画面，以及原始模型和美术素材。",
+      "internal": false,
+      "sections": [
+        {
+          "id": "gallery",
+          "title": "游戏画面和 Studio 图片",
+          "markdown": "These pictures come from the owner's local Wild Ranch project. Captions distinguish the current loading capture, earlier play-client evidence, and older Studio composition views. The gameplay pictures show real game scenes. Old timer values, labels, player wallets, purchase signs and HUD controls are historical evidence. The version 260 instructions earlier in this guide are the current player reference.\n\n[image:new-animals-grassland]\n\n[image:ranch-v7-tutorial-day]\n\n[image:r8-pose-aim]\n\n[image:r8-ride-pose]\n\n[image:r8-feed-prompt]\n\n[image:r8-fly-above-dismount]",
+          "imageIds": [
+            "new-animals-grassland",
+            "ranch-v7-tutorial-day",
+            "r8-pose-aim",
+            "r8-ride-pose",
+            "r8-feed-prompt",
+            "r8-fly-above-dismount"
+          ]
+        },
+        {
+          "id": "gallery-map",
+          "title": "游历整个世界",
+          "markdown": "[image:overhaul-overview]\n\n[image:p2-savanna-play-client]\n\n[image:hosted-snowland-edit-capture]\n\n[image:hosted-desert-edit-capture]\n\n[image:p2-prehistoric-play-client]\n\n[image:hosted-enchanted-edit-capture]",
+          "imageIds": [
+            "overhaul-overview",
+            "p2-savanna-play-client",
+            "hosted-snowland-edit-capture",
+            "hosted-desert-edit-capture",
+            "p2-prehistoric-play-client",
+            "hosted-enchanted-edit-capture"
+          ]
+        },
+        {
+          "id": "gallery-ranch",
+          "title": "中心区、商店和围栏",
+          "markdown": "[image:hosted-world-edit-capture]\n\n[image:ranch-v7-merchant]\n\n[image:ranch-v7-overview]\n\n[image:gate3-play-client]\n\n[image:p2-enchanted-enc-play]\n\n[image:native-studio-playtest]",
+          "imageIds": [
+            "hosted-world-edit-capture",
+            "ranch-v7-merchant",
+            "ranch-v7-overview",
+            "gate3-play-client",
+            "p2-enchanted-enc-play",
+            "native-studio-playtest"
+          ]
+        },
+        {
+          "id": "asset-art",
+          "title": "原始游戏美术和模型资料",
+          "markdown": "### Artwork tied to current game slots\n\nThe current UI module points the food, radar and HUD icon keys at the same sets described beside the corresponding local files. The enclosure atlas has an additional ID link through the archived upload receipt. These are existing project images. The atlas itself shows older renderings of the enclosure kits.\n\n| In-game use | Local originals | Evidence in the reviewed place |\n| --- | --- | --- |\n| Main menu icons | `icons_20261120/hud_*.png` | Six keys and dedicated asset references in `WR.Art`. The active HUD requests those art keys. |\n| Food and radar cards | `icons_20261120/food1–10.png` and `radar1–6.png` | `WR.Config` and shop panels select art from the matching keys in `WR.Art`. |\n| Seven enclosure card images | `assets/ui/out/enclosures.png` | Local atlas upload `121498455639768` → verified reupload `105509614296295` → current `WR.Art` tiles `enc0–enc6`. |\n\n[image:icon-rebirth]\n\n[image:icon-upgrade]\n\n[image:icon-index]\n\n[image:icon-rewards]\n\n[image:icon-shop]\n\n[image:icon-invite]\n\n[image:icon-cabbage]\n\n[image:icon-apple]\n\n[image:icon-carrot]\n\n[image:icon-melon]\n\n[image:icon-pineapple]\n\n[image:icon-shrimp]\n\n[image:icon-salmon]\n\n[image:icon-drumstick]\n\n[image:icon-ham]\n\n[image:icon-steak]\n\n[image:icon-common]\n\n[image:icon-uncommon]\n\n[image:icon-rare]\n\n[image:icon-epic]\n\n[image:icon-legendary]\n\n[image:icon-mystic]",
+          "imageIds": [
+            "icon-rebirth",
+            "icon-upgrade",
+            "icon-index",
+            "icon-rewards",
+            "icon-shop",
+            "icon-invite",
+            "icon-cabbage",
+            "icon-apple",
+            "icon-carrot",
+            "icon-melon",
+            "icon-pineapple",
+            "icon-shrimp",
+            "icon-salmon",
+            "icon-drumstick",
+            "icon-ham",
+            "icon-steak",
+            "icon-common",
+            "icon-uncommon",
+            "icon-rare",
+            "icon-epic",
+            "icon-legendary",
+            "icon-mystic"
+          ]
+        },
+        {
+          "id": "asset-enclosures",
+          "title": "围栏美术和源文件",
+          "markdown": "[image:enclosures]\n\nThe archived atlas is the source image for the seven enclosure thumbnails. Version 260 uses [Starter [新手], Meadow [草地], Safari [野生动物园], Glacier [冰川], Oasis [绿洲], Jurassic [侏罗纪] and Crystal [水晶]](#rebirth) as their names. The server rebuilds the pen's actual style when the owner rebirths. Current models also include independent decoration props.\n\n### Source folders within the local Roblox project\n\n| Source | What is in it | How it was matched |\n| --- | --- | --- |\n| `Animal_Rig_Lab_20261028/export/` | A rigged animated GLB for each of the 72 current IDs, alongside rig and clip data. | All 72 current `WR.Species` IDs have a same-ID `WRAnimals` template and a same-ID local GLB. The project's import notes identify this Animal Rig Lab pack. |\n| `Animal_Rig_Lab_20261028/verification/rig/` | The 72 original three-view model pictures used in the next six chapters. | Each image is keyed by its current model ID, including the renamed Enchanted pets. The pictures show the source rigs before in-game appearances, lighting, pose overrides and sizing. |\n| `wild_ranch/sap_uploads_20261116/` | Local melee GLBs, decoration and shop revisions and owner-provided icons. | Named décor exports correspond to the twelve live template slots. Later uploads may use another local revision of a given GLB. |\n| `wild_ranch_build/assets/` and `wild_ranch/models/` | Terrain textures, biome meshes, hub works, enclosure art and source packs. | Each of the six biome namespaces is present in the current runtime library, alongside hub and enclosure packs. |\n| `wild_ranch/gun_models/` and `wild_ranch/All_15_Revised_Tranquilizer_Images_V11/` | Gun models and design images. | Version 260 uses 15 in-place gun models in `WRGuns` and `WRGunShow`. Some local reference filenames use old weapon names. Exact geometry revisions are not confirmed by filenames. |\n| `wild_ranch_build/docs/evidence/` and `wild_ranch/playtest_release_20261031/` | The original screenshots used in the visual archive. | Matching project archive and in-game scene contents. Old images are labeled as earlier builds. |\n\nThe checked model IDs and picture names establish correspondence with the active roster. File membership by name does not establish that an uploaded Roblox mesh is byte-for-byte identical to every local export. Whether a particular asset resolves for a hosted player was outside this review.",
+          "imageIds": [
+            "enclosures"
+          ]
+        },
+        {
+          "id": "rig-grassland",
+          "title": "Grassland 原始模型图片",
+          "markdown": "Grassland (草原) 的 12 个源模型，按当前名单顺序排列。这些最初的三视图展示了该项目的绑定资产。\n\n[image:rig-deer]\n\n[image:rig-fox]\n\n[image:rig-boar]\n\n[image:rig-addax]\n\n[image:rig-horse]\n\n[image:rig-bison]\n\n[image:rig-moose]\n\n[image:rig-bear]\n\n[image:rig-tiger]\n\n[image:rig-unicorn]\n\n[image:rig-kirin]\n\n[image:rig-griffin]",
+          "imageIds": [
+            "rig-deer",
+            "rig-fox",
+            "rig-boar",
+            "rig-addax",
+            "rig-horse",
+            "rig-bison",
+            "rig-moose",
+            "rig-bear",
+            "rig-tiger",
+            "rig-unicorn",
+            "rig-kirin",
+            "rig-griffin"
+          ]
+        },
+        {
+          "id": "rig-savanna",
+          "title": "Savanna 原始模型图片",
+          "markdown": "12 个 Savanna [热带草原] 源模型，按当前名册顺序排列。这些原始的三视图图片展示了该项目的骨骼绑定（rig）资产。\n\n[image:rig-zebra]\n\n[image:rig-ostrich]\n\n[image:rig-hedgehog]\n\n[image:rig-hyena]\n\n[image:rig-wildebeest]\n\n[image:rig-cheetah]\n\n[image:rig-giraffe]\n\n[image:rig-hippopotamus]\n\n[image:rig-crocodile]\n\n[image:rig-lion]\n\n[image:rig-elephant]\n\n[image:rig-cerberus]",
+          "imageIds": [
+            "rig-zebra",
+            "rig-ostrich",
+            "rig-hedgehog",
+            "rig-hyena",
+            "rig-wildebeest",
+            "rig-cheetah",
+            "rig-giraffe",
+            "rig-hippopotamus",
+            "rig-crocodile",
+            "rig-lion",
+            "rig-elephant",
+            "rig-cerberus"
+          ]
+        },
+        {
+          "id": "rig-snowland",
+          "title": "Snowland 原始模型图片",
+          "markdown": "Snowland [雪地] 的 12 个源模型，按当前的名单顺序排列。这些原版三视图展示了该项目的骨骼绑定资产。\n\n[image:rig-red-panda]\n\n[image:rig-snow-monkey]\n\n[image:rig-mountain-goat]\n\n[image:rig-arctic-wolf]\n\n[image:rig-yak]\n\n[image:rig-wolverine]\n\n[image:rig-snow-leopard]\n\n[image:rig-polar-bear]\n\n[image:rig-woolly-rhino]\n\n[image:rig-woolly-mammoth]\n\n[image:rig-ice-tortoise]\n\n[image:rig-yeti]",
+          "imageIds": [
+            "rig-red-panda",
+            "rig-snow-monkey",
+            "rig-mountain-goat",
+            "rig-arctic-wolf",
+            "rig-yak",
+            "rig-wolverine",
+            "rig-snow-leopard",
+            "rig-polar-bear",
+            "rig-woolly-rhino",
+            "rig-woolly-mammoth",
+            "rig-ice-tortoise",
+            "rig-yeti"
+          ]
+        },
+        {
+          "id": "rig-desert",
+          "title": "Desert 原始模型图片",
+          "markdown": "The 12 Desert source models, in the current roster order. These original three-view pictures show the project’s rig assets.\n\n[image:rig-mouse]\n\n[image:rig-rabbit]\n\n[image:rig-fennec-fox]\n\n[image:rig-sand-cat]\n\n[image:rig-tarantula]\n\n[image:rig-caracal]\n\n[image:rig-bighorn-ram]\n\n[image:rig-camel]\n\n[image:rig-kangaroo]\n\n[image:rig-ammit]\n\n[image:rig-chimera]\n\n[image:rig-sand-dragon]",
+          "imageIds": [
+            "rig-mouse",
+            "rig-rabbit",
+            "rig-fennec-fox",
+            "rig-sand-cat",
+            "rig-tarantula",
+            "rig-caracal",
+            "rig-bighorn-ram",
+            "rig-camel",
+            "rig-kangaroo",
+            "rig-ammit",
+            "rig-chimera",
+            "rig-sand-dragon"
+          ]
+        },
+        {
+          "id": "rig-prehistoric",
+          "title": "Prehistoric 原始模型图片",
+          "markdown": "The 12 Prehistoric source models, in the current roster order. These original three-view pictures show the project’s rig assets.\n\n[image:rig-velociraptor]\n\n[image:rig-pachycephalosaurus]\n\n[image:rig-iguanodon]\n\n[image:rig-parasaurolophus]\n\n[image:rig-stegosaurus]\n\n[image:rig-ankylosaurus]\n\n[image:rig-triceratops]\n\n[image:rig-therizinosaurus]\n\n[image:rig-brachiosaurus]\n\n[image:rig-spinosaurus]\n\n[image:rig-tyrannosaurus-rex]\n\n[image:rig-dragon]",
+          "imageIds": [
+            "rig-velociraptor",
+            "rig-pachycephalosaurus",
+            "rig-iguanodon",
+            "rig-parasaurolophus",
+            "rig-stegosaurus",
+            "rig-ankylosaurus",
+            "rig-triceratops",
+            "rig-therizinosaurus",
+            "rig-brachiosaurus",
+            "rig-spinosaurus",
+            "rig-tyrannosaurus-rex",
+            "rig-dragon"
+          ]
+        },
+        {
+          "id": "rig-enchanted",
+          "title": "Enchanted Grove 原始模型图片",
+          "markdown": "当前出场顺序中的 12 个 Enchanted Grove（魔法树林）源模型。这些原始的三视图图片展示了该项目的骨骼绑定（rig）资产。\n\n[image:rig-glimmer-deer]\n\n[image:rig-duskwolf]\n\n[image:rig-spinecat]\n\n[image:rig-mossback]\n\n[image:rig-tuskhorn]\n\n[image:rig-glowmane]\n\n[image:rig-featherscale]\n\n[image:rig-thunder-bison]\n\n[image:rig-hammerhorn]\n\n[image:rig-shadowfang]\n\n[image:rig-astraeus]\n\n[image:rig-violet-wyvern]",
+          "imageIds": [
+            "rig-glimmer-deer",
+            "rig-duskwolf",
+            "rig-spinecat",
+            "rig-mossback",
+            "rig-tuskhorn",
+            "rig-glowmane",
+            "rig-featherscale",
+            "rig-thunder-bison",
+            "rig-hammerhorn",
+            "rig-shadowfang",
+            "rig-astraeus",
+            "rig-violet-wyvern"
+          ]
+        }
+      ]
+    }
+  ],
+  "images": {
+    "ranch-v7-overview": {
+      "id": "ranch-v7-overview",
+      "file": "ranch-v7-overview.jpg",
+      "url": "/guide/img/ranch-v7-overview.jpg",
+      "alt": "从上方俯瞰中心广场、商店摊位和周围的牧场。",
+      "caption": "从上方俯瞰中心广场、商店摊位和周围的牧场。",
+      "label": "存档的 Studio 视图",
+      "width": 1300,
+      "height": 729
+    },
+    "r8-pose-aim": {
+      "id": "r8-pose-aim",
+      "file": "r8-pose-aim.jpg",
+      "url": "/guide/img/r8-pose-aim.jpg",
+      "alt": "早期在广场上的瞄准和持武姿势。商店招牌可追溯到那个版本。",
+      "caption": "早期在广场上的瞄准和持武姿势。商店招牌可追溯到那个版本。",
+      "label": "存档的游戏画面",
+      "width": 1300,
+      "height": 685
+    },
+    "new-animals-grassland": {
+      "id": "new-animals-grassland",
+      "file": "new-animals-grassland.jpg",
+      "url": "/guide/img/new-animals-grassland.jpg",
+      "alt": "早期 Grassland（草原）游戏会话中的野生动物。",
+      "caption": "早期 Grassland（草原）游戏会话中的野生动物。",
+      "label": "存档的游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "r8-feed-prompt": {
+      "id": "r8-feed-prompt",
+      "file": "r8-feed-prompt.jpg",
+      "url": "/guide/img/r8-feed-prompt.jpg",
+      "alt": "在早期版本中牧场内喂食 Cheetah（猎豹）。",
+      "caption": "在早期版本中牧场内喂食 Cheetah（猎豹）。",
+      "label": "存档的游戏画面",
+      "width": 1300,
+      "height": 685
+    },
+    "gate3-play-client": {
+      "id": "gate3-play-client",
+      "file": "gate3-play-client.jpg",
+      "url": "/guide/img/gate3-play-client.jpg",
+      "alt": "走近围栏大门和栅栏。",
+      "caption": "走近围栏大门和栅栏。",
+      "label": "存档的游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "r8-ride-pose": {
+      "id": "r8-ride-pose",
+      "file": "r8-ride-pose.jpg",
+      "url": "/guide/img/r8-ride-pose.jpg",
+      "alt": "广场上的 Cheetah（猎豹）坐骑。旧的按键提示早于当前的 Dismount（下马）控制。",
+      "caption": "广场上的 Cheetah（猎豹）坐骑。旧的按键提示早于当前的 Dismount（下马）控制。",
+      "label": "存档的游戏画面",
+      "width": 1300,
+      "height": 685
+    },
+    "r8-fly-above-dismount": {
+      "id": "r8-fly-above-dismount",
+      "file": "r8-fly-above-dismount.jpg",
+      "url": "/guide/img/r8-fly-above-dismount.jpg",
+      "alt": "Grassland（草原）中的 Griffin（狮鹫），带有早期的飞行和下马控制。",
+      "caption": "Grassland（草原）中的 Griffin（狮鹫），带有早期的飞行和下马控制。",
+      "label": "存档的游戏画面",
+      "width": 1300,
+      "height": 685
+    },
+    "hosted-world-edit-capture": {
+      "id": "hosted-world-edit-capture",
+      "file": "hosted-world-edit-capture.jpg",
+      "url": "/guide/img/hosted-world-edit-capture.jpg",
+      "alt": "来自已保存世界档案的铺装广场和 Grassland（草原）入口。",
+      "caption": "来自已保存世界档案的铺装广场和 Grassland（草原）入口。",
+      "label": "存档的 Studio 视图",
+      "width": 1300,
+      "height": 685
+    },
+    "hosted-snowland-edit-capture": {
+      "id": "hosted-snowland-edit-capture",
+      "file": "hosted-snowland-edit-capture.jpg",
+      "url": "/guide/img/hosted-snowland-edit-capture.jpg",
+      "alt": "来自已保存世界档案的 Snowland（雪地）鸟瞰图。",
+      "caption": "来自已保存世界档案的 Snowland（雪地）鸟瞰图。",
+      "label": "存档的 Studio 视图",
+      "width": 1380,
+      "height": 727
+    },
+    "ranch-v7-tutorial-day": {
+      "id": "ranch-v7-tutorial-day",
+      "file": "ranch-v7-tutorial-day.jpg",
+      "url": "/guide/img/ranch-v7-tutorial-day.jpg",
+      "alt": "牧场广场和欢迎教程的早期版本。",
+      "caption": "牧场广场和欢迎教程的早期版本。",
+      "label": "存档的游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "ranch-v7-night": {
+      "id": "ranch-v7-night",
+      "file": "ranch-v7-night.jpg",
+      "url": "/guide/img/ranch-v7-night.jpg",
+      "alt": "早期版本中夜晚的 ranch square（牧场广场）。生物展示价格和用户界面属于历史记录。",
+      "caption": "早期版本中夜晚的 ranch square（牧场广场）。生物展示价格和用户界面属于历史记录。",
+      "label": "存档游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "overhaul-overview": {
+      "id": "overhaul-overview",
+      "file": "overhaul-overview.jpg",
+      "url": "/guide/img/overhaul-overview.jpg",
+      "alt": "Grassland（草原）开阔的草地、土壤岸和岩石结构。",
+      "caption": "Grassland（草原）开阔的草地、土壤岸和岩石结构。",
+      "label": "存档 Studio 视图",
+      "width": 1380,
+      "height": 774
+    },
+    "p2-savanna-play-client": {
+      "id": "p2-savanna-play-client",
+      "file": "p2-savanna-play-client.jpg",
+      "url": "/guide/img/p2-savanna-play-client.jpg",
+      "alt": "Savanna（热带草原）游戏客户端场景，带有岩石拱门和枯草。",
+      "caption": "Savanna（热带草原）游戏客户端场景，带有岩石拱门和枯草。",
+      "label": "存档游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "p2-snowland-play-client": {
+      "id": "p2-snowland-play-client",
+      "file": "p2-snowland-play-client.jpg",
+      "url": "/guide/img/p2-snowland-play-client.jpg",
+      "alt": "Snowland（雪地）游戏客户端场景，带有积雪的岩架和针叶树。",
+      "caption": "Snowland（雪地）游戏客户端场景，带有积雪的岩架和针叶树。",
+      "label": "存档游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "p2-desert-play-client": {
+      "id": "p2-desert-play-client",
+      "file": "p2-desert-play-client.jpg",
+      "url": "/guide/img/p2-desert-play-client.jpg",
+      "alt": "Desert（沙漠）游戏客户端场景，带有仙人掌和层叠岩石。",
+      "caption": "Desert（沙漠）游戏客户端场景，带有仙人掌和层叠岩石。",
+      "label": "存档游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "p2-prehistoric-play-client": {
+      "id": "p2-prehistoric-play-client",
+      "file": "p2-prehistoric-play-client.jpg",
+      "url": "/guide/img/p2-prehistoric-play-client.jpg",
+      "alt": "Prehistoric（史前）游戏客户端场景，带有植被和层叠地面。",
+      "caption": "Prehistoric（史前）游戏客户端场景，带有植被和层叠地面。",
+      "label": "存档游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "p2-enchanted-play-client": {
+      "id": "p2-enchanted-play-client",
+      "file": "p2-enchanted-play-client.jpg",
+      "url": "/guide/img/p2-enchanted-play-client.jpg",
+      "alt": "Enchanted Grove（魔法树林）游戏客户端场景，带有蓝色树木和紫色水晶结构。",
+      "caption": "Enchanted Grove（魔法树林）游戏客户端场景，带有蓝色树木和紫色水晶结构。",
+      "label": "存档游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "r8-pose-reload": {
+      "id": "r8-pose-reload",
+      "file": "r8-pose-reload.jpg",
+      "url": "/guide/img/r8-pose-reload.jpg",
+      "alt": "ranch square（牧场广场）中较旧的麻醉枪重新装填姿势。",
+      "caption": "ranch square（牧场广场）中较旧的麻醉枪重新装填姿势。",
+      "label": "存档游戏画面",
+      "width": 1300,
+      "height": 685
+    },
+    "p2-enchanted-enc-play": {
+      "id": "p2-enchanted-enc-play",
+      "file": "p2-enchanted-enc-play.jpg",
+      "url": "/guide/img/p2-enchanted-enc-play.jpg",
+      "alt": "hub（大厅）中较早的 Enchanted（魔法）风格围栏。",
+      "caption": "hub（大厅）中较早的 Enchanted（魔法）风格围栏。",
+      "label": "存档游戏画面",
+      "width": 1300,
+      "height": 729
+    },
+    "hosted-desert-edit-capture": {
+      "id": "hosted-desert-edit-capture",
+      "file": "hosted-desert-edit-capture.jpg",
+      "url": "/guide/img/hosted-desert-edit-capture.jpg",
+      "alt": "展示平顶山和开阔平原的 Desert（沙漠）鸟瞰图。",
+      "caption": "展示平顶山和开阔平原的 Desert（沙漠）鸟瞰图。",
+      "label": "存档 Studio 视图",
+      "width": 1380,
+      "height": 727
+    },
+    "hosted-enchanted-edit-capture": {
+      "id": "hosted-enchanted-edit-capture",
+      "file": "hosted-enchanted-edit-capture.jpg",
+      "url": "/guide/img/hosted-enchanted-edit-capture.jpg",
+      "alt": "Enchanted Grove 鸟瞰图，展示了对比鲜明的叶子和水晶力场。",
+      "caption": "Enchanted Grove 鸟瞰图，展示了对比鲜明的叶子和水晶力场。",
+      "label": "存档的 Studio 视图",
+      "width": 1380,
+      "height": 727
+    },
+    "ranch-v7-merchant": {
+      "id": "ranch-v7-merchant",
+      "file": "ranch-v7-merchant.jpg",
+      "url": "/guide/img/ranch-v7-merchant.jpg",
+      "alt": "早期广场布局中的 Food Market 绿色遮阳篷模型。",
+      "caption": "早期广场布局中的 Food Market 绿色遮阳篷模型。",
+      "label": "存档的 Studio 视图",
+      "width": 1300,
+      "height": 729
+    },
+    "native-studio-playtest": {
+      "id": "native-studio-playtest",
+      "file": "native-studio-playtest.jpg",
+      "url": "/guide/img/native-studio-playtest.jpg",
+      "alt": "在某个围栏处的早期 Studio 测试。原始画面包含 Studio 界面。",
+      "caption": "在某个围栏处的早期 Studio 测试。原始画面包含 Studio 界面。",
+      "label": "存档的试玩",
+      "width": 1300,
+      "height": 813
+    },
+    "icon-rebirth": {
+      "id": "icon-rebirth",
+      "file": "icon-rebirth.webp",
+      "url": "/guide/img/icon-rebirth.webp",
+      "alt": "Rebirth 图标",
+      "caption": "Rebirth",
+      "label": "Rebirth",
+      "width": 240,
+      "height": 240
+    },
+    "icon-upgrade": {
+      "id": "icon-upgrade",
+      "file": "icon-upgrade.webp",
+      "url": "/guide/img/icon-upgrade.webp",
+      "alt": "Upgrade 图标",
+      "caption": "Upgrade",
+      "label": "Upgrade",
+      "width": 240,
+      "height": 240
+    },
+    "icon-index": {
+      "id": "icon-index",
+      "file": "icon-index.webp",
+      "url": "/guide/img/icon-index.webp",
+      "alt": "Index 图标",
+      "caption": "Index",
+      "label": "Index",
+      "width": 240,
+      "height": 240
+    },
+    "icon-rewards": {
+      "id": "icon-rewards",
+      "file": "icon-rewards.webp",
+      "url": "/guide/img/icon-rewards.webp",
+      "alt": "Rewards 图标",
+      "caption": "Rewards",
+      "label": "Rewards",
+      "width": 240,
+      "height": 240
+    },
+    "icon-shop": {
+      "id": "icon-shop",
+      "file": "icon-shop.webp",
+      "url": "/guide/img/icon-shop.webp",
+      "alt": "Shop 图标",
+      "caption": "Shop",
+      "label": "Shop",
+      "width": 240,
+      "height": 240
+    },
+    "icon-invite": {
+      "id": "icon-invite",
+      "file": "icon-invite.webp",
+      "url": "/guide/img/icon-invite.webp",
+      "alt": "Invite 图标",
+      "caption": "Invite",
+      "label": "Invite",
+      "width": 240,
+      "height": 240
+    },
+    "icon-cabbage": {
+      "id": "icon-cabbage",
+      "file": "icon-cabbage.webp",
+      "url": "/guide/img/icon-cabbage.webp",
+      "alt": "Cabbage 图标",
+      "caption": "Cabbage",
+      "label": "Cabbage",
+      "width": 240,
+      "height": 240
+    },
+    "icon-apple": {
+      "id": "icon-apple",
+      "file": "icon-apple.webp",
+      "url": "/guide/img/icon-apple.webp",
+      "alt": "Apple (苹果) 图标",
+      "caption": "Apple (苹果)",
+      "label": "Apple (苹果)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-carrot": {
+      "id": "icon-carrot",
+      "file": "icon-carrot.webp",
+      "url": "/guide/img/icon-carrot.webp",
+      "alt": "Carrot (胡萝卜) 图标",
+      "caption": "Carrot (胡萝卜)",
+      "label": "Carrot (胡萝卜)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-melon": {
+      "id": "icon-melon",
+      "file": "icon-melon.webp",
+      "url": "/guide/img/icon-melon.webp",
+      "alt": "Melon (甜瓜) 图标",
+      "caption": "Melon (甜瓜)",
+      "label": "Melon (甜瓜)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-pineapple": {
+      "id": "icon-pineapple",
+      "file": "icon-pineapple.webp",
+      "url": "/guide/img/icon-pineapple.webp",
+      "alt": "Pineapple (菠萝) 图标",
+      "caption": "Pineapple (菠萝)",
+      "label": "Pineapple (菠萝)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-shrimp": {
+      "id": "icon-shrimp",
+      "file": "icon-shrimp.webp",
+      "url": "/guide/img/icon-shrimp.webp",
+      "alt": "Shrimp (虾) 图标",
+      "caption": "Shrimp (虾)",
+      "label": "Shrimp (虾)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-salmon": {
+      "id": "icon-salmon",
+      "file": "icon-salmon.webp",
+      "url": "/guide/img/icon-salmon.webp",
+      "alt": "Salmon (三文鱼) 图标",
+      "caption": "Salmon (三文鱼)",
+      "label": "Salmon (三文鱼)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-drumstick": {
+      "id": "icon-drumstick",
+      "file": "icon-drumstick.webp",
+      "url": "/guide/img/icon-drumstick.webp",
+      "alt": "Drumstick (鸡腿) 图标",
+      "caption": "Drumstick (鸡腿)",
+      "label": "Drumstick (鸡腿)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-ham": {
+      "id": "icon-ham",
+      "file": "icon-ham.webp",
+      "url": "/guide/img/icon-ham.webp",
+      "alt": "Ham (火腿) 图标",
+      "caption": "Ham (火腿)",
+      "label": "Ham (火腿)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-steak": {
+      "id": "icon-steak",
+      "file": "icon-steak.webp",
+      "url": "/guide/img/icon-steak.webp",
+      "alt": "Steak (牛排) 图标",
+      "caption": "Steak (牛排)",
+      "label": "Steak (牛排)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-common": {
+      "id": "icon-common",
+      "file": "icon-common.webp",
+      "url": "/guide/img/icon-common.webp",
+      "alt": "Common (普通) 图标",
+      "caption": "Common (普通)",
+      "label": "Common (普通)",
+      "width": 240,
+      "height": 240
+    },
+    "icon-uncommon": {
+      "id": "icon-uncommon",
+      "file": "icon-uncommon.webp",
+      "url": "/guide/img/icon-uncommon.webp",
+      "alt": "Uncommon 图标",
+      "caption": "Uncommon (罕见)",
+      "label": "Uncommon",
+      "width": 240,
+      "height": 240
+    },
+    "icon-rare": {
+      "id": "icon-rare",
+      "file": "icon-rare.webp",
+      "url": "/guide/img/icon-rare.webp",
+      "alt": "Rare 图标",
+      "caption": "Rare (稀有)",
+      "label": "Rare",
+      "width": 240,
+      "height": 240
+    },
+    "icon-epic": {
+      "id": "icon-epic",
+      "file": "icon-epic.webp",
+      "url": "/guide/img/icon-epic.webp",
+      "alt": "Epic 图标",
+      "caption": "Epic (史诗)",
+      "label": "Epic",
+      "width": 240,
+      "height": 240
+    },
+    "icon-legendary": {
+      "id": "icon-legendary",
+      "file": "icon-legendary.webp",
+      "url": "/guide/img/icon-legendary.webp",
+      "alt": "Legendary 图标",
+      "caption": "Legendary (传说)",
+      "label": "Legendary",
+      "width": 240,
+      "height": 240
+    },
+    "icon-mystic": {
+      "id": "icon-mystic",
+      "file": "icon-mystic.webp",
+      "url": "/guide/img/icon-mystic.webp",
+      "alt": "Mystic 图标",
+      "caption": "Mystic (神话)",
+      "label": "Mystic",
+      "width": 240,
+      "height": 240
+    },
+    "enclosures": {
+      "id": "enclosures",
+      "file": "enclosures.jpg",
+      "url": "/guide/img/enclosures.jpg",
+      "alt": "来自当前美术插槽所用图集的七个围栏缩略图。请从左到右、先上后下阅读每个拼贴。",
+      "caption": "来自当前美术插槽所用图集的七个围栏缩略图。请从左到右、先上后下阅读每个拼贴。",
+      "label": "原版游戏美术",
+      "width": 1024,
+      "height": 512
+    },
+    "rig-deer": {
+      "id": "rig-deer",
+      "file": "rig-deer.jpg",
+      "url": "/guide/img/rig-deer.jpg",
+      "alt": "Deer 的原始动物骨骼绑定实验室三视图照片",
+      "caption": "Common (普通)",
+      "label": "Deer",
+      "width": 780,
+      "height": 260
+    },
+    "rig-fox": {
+      "id": "rig-fox",
+      "file": "rig-fox.jpg",
+      "url": "/guide/img/rig-fox.jpg",
+      "alt": "Fox 的原始动物骨骼绑定实验室三视图照片",
+      "caption": "Common (普通)",
+      "label": "Fox",
+      "width": 780,
+      "height": 260
+    },
+    "rig-boar": {
+      "id": "rig-boar",
+      "file": "rig-boar.jpg",
+      "url": "/guide/img/rig-boar.jpg",
+      "alt": "Boar 的原始动物骨骼绑定实验室三视图照片",
+      "caption": "Common (普通)",
+      "label": "Boar",
+      "width": 780,
+      "height": 260
+    },
+    "rig-addax": {
+      "id": "rig-addax",
+      "file": "rig-addax.jpg",
+      "url": "/guide/img/rig-addax.jpg",
+      "alt": "Addax 的原始动物骨骼绑定实验室三视图照片",
+      "caption": "Uncommon (罕见)",
+      "label": "Addax",
+      "width": 780,
+      "height": 260
+    },
+    "rig-horse": {
+      "id": "rig-horse",
+      "file": "rig-horse.jpg",
+      "url": "/guide/img/rig-horse.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Horse 的三视图",
+      "caption": "Uncommon（罕见）",
+      "label": "Horse",
+      "width": 780,
+      "height": 260
+    },
+    "rig-bison": {
+      "id": "rig-bison",
+      "file": "rig-bison.jpg",
+      "url": "/guide/img/rig-bison.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Bison 的三视图",
+      "caption": "Rare（稀有）",
+      "label": "Bison",
+      "width": 780,
+      "height": 260
+    },
+    "rig-moose": {
+      "id": "rig-moose",
+      "file": "rig-moose.jpg",
+      "url": "/guide/img/rig-moose.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Moose 的三视图",
+      "caption": "Rare（稀有）",
+      "label": "Moose",
+      "width": 780,
+      "height": 260
+    },
+    "rig-bear": {
+      "id": "rig-bear",
+      "file": "rig-bear.jpg",
+      "url": "/guide/img/rig-bear.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Bear 的三视图",
+      "caption": "Epic（史诗）",
+      "label": "Bear",
+      "width": 780,
+      "height": 260
+    },
+    "rig-tiger": {
+      "id": "rig-tiger",
+      "file": "rig-tiger.jpg",
+      "url": "/guide/img/rig-tiger.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Tiger 的三视图",
+      "caption": "Epic（史诗）",
+      "label": "Tiger",
+      "width": 780,
+      "height": 260
+    },
+    "rig-unicorn": {
+      "id": "rig-unicorn",
+      "file": "rig-unicorn.jpg",
+      "url": "/guide/img/rig-unicorn.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Unicorn 的三视图",
+      "caption": "Legendary（传说）",
+      "label": "Unicorn",
+      "width": 780,
+      "height": 260
+    },
+    "rig-kirin": {
+      "id": "rig-kirin",
+      "file": "rig-kirin.jpg",
+      "url": "/guide/img/rig-kirin.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Kirin 的三视图",
+      "caption": "Legendary（传说）",
+      "label": "Kirin",
+      "width": 780,
+      "height": 260
+    },
+    "rig-griffin": {
+      "id": "rig-griffin",
+      "file": "rig-griffin.jpg",
+      "url": "/guide/img/rig-griffin.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Griffin 的三视图",
+      "caption": "Mystic Fly（神话飞行）",
+      "label": "Griffin",
+      "width": 780,
+      "height": 260
+    },
+    "rig-zebra": {
+      "id": "rig-zebra",
+      "file": "rig-zebra.jpg",
+      "url": "/guide/img/rig-zebra.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Zebra 的三视图",
+      "caption": "Common（普通）",
+      "label": "Zebra",
+      "width": 780,
+      "height": 260
+    },
+    "rig-ostrich": {
+      "id": "rig-ostrich",
+      "file": "rig-ostrich.jpg",
+      "url": "/guide/img/rig-ostrich.jpg",
+      "alt": "Sleep Pets & Chop Trees 游戏内 Animal Rig Lab（动物骨骼实验室）中 Ostrich 的三视图",
+      "caption": "Common（普通）",
+      "label": "Ostrich",
+      "width": 780,
+      "height": 260
+    },
+    "rig-hedgehog": {
+      "id": "rig-hedgehog",
+      "file": "rig-hedgehog.jpg",
+      "url": "/guide/img/rig-hedgehog.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Hedgehog (刺猬)",
+      "caption": "Common (普通)",
+      "label": "Hedgehog (刺猬)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-hyena": {
+      "id": "rig-hyena",
+      "file": "rig-hyena.jpg",
+      "url": "/guide/img/rig-hyena.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Hyena (鬣狗)",
+      "caption": "Uncommon (罕见)",
+      "label": "Hyena (鬣狗)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-wildebeest": {
+      "id": "rig-wildebeest",
+      "file": "rig-wildebeest.jpg",
+      "url": "/guide/img/rig-wildebeest.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Wildebeest (角马)",
+      "caption": "Uncommon (罕见)",
+      "label": "Wildebeest (角马)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-cheetah": {
+      "id": "rig-cheetah",
+      "file": "rig-cheetah.jpg",
+      "url": "/guide/img/rig-cheetah.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Cheetah (猎豹)",
+      "caption": "Rare (稀有)",
+      "label": "Cheetah (猎豹)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-giraffe": {
+      "id": "rig-giraffe",
+      "file": "rig-giraffe.jpg",
+      "url": "/guide/img/rig-giraffe.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Giraffe (长颈鹿)",
+      "caption": "Rare (稀有)",
+      "label": "Giraffe (长颈鹿)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-hippopotamus": {
+      "id": "rig-hippopotamus",
+      "file": "rig-hippopotamus.jpg",
+      "url": "/guide/img/rig-hippopotamus.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Hippopotamus (河马)",
+      "caption": "Epic (史诗)",
+      "label": "Hippopotamus (河马)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-crocodile": {
+      "id": "rig-crocodile",
+      "file": "rig-crocodile.jpg",
+      "url": "/guide/img/rig-crocodile.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Crocodile (鳄鱼)",
+      "caption": "Epic (史诗)",
+      "label": "Crocodile (鳄鱼)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-lion": {
+      "id": "rig-lion",
+      "file": "rig-lion.jpg",
+      "url": "/guide/img/rig-lion.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Lion (狮子)",
+      "caption": "Legendary (传说)",
+      "label": "Lion (狮子)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-elephant": {
+      "id": "rig-elephant",
+      "file": "rig-elephant.jpg",
+      "url": "/guide/img/rig-elephant.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Elephant (大象)",
+      "caption": "Legendary (传说)",
+      "label": "Elephant (大象)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-cerberus": {
+      "id": "rig-cerberus",
+      "file": "rig-cerberus.jpg",
+      "url": "/guide/img/rig-cerberus.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Cerberus (地狱三头犬)",
+      "caption": "Mystic (神话)",
+      "label": "Cerberus (地狱三头犬)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-red-panda": {
+      "id": "rig-red-panda",
+      "file": "rig-red-panda.jpg",
+      "url": "/guide/img/rig-red-panda.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Red Panda (小熊猫)",
+      "caption": "Common (普通)",
+      "label": "Red Panda",
+      "width": 780,
+      "height": 260
+    },
+    "rig-snow-monkey": {
+      "id": "rig-snow-monkey",
+      "file": "rig-snow-monkey.jpg",
+      "url": "/guide/img/rig-snow-monkey.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Snow Monkey (雪猴)",
+      "caption": "Common (普通)",
+      "label": "Snow Monkey",
+      "width": 780,
+      "height": 260
+    },
+    "rig-mountain-goat": {
+      "id": "rig-mountain-goat",
+      "file": "rig-mountain-goat.jpg",
+      "url": "/guide/img/rig-mountain-goat.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Mountain Goat (山羊)",
+      "caption": "Common (普通)",
+      "label": "Mountain Goat",
+      "width": 780,
+      "height": 260
+    },
+    "rig-arctic-wolf": {
+      "id": "rig-arctic-wolf",
+      "file": "rig-arctic-wolf.jpg",
+      "url": "/guide/img/rig-arctic-wolf.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Arctic Wolf (北极狼)",
+      "caption": "Uncommon (罕见)",
+      "label": "Arctic Wolf",
+      "width": 780,
+      "height": 260
+    },
+    "rig-yak": {
+      "id": "rig-yak",
+      "file": "rig-yak.jpg",
+      "url": "/guide/img/rig-yak.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Yak (牦牛)",
+      "caption": "Uncommon (罕见)",
+      "label": "Yak",
+      "width": 780,
+      "height": 260
+    },
+    "rig-wolverine": {
+      "id": "rig-wolverine",
+      "file": "rig-wolverine.jpg",
+      "url": "/guide/img/rig-wolverine.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Wolverine (狼獾)",
+      "caption": "Rare (稀有)",
+      "label": "Wolverine",
+      "width": 780,
+      "height": 260
+    },
+    "rig-snow-leopard": {
+      "id": "rig-snow-leopard",
+      "file": "rig-snow-leopard.jpg",
+      "url": "/guide/img/rig-snow-leopard.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Snow Leopard (雪豹)",
+      "caption": "Rare (稀有)",
+      "label": "Snow Leopard",
+      "width": 780,
+      "height": 260
+    },
+    "rig-polar-bear": {
+      "id": "rig-polar-bear",
+      "file": "rig-polar-bear.jpg",
+      "url": "/guide/img/rig-polar-bear.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Polar Bear (北极熊)",
+      "caption": "Epic (史诗)",
+      "label": "Polar Bear",
+      "width": 780,
+      "height": 260
+    },
+    "rig-woolly-rhino": {
+      "id": "rig-woolly-rhino",
+      "file": "rig-woolly-rhino.jpg",
+      "url": "/guide/img/rig-woolly-rhino.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Woolly Rhino (长毛犀牛)",
+      "caption": "Epic (史诗)",
+      "label": "Woolly Rhino",
+      "width": 780,
+      "height": 260
+    },
+    "rig-woolly-mammoth": {
+      "id": "rig-woolly-mammoth",
+      "file": "rig-woolly-mammoth.jpg",
+      "url": "/guide/img/rig-woolly-mammoth.jpg",
+      "alt": "Original Animal Rig Lab 三视图 Woolly Mammoth (长毛象)",
+      "caption": "Legendary (传奇)",
+      "label": "Woolly Mammoth",
+      "width": 780,
+      "height": 260
+    },
+    "rig-ice-tortoise": {
+      "id": "rig-ice-tortoise",
+      "file": "rig-ice-tortoise.jpg",
+      "url": "/guide/img/rig-ice-tortoise.jpg",
+      "alt": "Ice Tortoise 的原始动物骨骼实验室三视图",
+      "caption": "Legendary (传奇)",
+      "label": "Ice Tortoise",
+      "width": 780,
+      "height": 260
+    },
+    "rig-yeti": {
+      "id": "rig-yeti",
+      "file": "rig-yeti.jpg",
+      "url": "/guide/img/rig-yeti.jpg",
+      "alt": "Yeti 的原始动物骨骼实验室三视图",
+      "caption": "Mystic (神秘)",
+      "label": "Yeti",
+      "width": 780,
+      "height": 260
+    },
+    "rig-mouse": {
+      "id": "rig-mouse",
+      "file": "rig-mouse.jpg",
+      "url": "/guide/img/rig-mouse.jpg",
+      "alt": "Mouse 的原始动物骨骼实验室三视图",
+      "caption": "Common (普通)",
+      "label": "Mouse",
+      "width": 780,
+      "height": 260
+    },
+    "rig-rabbit": {
+      "id": "rig-rabbit",
+      "file": "rig-rabbit.jpg",
+      "url": "/guide/img/rig-rabbit.jpg",
+      "alt": "Rabbit 的原始动物骨骼实验室三视图",
+      "caption": "Common (普通)",
+      "label": "Rabbit",
+      "width": 780,
+      "height": 260
+    },
+    "rig-fennec-fox": {
+      "id": "rig-fennec-fox",
+      "file": "rig-fennec-fox.jpg",
+      "url": "/guide/img/rig-fennec-fox.jpg",
+      "alt": "Fennec Fox 的原始动物骨骼实验室三视图",
+      "caption": "Common (普通)",
+      "label": "Fennec Fox",
+      "width": 780,
+      "height": 260
+    },
+    "rig-sand-cat": {
+      "id": "rig-sand-cat",
+      "file": "rig-sand-cat.jpg",
+      "url": "/guide/img/rig-sand-cat.jpg",
+      "alt": "Sand Cat 的原始动物骨骼实验室三视图",
+      "caption": "Uncommon (罕见)",
+      "label": "Sand Cat",
+      "width": 780,
+      "height": 260
+    },
+    "rig-tarantula": {
+      "id": "rig-tarantula",
+      "file": "rig-tarantula.jpg",
+      "url": "/guide/img/rig-tarantula.jpg",
+      "alt": "Tarantula 的原始动物骨骼实验室三视图",
+      "caption": "Uncommon (罕见)",
+      "label": "Tarantula",
+      "width": 780,
+      "height": 260
+    },
+    "rig-caracal": {
+      "id": "rig-caracal",
+      "file": "rig-caracal.jpg",
+      "url": "/guide/img/rig-caracal.jpg",
+      "alt": "Caracal 的原始动物骨骼实验室三视图",
+      "caption": "Rare (稀有)",
+      "label": "Caracal",
+      "width": 780,
+      "height": 260
+    },
+    "rig-bighorn-ram": {
+      "id": "rig-bighorn-ram",
+      "file": "rig-bighorn-ram.jpg",
+      "url": "/guide/img/rig-bighorn-ram.jpg",
+      "alt": "Bighorn Ram 的原始动物骨骼实验室三视图",
+      "caption": "Rare (稀有)",
+      "label": "Bighorn Ram",
+      "width": 780,
+      "height": 260
+    },
+    "rig-camel": {
+      "id": "rig-camel",
+      "file": "rig-camel.jpg",
+      "url": "/guide/img/rig-camel.jpg",
+      "alt": "Camel 的原始动物骨骼实验室三视图",
+      "caption": "Epic (史诗)",
+      "label": "Camel",
+      "width": 780,
+      "height": 260
+    },
+    "rig-kangaroo": {
+      "id": "rig-kangaroo",
+      "file": "rig-kangaroo.jpg",
+      "url": "/guide/img/rig-kangaroo.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Kangaroo (袋鼠) 三视图",
+      "caption": "Epic (史诗)",
+      "label": "Kangaroo (袋鼠)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-ammit": {
+      "id": "rig-ammit",
+      "file": "rig-ammit.jpg",
+      "url": "/guide/img/rig-ammit.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Ammit (阿米特) 三视图",
+      "caption": "Legendary (传说)",
+      "label": "Ammit (阿米特)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-chimera": {
+      "id": "rig-chimera",
+      "file": "rig-chimera.jpg",
+      "url": "/guide/img/rig-chimera.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Chimera (喀迈拉) 三视图",
+      "caption": "Legendary (传说)",
+      "label": "Chimera (喀迈拉)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-sand-dragon": {
+      "id": "rig-sand-dragon",
+      "file": "rig-sand-dragon.jpg",
+      "url": "/guide/img/rig-sand-dragon.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Sand Dragon (沙龙) 三视图",
+      "caption": "Mystic Fly (神话飞龙)",
+      "label": "Sand Dragon (沙龙)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-velociraptor": {
+      "id": "rig-velociraptor",
+      "file": "rig-velociraptor.jpg",
+      "url": "/guide/img/rig-velociraptor.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Velociraptor (迅猛龙) 三视图",
+      "caption": "Common (普通)",
+      "label": "Velociraptor (迅猛龙)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-pachycephalosaurus": {
+      "id": "rig-pachycephalosaurus",
+      "file": "rig-pachycephalosaurus.jpg",
+      "url": "/guide/img/rig-pachycephalosaurus.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Pachycephalosaurus (厚头龙) 三视图",
+      "caption": "Common (普通)",
+      "label": "Pachycephalosaurus (厚头龙)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-iguanodon": {
+      "id": "rig-iguanodon",
+      "file": "rig-iguanodon.jpg",
+      "url": "/guide/img/rig-iguanodon.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Iguanodon (禽龙) 三视图",
+      "caption": "Common (普通)",
+      "label": "Iguanodon (禽龙)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-parasaurolophus": {
+      "id": "rig-parasaurolophus",
+      "file": "rig-parasaurolophus.jpg",
+      "url": "/guide/img/rig-parasaurolophus.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Parasaurolophus (副栉龙) 三视图",
+      "caption": "Uncommon (罕见)",
+      "label": "Parasaurolophus (副栉龙)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-stegosaurus": {
+      "id": "rig-stegosaurus",
+      "file": "rig-stegosaurus.jpg",
+      "url": "/guide/img/rig-stegosaurus.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Stegosaurus (剑龙) 三视图",
+      "caption": "Uncommon (罕见)",
+      "label": "Stegosaurus (剑龙)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-ankylosaurus": {
+      "id": "rig-ankylosaurus",
+      "file": "rig-ankylosaurus.jpg",
+      "url": "/guide/img/rig-ankylosaurus.jpg",
+      "alt": "Animal Rig Lab (动物骨骼实验室)的 Ankylosaurus (甲龙) 三视图",
+      "caption": "Rare (稀有)",
+      "label": "Ankylosaurus (甲龙)",
+      "width": 780,
+      "height": 260
+    },
+    "rig-triceratops": {
+      "id": "rig-triceratops",
+      "file": "rig-triceratops.jpg",
+      "url": "/guide/img/rig-triceratops.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Triceratops 三视图",
+      "caption": "Rare（稀有）",
+      "label": "Triceratops",
+      "width": 780,
+      "height": 260
+    },
+    "rig-therizinosaurus": {
+      "id": "rig-therizinosaurus",
+      "file": "rig-therizinosaurus.jpg",
+      "url": "/guide/img/rig-therizinosaurus.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Therizinosaurus 三视图",
+      "caption": "Epic（史诗）",
+      "label": "Therizinosaurus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-brachiosaurus": {
+      "id": "rig-brachiosaurus",
+      "file": "rig-brachiosaurus.jpg",
+      "url": "/guide/img/rig-brachiosaurus.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Brachiosaurus 三视图",
+      "caption": "Epic（史诗）",
+      "label": "Brachiosaurus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-spinosaurus": {
+      "id": "rig-spinosaurus",
+      "file": "rig-spinosaurus.jpg",
+      "url": "/guide/img/rig-spinosaurus.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Spinosaurus 三视图",
+      "caption": "Legendary（传说）",
+      "label": "Spinosaurus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-tyrannosaurus-rex": {
+      "id": "rig-tyrannosaurus-rex",
+      "file": "rig-tyrannosaurus-rex.jpg",
+      "url": "/guide/img/rig-tyrannosaurus-rex.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Tyrannosaurus Rex 三视图",
+      "caption": "Legendary（传说）",
+      "label": "Tyrannosaurus Rex",
+      "width": 780,
+      "height": 260
+    },
+    "rig-dragon": {
+      "id": "rig-dragon",
+      "file": "rig-dragon.jpg",
+      "url": "/guide/img/rig-dragon.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Dragon 三视图",
+      "caption": "Mystic Fly（神秘飞行）",
+      "label": "Dragon",
+      "width": 780,
+      "height": 260
+    },
+    "rig-glimmer-deer": {
+      "id": "rig-glimmer-deer",
+      "file": "rig-glimmer-deer.jpg",
+      "url": "/guide/img/rig-glimmer-deer.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Glimmer Deer 三视图",
+      "caption": "Common（普通）",
+      "label": "Glimmer Deer",
+      "width": 780,
+      "height": 260
+    },
+    "rig-duskwolf": {
+      "id": "rig-duskwolf",
+      "file": "rig-duskwolf.jpg",
+      "url": "/guide/img/rig-duskwolf.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Duskwolf 三视图",
+      "caption": "Common（普通）",
+      "label": "Duskwolf",
+      "width": 780,
+      "height": 260
+    },
+    "rig-spinecat": {
+      "id": "rig-spinecat",
+      "file": "rig-spinecat.jpg",
+      "url": "/guide/img/rig-spinecat.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Spinecat 三视图",
+      "caption": "Common（普通）",
+      "label": "Spinecat",
+      "width": 780,
+      "height": 260
+    },
+    "rig-mossback": {
+      "id": "rig-mossback",
+      "file": "rig-mossback.jpg",
+      "url": "/guide/img/rig-mossback.jpg",
+      "alt": "Original Animal Rig Lab（原始动物骨骼实验室）Mossback 三视图",
+      "caption": "Uncommon（罕见）",
+      "label": "Mossback",
+      "width": 780,
+      "height": 260
+    },
+    "rig-tuskhorn": {
+      "id": "rig-tuskhorn",
+      "file": "rig-tuskhorn.jpg",
+      "url": "/guide/img/rig-tuskhorn.jpg",
+      "alt": "Original Animal Rig Lab 三视图图片：Tuskhorn",
+      "caption": "Uncommon (罕见)",
+      "label": "Tuskhorn",
+      "width": 780,
+      "height": 260
+    },
+    "rig-glowmane": {
+      "id": "rig-glowmane",
+      "file": "rig-glowmane.jpg",
+      "url": "/guide/img/rig-glowmane.jpg",
+      "alt": "Original Animal Rig Lab 三视图图片：Glowmane",
+      "caption": "Rare (稀有)",
+      "label": "Glowmane",
+      "width": 780,
+      "height": 260
+    },
+    "rig-featherscale": {
+      "id": "rig-featherscale",
+      "file": "rig-featherscale.jpg",
+      "url": "/guide/img/rig-featherscale.jpg",
+      "alt": "Original Animal Rig Lab 三视图图片：Featherscale",
+      "caption": "Rare (稀有)",
+      "label": "Featherscale",
+      "width": 780,
+      "height": 260
+    },
+    "rig-thunder-bison": {
+      "id": "rig-thunder-bison",
+      "file": "rig-thunder-bison.jpg",
+      "url": "/guide/img/rig-thunder-bison.jpg",
+      "alt": "Original Animal Rig Lab 三视图图片：Thunder Bison",
+      "caption": "Epic (史诗)",
+      "label": "Thunder Bison",
+      "width": 780,
+      "height": 260
+    },
+    "rig-hammerhorn": {
+      "id": "rig-hammerhorn",
+      "file": "rig-hammerhorn.jpg",
+      "url": "/guide/img/rig-hammerhorn.jpg",
+      "alt": "Original Animal Rig Lab 三视图图片：Hammerhorn",
+      "caption": "Epic (史诗)",
+      "label": "Hammerhorn",
+      "width": 780,
+      "height": 260
+    },
+    "rig-shadowfang": {
+      "id": "rig-shadowfang",
+      "file": "rig-shadowfang.jpg",
+      "url": "/guide/img/rig-shadowfang.jpg",
+      "alt": "Original Animal Rig Lab 三视图图片：Shadowfang",
+      "caption": "Legendary (传说)",
+      "label": "Shadowfang",
+      "width": 780,
+      "height": 260
+    },
+    "rig-astraeus": {
+      "id": "rig-astraeus",
+      "file": "rig-astraeus.jpg",
+      "url": "/guide/img/rig-astraeus.jpg",
+      "alt": "Original Animal Rig Lab 三视图图片：Astraeus",
+      "caption": "Legendary (传说)",
+      "label": "Astraeus",
+      "width": 780,
+      "height": 260
+    },
+    "rig-violet-wyvern": {
+      "id": "rig-violet-wyvern",
+      "file": "rig-violet-wyvern.jpg",
+      "url": "/guide/img/rig-violet-wyvern.jpg",
+      "alt": "Original Animal Rig Lab 三视图图片：Violet Wyvern",
+      "caption": "Mystic Fly (神秘飞龙)",
+      "label": "Violet Wyvern",
+      "width": 780,
+      "height": 260
+    }
+  }
+}

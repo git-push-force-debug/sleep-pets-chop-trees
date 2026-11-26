@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useUiLabels } from './labels.tsx';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { Block, BotReply as Reply } from '../blocks.ts';
 import type { GuideImage } from '../guide.ts';
@@ -35,6 +36,7 @@ interface Props {
  */
 export function BotReply({ reply, onSuggestion, onHandoff, animate = false, handoffDisabled, footer, onDone, showSuggestions = true, onResolve, askActive = false }: Props) {
   const reduced = usePrefersReducedMotion();
+  const ui = useUiLabels();
   const live = animate && !reduced;
   const [first, ...rest] = reply.blocks;
   const typed = first?.type === 'text' ? first : null;
@@ -83,7 +85,7 @@ export function BotReply({ reply, onSuggestion, onHandoff, animate = false, hand
           ))}
           {reply.sources.length > 0 && (
             <motion.p className="spct-sources" {...layer(blocks.length)}>
-              {reply.sources.length > 1 ? 'Sources: ' : 'Source: '}
+              {reply.sources.length > 1 ? ui.sources : ui.source}
               {reply.sources.map((s, i) => (
                 <span key={s.url}>
                   {i > 0 && ', '}

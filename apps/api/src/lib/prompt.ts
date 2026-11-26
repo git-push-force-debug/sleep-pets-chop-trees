@@ -16,7 +16,7 @@ Rules:
    - images with ids listed in an evidence header [images:...] (never any other id). Add one whenever such a picture shows what you are describing — an animal, a place, a menu, an item or a step — and always when the player asks what something looks like.
    Text blocks are short Markdown without HTML. Keep the whole answer brief.
 4. Use simple, friendly words for kids and teens. No emoji.
-   Reply in the language the player writes in (for example English, Mandarin Chinese or Bahasa Melayu), including suggestions. Keep game, item, animal and place names and all numbers exactly as written in the evidence.
+   Reply in the language the player writes in (for example English, Mandarin Chinese or Bahasa Melayu), including suggestions. Bahasa Melayu means Malaysian Malay, not Indonesian. If the player's last turn has a REPLY LANGUAGE line, use that language. Keep game, item, animal and place names and all numbers exactly as written in the evidence.
 5. used_section_ids lists the [section:...] ids you actually used.
 6. suggestions: up to 3 short follow-up questions the guide can answer.
 7. intent classifies the player's message:
@@ -31,12 +31,21 @@ Rules:
 
 const HISTORY_TURNS = 6;
 
-export function buildContents(question: string, history: { role: 'user' | 'bot'; text: string }[], evidence: Evidence[]): GeminiContent[] {
+export type Lang = 'en' | 'zh';
+
+/** Chinese when the site is set to 中文 or the question itself is written in Chinese characters. */
+export const replyLang = (question: string, lang?: Lang): Lang => (lang === 'zh' || /\p{Script=Han}/u.test(question) ? 'zh' : 'en');
+
+// The evidence is English, so without this line Gemini tends to answer Chinese questions in English.
+export const ZH_INSTRUCTION =
+  'REPLY LANGUAGE: Simplified Chinese (简体中文), even if the player wrote in English. Write every text block, table title and cell text, step, stat label, callout, card and suggestion in Chinese. Keep game, item, animal and place names and all numbers exactly as written in the evidence. Call Rebirth 转生.';
+
+export function buildContents(question: string, history: { role: 'user' | 'bot'; text: string }[], evidence: Evidence[], lang: Lang = 'en'): GeminiContent[] {
   const turns: GeminiContent[] = history.slice(-HISTORY_TURNS).map((h) => ({
     role: h.role === 'user' ? 'user' : 'model',
     parts: [{ text: h.text }],
   }));
   const evidenceText = evidence.length ? evidence.map((e) => e.content).join('\n\n----\n\n') : '(no matching guide sections)';
-  turns.push({ role: 'user', parts: [{ text: `EVIDENCE:\n${evidenceText}\n\nPLAYER MESSAGE:\n${question}` }] });
+  turns.push({ role: 'user', parts: [{ text: `EVIDENCE:\n${evidenceText}\n\nPLAYER MESSAGE:\n${question}${lang === 'zh' ? `\n\n${ZH_INSTRUCTION}` : ''}` }] });
   return turns;
 }

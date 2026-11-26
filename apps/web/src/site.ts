@@ -1,11 +1,13 @@
-export const NAV: { to: string; label: string }[] = [
-  { to: '/', label: 'Home' },
-  { to: '/guide/player-guide', label: 'Guide' },
-  { to: '/guide/biomes', label: 'Wildlife' },
-  { to: '/guide/economy', label: 'Gear' },
-  { to: '/guide/rewards', label: 'Rewards' },
-  { to: '/guide/faq', label: 'FAQ' },
-  { to: '/support', label: 'Support' },
+import type { Strings } from './i18n.tsx';
+
+export const NAV: { to: string; label: keyof Strings['nav'] }[] = [
+  { to: '/', label: 'home' },
+  { to: '/guide/player-guide', label: 'guide' },
+  { to: '/guide/biomes', label: 'wildlife' },
+  { to: '/guide/economy', label: 'gear' },
+  { to: '/guide/rewards', label: 'rewards' },
+  { to: '/guide/faq', label: 'faq' },
+  { to: '/support', label: 'support' },
 ];
 
 export const ROBLOX_URL = 'https://www.roblox.com/games/109510233820622';

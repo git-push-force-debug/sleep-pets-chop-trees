@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { GeminiAnswer } from '../../../../packages/shared/src/blocks.ts';
 import type { GuideImage } from '../../../../packages/shared/src/guide.ts';
-import { coerceAnswer, decideHandoff, sanitize } from './answer.ts';
+import { coerceAnswer, decideHandoff, handoffReason, sanitize } from './answer.ts';
 import type { Evidence } from './dify.ts';
 
 const ev = (sectionId: string, chapter: string, imageIds: string[] = [], score = 0.7): Evidence => ({
@@ -114,3 +114,16 @@ describe('sanitize — pictures and removed pages', () => {
   });
 });
 
+
+describe('Chinese replies', () => {
+  it('words the hand-off reason in Chinese', () => {
+    expect(handoffReason({ intent: 'account_or_purchase', answer_found: true }, 'zh')).toBe('购买和账号问题需要团队成员来处理。');
+    expect(handoffReason({ intent: 'game_question', answer_found: false }, 'zh')).toBe('游戏指南里没有找到这个内容。');
+  });
+
+  it('uses Chinese section titles for sources and the Chinese hand-off line', () => {
+    const reply = sanitize(answer(), [ev('rebirth', 'player-guide')], {}, 'https://site.test', true, 'zh', { rebirth: '重生' });
+    expect(reply.sources).toEqual([{ title: '重生', url: 'https://site.test/guide/player-guide#rebirth' }]);
+    expect(reply.blocks.at(-1)).toEqual({ type: 'handoff', reason: '游戏指南里没有找到这个内容。' });
+  });
+});

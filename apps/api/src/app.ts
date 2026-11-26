@@ -18,6 +18,8 @@ export interface Deps {
   chatwoot: ChatwootClient;
   env: Env;
   guideImages: Record<string, GuideImage>;
+  /** Chinese image text and section titles, for replies in 中文. */
+  guideZh: { images: Record<string, GuideImage>; titles: Record<string, string> };
 }
 
 const LOCALHOST = /^http:\/\/localhost:\d+$/;
